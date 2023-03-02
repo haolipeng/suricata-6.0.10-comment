@@ -64,3 +64,4 @@ test.sh
 .vscode/*
 /suricata-update/*
 !/suricata-update/Makefile.am
+/.idea/
