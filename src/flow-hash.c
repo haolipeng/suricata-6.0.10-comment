@@ -537,23 +537,30 @@ static inline void NoFlowHandleIPS(Packet *p)
  */
 static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
 {
+	//紧急模式标志
     const bool emerg = ((SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY) != 0);
 #ifdef DEBUG
     if (g_eps_flow_memcap != UINT64_MAX && g_eps_flow_memcap == p->pcap_cnt) {
         return NULL;
     }
 #endif
+	//紧急模式下，tcp的非syn包不生成flow
     if (FlowCreateCheck(p, emerg) == 0) {
         return NULL;
     }
 
     /* get a flow from the spare queue */
+	//每个线程拥有一个FlowLookupStruct指针fls
+	//从线程所属的flow空闲队列里获取flow，如果获取成功则返回flow
     Flow *f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
     if (f == NULL) {
+		//获取flow失败，则从全局flow内存池中获取一个flow队列，再从flow队列中获取flow
         f = FlowSpareSync(tv, fls, p, emerg);
     }
+	//全局flow内存池，也没有flow队列
     if (f == NULL) {
         /* If we reached the max memcap, we get a used flow */
+		//flow内存超过配置上限，则进入紧急模式
         if (!(FLOW_CHECK_MEMCAP(sizeof(Flow) + FlowStorageSize()))) {
             /* declare state of emergency */
             if (!(SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY)) {
@@ -562,6 +569,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
                 FlowWakeupFlowManagerThread();
             }
 
+			//从全局flow_hash表中的bucket中，将引用计数为0的项进行复用
             f = FlowGetUsedFlow(tv, fls->dtv, &p->ts);
             if (f == NULL) {
                 NoFlowHandleIPS(p);
@@ -580,6 +588,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
         }
 
         /* now see if we can alloc a new flow */
+		//内存未达到上限，则直接在内存上分配flow
         f = FlowAlloc();
         if (f == NULL) {
 #ifdef UNITTESTS
@@ -594,6 +603,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
         }
 
         /* flow is initialized but *unlocked* */
+		//flow已经初始化，但是并未上锁
     } else {
         /* flow has been recycled before it went into the spare queue */
 
@@ -734,12 +744,14 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
 
     /* get our hash bucket and lock it */
     const uint32_t hash = p->flow_hash;
+	//以数据包的流哈希值为下标，获取其对应的FlowBucket链表
     FlowBucket *fb = &flow_hash[hash % flow_config.hash_size];
-    FromHashLockBucket(fb);
+    FromHashLockBucket(fb);//行级锁，锁住一个bucket
 
     SCLogDebug("fb %p fb->head %p", fb, fb->head);
 
     /* see if the bucket already has a flow */
+	//bucket为空,直接FlowGetNew申请Flow
     if (fb->head == NULL) {
         f = FlowGetNew(tv, fls, p);
         if (f == NULL) {
@@ -748,15 +760,15 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
         }
 
         /* flow is locked */
-        fb->head = f;
+        fb->head = f;//bucket的头结点为f
 
         /* got one, now lock, initialize and return */
-        FlowInit(f, p);
+        FlowInit(f, p);//流初始化
         f->flow_hash = hash;
         f->fb = fb;
         FlowUpdateState(f, FLOW_STATE_NEW);
 
-        FlowReference(dest, f);
+        FlowReference(dest, f);//增加引用计数
 
         FBLOCK_UNLOCK(fb);
         return f;
@@ -768,11 +780,13 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
     Flow *prev_f = NULL; /* previous flow */
     f = fb->head;
     do {
-        Flow *next_f = NULL;
+        Flow *next_f = NULL;/*next flow*/
+		//检测流超时
         const bool timedout =
             (fb_nextts < (uint32_t)p->ts.tv_sec && FlowIsTimedOut(f, (uint32_t)p->ts.tv_sec, emerg));
         if (timedout) {
             FromHashLockTO(f);//FLOWLOCK_WRLOCK(f);
+            //超时且引用计数为0，没有packet引用这个flow，则放到线程所属的work queue
             if (likely(f->use_cnt == 0)) {
                 next_f = f->next;
                 MoveToWorkQueue(tv, fls, fb, f, prev_f);
@@ -780,7 +794,7 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
                 goto flow_removed;
             }
             FLOWLOCK_UNLOCK(f);
-        } else if (FlowCompare(f, p) != 0) {
+        } else if (FlowCompare(f, p) != 0) {//找到了和packet匹配的流
             FromHashLockCMP(f);//FLOWLOCK_WRLOCK(f);
             /* found a matching flow that is not timed out */
             if (unlikely(TcpSessionPacketSsnReuse(p, f, f->protoctx) == 1)) {
@@ -800,14 +814,18 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
             }
             FlowReference(dest, f);
             FBLOCK_UNLOCK(fb);
+			//返回哈希值匹配的流
             return f; /* return w/o releasing flow lock */
         }
         /* unless we removed 'f', prev_f needs to point to
          * current 'f' when adding a new flow below. */
+         
+		//除非我们删除'f'，否则在下面添加新流时,prev_f 需要指向当前'f'。
         prev_f = f;
         next_f = f->next;
 
 flow_removed:
+		//查询完所有flow都没有找到
         if (next_f == NULL) {
             f = FlowGetNew(tv, fls, p);
             if (f == NULL) {
@@ -816,14 +834,14 @@ flow_removed:
             }
 
             /* flow is locked */
-
+			//flow添加到bucket链表的
             f->next = fb->head;
             fb->head = f;
 
             /* initialize and return */
             FlowInit(f, p);
             f->flow_hash = hash;
-            f->fb = fb;
+            f->fb = fb;//流所属的FlowBucket
             FlowUpdateState(f, FLOW_STATE_NEW);
             FlowReference(dest, f);
             FBLOCK_UNLOCK(fb);
@@ -1041,6 +1059,8 @@ static inline bool StillAlive(const Flow *f, const struct timeval *ts)
  */
 static Flow *FlowGetUsedFlow(ThreadVars *tv, DecodeThreadVars *dtv, const struct timeval *ts)
 {
+	//flow_prune_idx标记从哪个bucket上获取符合条件的flow，每次加5
+	//如果这个bucket上没有符合条件的flow，则索引加1，检查下一个bucket，直到找到flow
     uint32_t idx = GetUsedAtomicUpdate(FLOW_GET_NEW_TRIES) % flow_config.hash_size;
     uint32_t tried = 0;
 
