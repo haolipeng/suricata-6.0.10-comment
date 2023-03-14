@@ -40,6 +40,7 @@
  * to the list, the entire bucket is locked. */
 typedef struct FlowBucket_ {
     /** head of the list of active flows for this row. */
+	//bucket下挂的链表的表头
     Flow *head;
     /** head of the list of evicted flows for this row. Waiting to be
      *  collected by the Flow Manager. */

@@ -641,12 +641,15 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         StreamTcpSetOSPolicy(stream, p);
     }
 
+    //同时标识session的STREAMTCP_FLAG_APP_LAYER_DISABLED和stram的STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED，
+    // app and raw reassembly disable则无需重组
     if ((ssn->flags & STREAMTCP_FLAG_APP_LAYER_DISABLED) &&
         (stream->flags & STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED)) {
         SCLogDebug("ssn %p: both app and raw reassembly disabled, not reassembling", ssn);
         SCReturnInt(0);
     }
 
+    //检测重组深度
     /* If we have reached the defined depth for either of the stream, then stop
        reassembling the TCP session */
     uint32_t size = StreamTcpReassembleCheckDepth(ssn, stream, TCP_GET_SEQ(p), p->payload_len);
@@ -665,6 +668,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
     if (size > p->payload_len)
         size = p->payload_len;
 
+    //获取一个TcpSegment,设置其seq序列号和payload_len
     TcpSegment *seg = StreamTcpGetSegment(tv, ra_ctx);
     if (seg == NULL) {
         SCLogDebug("segment_pool is empty");
@@ -687,6 +691,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
                 APPLAYER_PROTO_DETECTION_SKIPPED);
     }
 
+    //tcp重组插入segment
     if (StreamTcpReassembleInsertSegment(tv, ra_ctx, stream, seg, p, TCP_GET_SEQ(p), p->payload, p->payload_len) != 0) {
         SCLogDebug("StreamTcpReassembleInsertSegment failed");
         SCReturnInt(-1);

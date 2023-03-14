@@ -42,7 +42,7 @@ typedef struct FlowSparePool {
 
 static uint32_t flow_spare_pool_flow_cnt = 0;
 static uint32_t flow_spare_pool_block_size = 100;
-static FlowSparePool *flow_spare_pool = NULL;
+static FlowSparePool *flow_spare_pool = NULL;	//记录flow spare flow内存池的链表头
 static SCMutex flow_spare_pool_m = SCMUTEX_INITIALIZER;
 
 uint32_t FlowSpareGetPoolSize(void)
@@ -65,12 +65,14 @@ static FlowSparePool *FlowSpareGetPool(void)
 static bool FlowSparePoolUpdateBlock(FlowSparePool *p)
 {
     DEBUG_VALIDATE_BUG_ON(p == NULL);
-
+	//flow_spare_pool_block_size默认值为100
+	//p->queue.len的值一直小于100，假如原先队列里有60个flow，那只需再添加40个flow
     for (uint32_t i = p->queue.len; i < flow_spare_pool_block_size; i++)
     {
-        Flow *f = FlowAlloc();
+        Flow *f = FlowAlloc();//申请flow结构体
         if (f == NULL)
             return false;
+		//将Flow对象添加到FlowSparePool的FlowQueuePrivate中
         FlowQueuePrivateAppendFlow(&p->queue, f);
     }
     return true;

@@ -504,6 +504,7 @@ void FlowHandlePacket(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
     /* Get this packet's flow from the hash. FlowHandlePacket() will setup
      * a new flow if nescesary. If we get NULL, we're out of flow memory.
      * The returned flow is locked. */
+    //核心函数，重点看！
     Flow *f = FlowGetFlowFromHash(tv, fls, p, &p->flow);
     if (f == NULL)
         return;
@@ -520,16 +521,16 @@ void FlowInitConfig(char quiet)
     SCLogDebug("initializing flow engine...");
 
     memset(&flow_config,  0, sizeof(flow_config));
-    SC_ATOMIC_INIT(flow_flags);
-    SC_ATOMIC_INIT(flow_memuse);
+    SC_ATOMIC_INIT(flow_flags);//流状态标志
+    SC_ATOMIC_INIT(flow_memuse);//流占用的内存大小
     SC_ATOMIC_INIT(flow_prune_idx);
-    SC_ATOMIC_INIT(flow_config.memcap);
+    SC_ATOMIC_INIT(flow_config.memcap);//flow的内存使用上限
     FlowQueueInit(&flow_recycle_q);
 
     /* set defaults */
     flow_config.hash_rand   = (uint32_t)RandomGet();
-    flow_config.hash_size   = FLOW_DEFAULT_HASHSIZE;
-    flow_config.prealloc    = FLOW_DEFAULT_PREALLOC;
+    flow_config.hash_size   = FLOW_DEFAULT_HASHSIZE;//预分配的FlowBucket的个数
+    flow_config.prealloc    = FLOW_DEFAULT_PREALLOC;//预分配flow总个数
     SC_ATOMIC_SET(flow_config.memcap, FLOW_DEFAULT_MEMCAP);
 
     /* If we have specific config, overwrite the defaults with them,
@@ -617,10 +618,12 @@ void FlowInitConfig(char quiet)
     memset(flow_hash, 0, flow_config.hash_size * sizeof(FlowBucket));
 
     uint32_t i = 0;
+	//初始化flow_hash表，新建的flow流存放到flow_hash的每个bucket链表里
     for (i = 0; i < flow_config.hash_size; i++) {
         FBLOCK_INIT(&flow_hash[i]);
         SC_ATOMIC_INIT(flow_hash[i].next_ts);
     }
+	//flow bucket占用的内存累加到全局原子变量flow_memuse中
     (void) SC_ATOMIC_ADD(flow_memuse, (flow_config.hash_size * sizeof(FlowBucket)));
 
     if (quiet == FALSE) {
@@ -629,12 +632,15 @@ void FlowInitConfig(char quiet)
                   SC_ATOMIC_GET(flow_memuse), flow_config.hash_size,
                   (uintmax_t)sizeof(FlowBucket));
     }
+	
+	//初始化流的全局内存池
     FlowSparePoolInit();
     if (quiet == FALSE) {
         SCLogConfig("flow memory usage: %"PRIu64" bytes, maximum: %"PRIu64,
                 SC_ATOMIC_GET(flow_memuse), SC_ATOMIC_GET(flow_config.memcap));
     }
 
+	//初始化tcp、udp、icmp等各协议的超时时间
     FlowInitFlowProto();
 
     uint32_t sz = sizeof(Flow) + FlowStorageSize();
