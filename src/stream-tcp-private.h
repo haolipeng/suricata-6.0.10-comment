@@ -258,18 +258,18 @@ enum TcpState
 }
 
 typedef struct TcpSession_ {
-    PoolThreadReserved res;
-    uint8_t state:4;                        /**< tcp state from state enum */
+    PoolThreadReserved res;             //PoolThread使用的的id号
+    uint8_t state:4;                        /**< tcp state from state enum 会话状态*/
     uint8_t pstate:4;                       /**< previous state */
     uint8_t queue_len;                      /**< length of queue list below */
-    int8_t data_first_seen_dir;
+    int8_t data_first_seen_dir;         //首次出现的数据的方向
     /** track all the tcp flags we've seen */
-    uint8_t tcp_packet_flags;
+    uint8_t tcp_packet_flags;           //保存了两个方向数据包tcp头的所有flag
     /* coccinelle: TcpSession:flags:STREAMTCP_FLAG */
-    uint16_t flags;
+    uint16_t flags;                     //tcp会话的标记
     uint32_t reassembly_depth;      /**< reassembly depth for the stream */
-    TcpStream server;
-    TcpStream client;
+    TcpStream server;                   //server -> client的stream的状态
+    TcpStream client;                   //client -> server的stream的状态
     TcpStateQueue *queue;                   /**< list of SYN/ACK candidates */
 } TcpSession;
 
