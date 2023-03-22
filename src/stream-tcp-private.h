@@ -170,7 +170,7 @@ enum TcpState
 #define STREAMTCP_FLAG_ASYNC                        0x0040
 /** Flag to indicate we're dealing with 4WHS: SYN, SYN, SYN/ACK, ACK
  * (http://www.breakingpointsystems.com/community/blog/tcp-portals-the-three-way-handshake-is-a-lie) */
-#define STREAMTCP_FLAG_4WHS                         0x0080
+//#define STREAMTCP_FLAG_4WHS                         0x0080
 /** Flag to indicate that this session is possible trying to evade the detection
  *  (http://www.packetstan.com/2010/06/recently-ive-been-on-campaign-to-make.html) */
 #define STREAMTCP_FLAG_DETECTION_EVASION_ATTEMPT    0x0100

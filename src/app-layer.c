@@ -204,6 +204,7 @@ static void TCPProtoDetectCheckBailConditions(ThreadVars *tv,
         return;
     }
 
+    //client和server缓存数据是否对协议识别可用
     const uint32_t size_ts = StreamDataAvailableForProtoDetect(&ssn->client);
     const uint32_t size_tc = StreamDataAvailableForProtoDetect(&ssn->server);
     SCLogDebug("size_ts %" PRIu32 ", size_tc %" PRIu32, size_ts, size_tc);

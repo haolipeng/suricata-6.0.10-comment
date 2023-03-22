@@ -78,6 +78,7 @@ static inline int InsertSegmentDataCustom(TcpStream *stream, TcpSegment *seg, ui
     uint16_t data_offset;
 
     //对比数据seq序号与stream->base_seq,大于等于
+    //计算stream offset和data offset
     if (likely(SEQ_GEQ(seg->seq, stream->base_seq))) {
         //计算数据写入在StreamingBuffer中的偏移和长度
         stream_offset = STREAM_BASE_OFFSET(stream) + (seg->seq - stream->base_seq);
@@ -97,7 +98,7 @@ static inline int InsertSegmentDataCustom(TcpStream *stream, TcpSegment *seg, ui
         SCReturnInt(0);
     }
 
-    //
+    //将segment插入到streaming buffer
     int ret = StreamingBufferInsertAt(
             &stream->sb, &seg->sbseg, data + data_offset, data_len - data_offset, stream_offset);
     if (ret != 0) {

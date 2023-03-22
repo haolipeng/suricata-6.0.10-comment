@@ -88,7 +88,7 @@ typedef struct StreamingBufferBlock {
 int SBBCompare(struct StreamingBufferBlock *a, struct StreamingBufferBlock *b);
 
 /* red-black tree prototype for SACK records */
-RB_HEAD(SBB, StreamingBufferBlock);
+RB_HEAD(SBB, StreamingBufferBlock); //定义红黑树的根节点
 RB_PROTOTYPE(SBB, StreamingBufferBlock, rb, SBBCompare);
 StreamingBufferBlock *SBB_RB_FIND_INCLUSIVE(struct SBB *head, StreamingBufferBlock *elm);
 
