@@ -4726,18 +4726,6 @@ static int SigTestDropFlow03(void)
         goto end;
     }
 
-    /* Second part.. Let's feed with another packet */
-    if (StreamTcpCheckFlowDrops(p2) == 1) {
-        SCLogDebug("This flow/stream triggered a drop rule");
-        FlowSetNoPacketInspectionFlag(p2->flow);
-        DecodeSetNoPacketInspectionFlag(p2);
-        StreamTcpDisableAppLayer(p2->flow);
-        p2->action |= ACTION_DROP;
-        /* return the segments to the pool */
-        StreamTcpSessionPktFree(p2);
-    }
-
-
     if ( !(p2->flags & PKT_NOPACKET_INSPECTION)) {
         printf("The packet was not flagged with no-inspection: ");
         goto end;

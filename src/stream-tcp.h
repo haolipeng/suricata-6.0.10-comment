@@ -148,28 +148,6 @@ const char *StreamTcpStateAsString(const enum TcpState);
 const char *StreamTcpSsnStateAsString(const TcpSession *ssn);
 
 /** ------- Inline functions: ------ */
-
-/**
-  * \brief If we are on IPS mode, and got a drop action triggered from
-  * the IP only module, or from a reassembled msg and/or from an
-  * applayer detection, then drop the rest of the packets of the
-  * same stream and avoid inspecting it any further
-  * \param p pointer to the Packet to check
-  * \retval 1 if we must drop this stream
-  * \retval 0 if the stream still legal
-  */
-static inline int StreamTcpCheckFlowDrops(Packet *p)
-{
-    /* If we are on IPS mode, and got a drop action triggered from
-     * the IP only module, or from a reassembled msg and/or from an
-     * applayer detection, then drop the rest of the packets of the
-     * same stream and avoid inspecting it any further */
-    if (EngineModeIsIPS() && (p->flow->flags & FLOW_ACTION_DROP))
-        return 1;
-
-    return 0;
-}
-
 enum {
     /* stream has no segments for forced reassembly, nor for detection */
     STREAM_HAS_UNPROCESSED_SEGMENTS_NONE = 0,

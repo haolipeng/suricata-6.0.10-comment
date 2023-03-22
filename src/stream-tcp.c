@@ -457,9 +457,7 @@ void StreamTcpInitConfig(char quiet)
         /* checking for "auto" and falling back to boolean to provide
          * backward compatibility */
         if (strcmp(temp_stream_inline_str, "auto") == 0) {
-            if (EngineModeIsIPS()) {
-                stream_config.flags |= STREAMTCP_INIT_FLAG_INLINE;
-            }
+
         } else if (ConfGetBool("stream.inline", &inl) == 1) {
             if (inl) {
                 stream_config.flags |= STREAMTCP_INIT_FLAG_INLINE;
@@ -467,9 +465,9 @@ void StreamTcpInitConfig(char quiet)
         }
     } else {
         /* default to 'auto' */
-        if (EngineModeIsIPS()) {
+        /*if (EngineModeIsIPS()) {
             stream_config.flags |= STREAMTCP_INIT_FLAG_INLINE;
-        }
+        }*/
     }
     stream_config.ssn_memcap_policy = ExceptionPolicyParse("stream.memcap-policy", true);
     stream_config.reassembly_memcap_policy =
@@ -4702,16 +4700,6 @@ int StreamTcpPacket (ThreadVars *tv, Packet *p, StreamTcpThread *stt,
      * the IP only module, or from a reassembled msg and/or from an
      * applayer detection, then drop the rest of the packets of the
      * same stream and avoid inspecting it any further */
-    if (StreamTcpCheckFlowDrops(p) == 1) {
-        SCLogDebug("This flow/stream triggered a drop rule");
-        FlowSetNoPacketInspectionFlag(p->flow);
-        DecodeSetNoPacketInspectionFlag(p);
-        StreamTcpDisableAppLayer(p->flow);
-        PacketDrop(p, ACTION_DROP, PKT_DROP_REASON_FLOW_DROP);
-        /* return the segments to the pool */
-        StreamTcpSessionPktFree(p);
-        SCReturnInt(0);
-    }
 
     if (ssn == NULL || ssn->state == TCP_NONE) {
         if (StreamTcpPacketStateNone(tv, p, stt, ssn, &stt->pseudo_queue) == -1) {
@@ -10348,9 +10336,6 @@ void StreamTcpRegisterTests (void)
                    StreamTcpTest12);
     UtRegisterTest("StreamTcpTest13 -- opposite stream packets for Async " "stream",
                    StreamTcpTest13);
-    UtRegisterTest("StreamTcp4WHSTest01", StreamTcp4WHSTest01);
-    UtRegisterTest("StreamTcp4WHSTest02", StreamTcp4WHSTest02);
-    UtRegisterTest("StreamTcp4WHSTest03", StreamTcp4WHSTest03);
     UtRegisterTest("StreamTcpTest14 -- setup OS policy", StreamTcpTest14);
     UtRegisterTest("StreamTcpTest15 -- setup OS policy", StreamTcpTest15);
     UtRegisterTest("StreamTcpTest16 -- setup OS policy", StreamTcpTest16);

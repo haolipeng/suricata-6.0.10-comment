@@ -415,9 +415,6 @@ void FlowHandlePacketUpdate(Flow *f, Packet *p, ThreadVars *tv, DecodeThreadVars
         } else {
             /* In IPS mode the packet could come from the other interface so it would
              * need to be bypassed */
-            if (EngineModeIsIPS()) {
-                BypassedFlowUpdate(f, p);
-            }
         }
     }
 #endif
