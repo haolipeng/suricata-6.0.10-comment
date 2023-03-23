@@ -1926,9 +1926,7 @@ int StreamTcpReassembleHandleSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
      * was *just* set. In this case we trigger the AppLayer Truncate
      * logic, to inform the applayer no more data in this direction is
      * to be expected. */
-    if ((stream->flags &
-                (STREAMTCP_STREAM_FLAG_DEPTH_REACHED|STREAMTCP_STREAM_FLAG_NOREASSEMBLY)) ==
-            STREAMTCP_STREAM_FLAG_DEPTH_REACHED)
+    if ((stream->flags & (STREAMTCP_STREAM_FLAG_DEPTH_REACHED|STREAMTCP_STREAM_FLAG_NOREASSEMBLY)) == STREAMTCP_STREAM_FLAG_DEPTH_REACHED)
     {
         SCLogDebug("STREAMTCP_STREAM_FLAG_DEPTH_REACHED, truncate applayer");
         if (dir != UPDATE_DIR_PACKET) {
