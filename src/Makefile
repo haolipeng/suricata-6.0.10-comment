@@ -354,22 +354,13 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	output-json-common.$(OBJEXT) packet-queue.$(OBJEXT) \
 	pkt-var.$(OBJEXT) reputation.$(OBJEXT) \
 	respond-reject.$(OBJEXT) respond-reject-libnet11.$(OBJEXT) \
-	runmode-af-packet.$(OBJEXT) runmode-erf-dag.$(OBJEXT) \
-	runmode-erf-file.$(OBJEXT) runmode-ipfw.$(OBJEXT) \
-	runmode-napatech.$(OBJEXT) runmode-netmap.$(OBJEXT) \
-	runmode-nfq.$(OBJEXT) runmode-nflog.$(OBJEXT) \
-	runmode-pcap.$(OBJEXT) runmode-pcap-file.$(OBJEXT) \
-	runmode-pfring.$(OBJEXT) runmode-unittests.$(OBJEXT) \
-	runmode-unix-socket.$(OBJEXT) runmode-windivert.$(OBJEXT) \
-	runmodes.$(OBJEXT) rust-context.$(OBJEXT) \
-	source-af-packet.$(OBJEXT) source-erf-dag.$(OBJEXT) \
-	source-erf-file.$(OBJEXT) source-ipfw.$(OBJEXT) \
-	source-napatech.$(OBJEXT) source-netmap.$(OBJEXT) \
-	source-nfq.$(OBJEXT) source-nflog.$(OBJEXT) \
-	source-pcap.$(OBJEXT) source-pcap-file.$(OBJEXT) \
+	runmode-af-packet.$(OBJEXT) runmode-pcap.$(OBJEXT) \
+	runmode-pcap-file.$(OBJEXT) runmode-unittests.$(OBJEXT) \
+	runmode-unix-socket.$(OBJEXT) runmodes.$(OBJEXT) \
+	rust-context.$(OBJEXT) source-af-packet.$(OBJEXT) source-pcap.$(OBJEXT) \
+	source-pcap-file.$(OBJEXT) \
 	source-pcap-file-directory-helper.$(OBJEXT) \
-	source-pcap-file-helper.$(OBJEXT) source-pfring.$(OBJEXT) \
-	source-windivert.$(OBJEXT) stream.$(OBJEXT) \
+	source-pcap-file-helper.$(OBJEXT) stream.$(OBJEXT) \
 	stream-tcp.$(OBJEXT) stream-tcp-inline.$(OBJEXT) \
 	stream-tcp-list.$(OBJEXT) stream-tcp-reassemble.$(OBJEXT) \
 	stream-tcp-sack.$(OBJEXT) stream-tcp-util.$(OBJEXT) \
@@ -827,23 +818,13 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/pkt-var.Po ./$(DEPDIR)/reputation.Po \
 	./$(DEPDIR)/respond-reject-libnet11.Po \
 	./$(DEPDIR)/respond-reject.Po ./$(DEPDIR)/runmode-af-packet.Po \
-	./$(DEPDIR)/runmode-erf-dag.Po ./$(DEPDIR)/runmode-erf-file.Po \
-	./$(DEPDIR)/runmode-ipfw.Po ./$(DEPDIR)/runmode-napatech.Po \
-	./$(DEPDIR)/runmode-netmap.Po ./$(DEPDIR)/runmode-nflog.Po \
-	./$(DEPDIR)/runmode-nfq.Po ./$(DEPDIR)/runmode-pcap-file.Po \
-	./$(DEPDIR)/runmode-pcap.Po ./$(DEPDIR)/runmode-pfring.Po \
+	./$(DEPDIR)/runmode-pcap-file.Po ./$(DEPDIR)/runmode-pcap.Po \
 	./$(DEPDIR)/runmode-unittests.Po \
-	./$(DEPDIR)/runmode-unix-socket.Po \
-	./$(DEPDIR)/runmode-windivert.Po ./$(DEPDIR)/runmodes.Po \
-	./$(DEPDIR)/rust-context.Po ./$(DEPDIR)/source-af-packet.Po \
-	./$(DEPDIR)/source-erf-dag.Po ./$(DEPDIR)/source-erf-file.Po \
-	./$(DEPDIR)/source-ipfw.Po ./$(DEPDIR)/source-napatech.Po \
-	./$(DEPDIR)/source-netmap.Po ./$(DEPDIR)/source-nflog.Po \
-	./$(DEPDIR)/source-nfq.Po \
+	./$(DEPDIR)/runmode-unix-socket.Po ./$(DEPDIR)/runmodes.Po \
+	./$(DEPDIR)/rust-context.Po \
 	./$(DEPDIR)/source-pcap-file-directory-helper.Po \
 	./$(DEPDIR)/source-pcap-file-helper.Po \
 	./$(DEPDIR)/source-pcap-file.Po ./$(DEPDIR)/source-pcap.Po \
-	./$(DEPDIR)/source-pfring.Po ./$(DEPDIR)/source-windivert.Po \
 	./$(DEPDIR)/stream-tcp-inline.Po \
 	./$(DEPDIR)/stream-tcp-list.Po \
 	./$(DEPDIR)/stream-tcp-reassemble.Po \
@@ -1060,7 +1041,7 @@ CPPFLAGS = -I/usr/include   -I/usr/lib/htp/include
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O0
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -1245,8 +1226,7 @@ top_srcdir = ..
 noinst_HEADERS = action-globals.h \
     app-layer-nbss.h app-layer-dcerpc-common.h \
     debug.h \
-	flow-private.h queue.h source-nfq-prototypes.h \
-	source-windivert-prototypes.h \
+	flow-private.h queue.h \
 	suricata-common.h threadvars.h tree.h \
     util-validate.h
 
@@ -1647,36 +1627,17 @@ reputation.c reputation.h \
 respond-reject.c respond-reject.h \
 respond-reject-libnet11.h respond-reject-libnet11.c \
 runmode-af-packet.c runmode-af-packet.h \
-runmode-erf-dag.c runmode-erf-dag.h \
-runmode-erf-file.c runmode-erf-file.h \
-runmode-ipfw.c runmode-ipfw.h \
-runmode-napatech.c runmode-napatech.h \
-runmode-netmap.c runmode-netmap.h \
-runmode-nfq.c runmode-nfq.h \
-runmode-nflog.c runmode-nflog.h \
 runmode-pcap.c runmode-pcap.h \
 runmode-pcap-file.c runmode-pcap-file.h \
-runmode-pfring.c runmode-pfring.h \
 runmode-unittests.c runmode-unittests.h \
 runmode-unix-socket.c runmode-unix-socket.h \
-runmode-windivert.c runmode-windivert.h \
 runmodes.c runmodes.h \
 rust.h \
 rust-context.c rust-context.h \
-source-af-packet.c source-af-packet.h \
-source-erf-dag.c source-erf-dag.h \
-source-erf-file.c source-erf-file.h \
-source-ipfw.c source-ipfw.h \
-source-napatech.c source-napatech.h \
-source-netmap.c source-netmap.h \
-source-nfq.c source-nfq.h \
-source-nflog.c source-nflog.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
 source-pcap-file-helper.c source-pcap-file-helper.h \
-source-pfring.c source-pfring.h \
-source-windivert.c source-windivert.h \
 stream.c stream.h \
 stream-tcp.c stream-tcp.h stream-tcp-private.h \
 stream-tcp-inline.c stream-tcp-inline.h \
@@ -2520,35 +2481,16 @@ include ./$(DEPDIR)/reputation.Po # am--include-marker
 include ./$(DEPDIR)/respond-reject-libnet11.Po # am--include-marker
 include ./$(DEPDIR)/respond-reject.Po # am--include-marker
 include ./$(DEPDIR)/runmode-af-packet.Po # am--include-marker
-include ./$(DEPDIR)/runmode-erf-dag.Po # am--include-marker
-include ./$(DEPDIR)/runmode-erf-file.Po # am--include-marker
-include ./$(DEPDIR)/runmode-ipfw.Po # am--include-marker
-include ./$(DEPDIR)/runmode-napatech.Po # am--include-marker
-include ./$(DEPDIR)/runmode-netmap.Po # am--include-marker
-include ./$(DEPDIR)/runmode-nflog.Po # am--include-marker
-include ./$(DEPDIR)/runmode-nfq.Po # am--include-marker
 include ./$(DEPDIR)/runmode-pcap-file.Po # am--include-marker
 include ./$(DEPDIR)/runmode-pcap.Po # am--include-marker
-include ./$(DEPDIR)/runmode-pfring.Po # am--include-marker
 include ./$(DEPDIR)/runmode-unittests.Po # am--include-marker
 include ./$(DEPDIR)/runmode-unix-socket.Po # am--include-marker
-include ./$(DEPDIR)/runmode-windivert.Po # am--include-marker
 include ./$(DEPDIR)/runmodes.Po # am--include-marker
 include ./$(DEPDIR)/rust-context.Po # am--include-marker
-include ./$(DEPDIR)/source-af-packet.Po # am--include-marker
-include ./$(DEPDIR)/source-erf-dag.Po # am--include-marker
-include ./$(DEPDIR)/source-erf-file.Po # am--include-marker
-include ./$(DEPDIR)/source-ipfw.Po # am--include-marker
-include ./$(DEPDIR)/source-napatech.Po # am--include-marker
-include ./$(DEPDIR)/source-netmap.Po # am--include-marker
-include ./$(DEPDIR)/source-nflog.Po # am--include-marker
-include ./$(DEPDIR)/source-nfq.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap-file-directory-helper.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap-file-helper.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap-file.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap.Po # am--include-marker
-include ./$(DEPDIR)/source-pfring.Po # am--include-marker
-include ./$(DEPDIR)/source-windivert.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-inline.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-list.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-reassemble.Po # am--include-marker
@@ -3296,35 +3238,16 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/respond-reject-libnet11.Po
 	-rm -f ./$(DEPDIR)/respond-reject.Po
 	-rm -f ./$(DEPDIR)/runmode-af-packet.Po
-	-rm -f ./$(DEPDIR)/runmode-erf-dag.Po
-	-rm -f ./$(DEPDIR)/runmode-erf-file.Po
-	-rm -f ./$(DEPDIR)/runmode-ipfw.Po
-	-rm -f ./$(DEPDIR)/runmode-napatech.Po
-	-rm -f ./$(DEPDIR)/runmode-netmap.Po
-	-rm -f ./$(DEPDIR)/runmode-nflog.Po
-	-rm -f ./$(DEPDIR)/runmode-nfq.Po
 	-rm -f ./$(DEPDIR)/runmode-pcap-file.Po
 	-rm -f ./$(DEPDIR)/runmode-pcap.Po
-	-rm -f ./$(DEPDIR)/runmode-pfring.Po
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
-	-rm -f ./$(DEPDIR)/runmode-windivert.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
 	-rm -f ./$(DEPDIR)/rust-context.Po
-	-rm -f ./$(DEPDIR)/source-af-packet.Po
-	-rm -f ./$(DEPDIR)/source-erf-dag.Po
-	-rm -f ./$(DEPDIR)/source-erf-file.Po
-	-rm -f ./$(DEPDIR)/source-ipfw.Po
-	-rm -f ./$(DEPDIR)/source-napatech.Po
-	-rm -f ./$(DEPDIR)/source-netmap.Po
-	-rm -f ./$(DEPDIR)/source-nflog.Po
-	-rm -f ./$(DEPDIR)/source-nfq.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
 	-rm -f ./$(DEPDIR)/source-pcap.Po
-	-rm -f ./$(DEPDIR)/source-pfring.Po
-	-rm -f ./$(DEPDIR)/source-windivert.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-inline.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-list.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-reassemble.Po
@@ -3906,35 +3829,16 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/respond-reject-libnet11.Po
 	-rm -f ./$(DEPDIR)/respond-reject.Po
 	-rm -f ./$(DEPDIR)/runmode-af-packet.Po
-	-rm -f ./$(DEPDIR)/runmode-erf-dag.Po
-	-rm -f ./$(DEPDIR)/runmode-erf-file.Po
-	-rm -f ./$(DEPDIR)/runmode-ipfw.Po
-	-rm -f ./$(DEPDIR)/runmode-napatech.Po
-	-rm -f ./$(DEPDIR)/runmode-netmap.Po
-	-rm -f ./$(DEPDIR)/runmode-nflog.Po
-	-rm -f ./$(DEPDIR)/runmode-nfq.Po
 	-rm -f ./$(DEPDIR)/runmode-pcap-file.Po
 	-rm -f ./$(DEPDIR)/runmode-pcap.Po
-	-rm -f ./$(DEPDIR)/runmode-pfring.Po
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
-	-rm -f ./$(DEPDIR)/runmode-windivert.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
 	-rm -f ./$(DEPDIR)/rust-context.Po
-	-rm -f ./$(DEPDIR)/source-af-packet.Po
-	-rm -f ./$(DEPDIR)/source-erf-dag.Po
-	-rm -f ./$(DEPDIR)/source-erf-file.Po
-	-rm -f ./$(DEPDIR)/source-ipfw.Po
-	-rm -f ./$(DEPDIR)/source-napatech.Po
-	-rm -f ./$(DEPDIR)/source-netmap.Po
-	-rm -f ./$(DEPDIR)/source-nflog.Po
-	-rm -f ./$(DEPDIR)/source-nfq.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
 	-rm -f ./$(DEPDIR)/source-pcap.Po
-	-rm -f ./$(DEPDIR)/source-pfring.Po
-	-rm -f ./$(DEPDIR)/source-windivert.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-inline.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-list.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-reassemble.Po

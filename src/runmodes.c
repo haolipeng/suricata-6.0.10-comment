@@ -48,8 +48,6 @@
 
 #include "log-httplog.h"
 
-#include "source-pfring.h"
-
 #include "tmqh-flow.h"
 #include "flow-manager.h"
 #include "flow-bypass.h"
@@ -218,17 +216,8 @@ void RunModeRegisterRunModes(void)
 
     RunModeIdsPcapRegister();
     RunModeFilePcapRegister();
-    RunModeIdsPfringRegister();
-    RunModeIpsNFQRegister();
-    RunModeIpsIPFWRegister();
-    RunModeErfFileRegister();
-    RunModeErfDagRegister();
-    RunModeNapatechRegister();
     RunModeIdsAFPRegister();
-    RunModeIdsNetmapRegister();
-    RunModeIdsNflogRegister();
     RunModeUnixSocketRegister();
-    RunModeIpsWinDivertRegister();
 #ifdef UNITTESTS
     UtRunModeRegister();
 #endif
@@ -319,32 +308,11 @@ void RunModeDispatch(int runmode, const char *custom_mode,
 #endif
                 break;
             }
-            case RUNMODE_NFQ:
-                custom_mode = RunModeIpsNFQGetDefaultMode();
-                break;
-            case RUNMODE_IPFW:
-                custom_mode = RunModeIpsIPFWGetDefaultMode();
-                break;
-            case RUNMODE_ERF_FILE:
-                custom_mode = RunModeErfFileGetDefaultMode();
-                break;
-            case RUNMODE_DAG:
-                custom_mode = RunModeErfDagGetDefaultMode();
-                break;
-            case RUNMODE_NAPATECH:
-                custom_mode = RunModeNapatechGetDefaultMode();
-                break;
             case RUNMODE_AFP_DEV:
                 custom_mode = RunModeAFPGetDefaultMode();
                 break;
-            case RUNMODE_NETMAP:
-                custom_mode = RunModeNetmapGetDefaultMode();
-                break;
             case RUNMODE_UNIX_SOCKET:
                 custom_mode = RunModeUnixSocketGetDefaultMode();
-                break;
-            case RUNMODE_NFLOG:
-                custom_mode = RunModeIdsNflogGetDefaultMode();
                 break;
 #ifdef WINDIVERT
             case RUNMODE_WINDIVERT:

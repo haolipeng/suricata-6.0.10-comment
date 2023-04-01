@@ -77,28 +77,11 @@
 
 #include "stream-tcp.h"
 
-#include "source-nfq.h"
-#include "source-nfq-prototypes.h"
-
-#include "source-nflog.h"
-
-#include "source-ipfw.h"
-
 #include "source-pcap.h"
 #include "source-pcap-file.h"
 #include "source-pcap-file-helper.h"
 
-#include "source-pfring.h"
-
-#include "source-erf-file.h"
-#include "source-erf-dag.h"
-#include "source-napatech.h"
-
 #include "source-af-packet.h"
-#include "source-netmap.h"
-
-#include "source-windivert.h"
-#include "source-windivert-prototypes.h"
 
 #include "respond-reject.h"
 
@@ -892,14 +875,7 @@ void RegisterAllModules(void)
     TmModuleFlowManagerRegister();
     TmModuleFlowRecyclerRegister();
     TmModuleBypassedFlowManagerRegister();
-    /* nfq */
-    TmModuleReceiveNFQRegister();
-    TmModuleVerdictNFQRegister();
-    TmModuleDecodeNFQRegister();
-    /* ipfw */
-    TmModuleReceiveIPFWRegister();
-    TmModuleVerdictIPFWRegister();
-    TmModuleDecodeIPFWRegister();
+
     /* pcap live */
     TmModuleReceivePcapRegister();
     TmModuleDecodePcapRegister();
@@ -909,21 +885,6 @@ void RegisterAllModules(void)
     /* af-packet */
     TmModuleReceiveAFPRegister();
     TmModuleDecodeAFPRegister();
-    /* netmap */
-    TmModuleReceiveNetmapRegister();
-    TmModuleDecodeNetmapRegister();
-    /* pfring */
-    TmModuleReceivePfringRegister();
-    TmModuleDecodePfringRegister();
-    /* dag file */
-    TmModuleReceiveErfFileRegister();
-    TmModuleDecodeErfFileRegister();
-    /* dag live */
-    TmModuleReceiveErfDagRegister();
-    TmModuleDecodeErfDagRegister();
-    /* napatech */
-    TmModuleNapatechStreamRegister();
-    TmModuleNapatechDecodeRegister();
 
     /* flow worker */
     TmModuleFlowWorkerRegister();
@@ -935,14 +896,6 @@ void RegisterAllModules(void)
     TmModuleStatsLoggerRegister();
 
     TmModuleDebugList();
-    /* nflog */
-    TmModuleReceiveNFLOGRegister();
-    TmModuleDecodeNFLOGRegister();
-
-    /* windivert */
-    TmModuleReceiveWinDivertRegister();
-    TmModuleVerdictWinDivertRegister();
-    TmModuleDecodeWinDivertRegister();
 }
 
 static TmEcode LoadYamlConfig(SCInstance *suri)

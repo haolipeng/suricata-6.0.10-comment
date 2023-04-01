@@ -7,7 +7,6 @@
 *.rules
 *.pcap
 *.pcapng
-.deps/
 .libs/
 *~
 m4/
