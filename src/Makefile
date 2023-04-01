@@ -154,7 +154,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	app-layer-nfs-udp.$(OBJEXT) app-layer-ntp.$(OBJEXT) \
 	app-layer-register.$(OBJEXT) app-layer-tftp.$(OBJEXT) \
 	app-layer-ikev2.$(OBJEXT) app-layer-krb5.$(OBJEXT) \
-	app-layer-rfb.$(OBJEXT) app-layer-mqtt.$(OBJEXT) \
+	app-layer-rfb.$(OBJEXT) \
 	app-layer-template.$(OBJEXT) app-layer-template-rust.$(OBJEXT) \
 	app-layer-rdp.$(OBJEXT) app-layer-ssh.$(OBJEXT) \
 	app-layer-ssl.$(OBJEXT) app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
@@ -289,21 +289,6 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-tcpmss.$(OBJEXT) detect-template.$(OBJEXT) \
 	detect-template2.$(OBJEXT) detect-ftpdata.$(OBJEXT) \
 	detect-template-rust-buffer.$(OBJEXT) \
-	detect-mqtt-type.$(OBJEXT) detect-mqtt-flags.$(OBJEXT) \
-	detect-mqtt-qos.$(OBJEXT) \
-	detect-mqtt-protocol-version.$(OBJEXT) \
-	detect-mqtt-reason-code.$(OBJEXT) \
-	detect-mqtt-connect-flags.$(OBJEXT) \
-	detect-mqtt-connect-clientid.$(OBJEXT) \
-	detect-mqtt-connect-username.$(OBJEXT) \
-	detect-mqtt-connect-password.$(OBJEXT) \
-	detect-mqtt-connect-willtopic.$(OBJEXT) \
-	detect-mqtt-connect-willmessage.$(OBJEXT) \
-	detect-mqtt-connack-sessionpresent.$(OBJEXT) \
-	detect-mqtt-publish-message.$(OBJEXT) \
-	detect-mqtt-publish-topic.$(OBJEXT) \
-	detect-mqtt-subscribe-topic.$(OBJEXT) \
-	detect-mqtt-unsubscribe-topic.$(OBJEXT) \
 	detect-template-buffer.$(OBJEXT) detect-threshold.$(OBJEXT) \
 	detect-tls.$(OBJEXT) detect-tls-cert-validity.$(OBJEXT) \
 	detect-tls-version.$(OBJEXT) detect-tos.$(OBJEXT) \
@@ -344,7 +329,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	output-json-tftp.$(OBJEXT) output-json-smb.$(OBJEXT) \
 	output-json-ikev2.$(OBJEXT) output-json-krb5.$(OBJEXT) \
 	output-json-dhcp.$(OBJEXT) output-json-snmp.$(OBJEXT) \
-	output-json-rfb.$(OBJEXT) output-json-mqtt.$(OBJEXT) \
+	output-json-rfb.$(OBJEXT) \
 	output-json-template.$(OBJEXT) \
 	output-json-template-rust.$(OBJEXT) output-json-rdp.$(OBJEXT) \
 	output-json-dcerpc.$(OBJEXT) output-json-metadata.$(OBJEXT) \
@@ -685,22 +670,6 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-lua-extensions.Po ./$(DEPDIR)/detect-lua.Po \
 	./$(DEPDIR)/detect-mark.Po ./$(DEPDIR)/detect-metadata.Po \
 	./$(DEPDIR)/detect-modbus.Po \
-	./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po \
-	./$(DEPDIR)/detect-mqtt-connect-clientid.Po \
-	./$(DEPDIR)/detect-mqtt-connect-flags.Po \
-	./$(DEPDIR)/detect-mqtt-connect-password.Po \
-	./$(DEPDIR)/detect-mqtt-connect-username.Po \
-	./$(DEPDIR)/detect-mqtt-connect-willmessage.Po \
-	./$(DEPDIR)/detect-mqtt-connect-willtopic.Po \
-	./$(DEPDIR)/detect-mqtt-flags.Po \
-	./$(DEPDIR)/detect-mqtt-protocol-version.Po \
-	./$(DEPDIR)/detect-mqtt-publish-message.Po \
-	./$(DEPDIR)/detect-mqtt-publish-topic.Po \
-	./$(DEPDIR)/detect-mqtt-qos.Po \
-	./$(DEPDIR)/detect-mqtt-reason-code.Po \
-	./$(DEPDIR)/detect-mqtt-subscribe-topic.Po \
-	./$(DEPDIR)/detect-mqtt-type.Po \
-	./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po \
 	./$(DEPDIR)/detect-msg.Po ./$(DEPDIR)/detect-nfs-procedure.Po \
 	./$(DEPDIR)/detect-nfs-version.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
@@ -1267,7 +1236,6 @@ app-layer-tftp.c app-layer-tftp.h \
 app-layer-ikev2.c app-layer-ikev2.h \
 app-layer-krb5.c app-layer-krb5.h \
 app-layer-rfb.c app-layer-rfb.h \
-app-layer-mqtt.c app-layer-mqtt.h \
 app-layer-template.c app-layer-template.h \
 app-layer-template-rust.c app-layer-template-rust.h \
 app-layer-rdp.c app-layer-rdp.h \
@@ -1509,22 +1477,6 @@ detect-template.c detect-template.h \
 detect-template2.c detect-template2.h \
 detect-ftpdata.c detect-ftpdata.h \
 detect-template-rust-buffer.c detect-template-rust-buffer.h \
-detect-mqtt-type.c detect-mqtt-type.h \
-detect-mqtt-flags.c detect-mqtt-flags.h \
-detect-mqtt-qos.c detect-mqtt-qos.h \
-detect-mqtt-protocol-version.c detect-mqtt-protocol-version.h \
-detect-mqtt-reason-code.c detect-mqtt-reason-code.h \
-detect-mqtt-connect-flags.c detect-mqtt-connect-flags.h \
-detect-mqtt-connect-clientid.c detect-mqtt-connect-clientid.h \
-detect-mqtt-connect-username.c detect-mqtt-connect-username.h \
-detect-mqtt-connect-password.c detect-mqtt-connect-password.h \
-detect-mqtt-connect-willtopic.c detect-mqtt-connect-willtopic.h \
-detect-mqtt-connect-willmessage.c detect-mqtt-connect-willmessage.h \
-detect-mqtt-connack-sessionpresent.c detect-mqtt-connack-sessionpresent.h \
-detect-mqtt-publish-message.c detect-mqtt-publish-message.h \
-detect-mqtt-publish-topic.c detect-mqtt-publish-topic.h \
-detect-mqtt-subscribe-topic.c detect-mqtt-subscribe-topic.h \
-detect-mqtt-unsubscribe-topic.c detect-mqtt-unsubscribe-topic.h \
 detect-template-buffer.c detect-template-buffer.h \
 detect-threshold.c detect-threshold.h \
 detect-tls.c detect-tls.h \
@@ -1608,7 +1560,6 @@ output-json-krb5.c output-json-krb5.h \
 output-json-dhcp.c output-json-dhcp.h \
 output-json-snmp.c output-json-snmp.h \
 output-json-rfb.c output-json-rfb.h \
-output-json-mqtt.c output-json-mqtt.h \
 output-json-template.c output-json-template.h \
 output-json-template-rust.c output-json-template-rust.h \
 output-json-rdp.c output-json-rdp.h \
