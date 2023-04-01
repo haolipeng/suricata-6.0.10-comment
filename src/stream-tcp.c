@@ -1620,11 +1620,11 @@ static int StreamTcpPacketStateSynRecv(ThreadVars *tv, Packet *p,
                  * pattern for MOTS/MITM injection attacks, we need to be
                  * careful.
                  */
-                if (StreamTcpInlineMode()) {
+                /*if (StreamTcpInlineMode()) {
                     if (p->payload_len > 0 &&
                             SEQ_EQ(TCP_GET_ACK(p), ssn->client.last_ack) &&
                             SEQ_EQ(TCP_GET_SEQ(p), ssn->server.next_seq)) {
-                        /* packet loss is possible but unlikely here */
+                        *//* packet loss is possible but unlikely here *//*
                         SCLogDebug("ssn %p: possible data injection", ssn);
                         StreamTcpSetEvent(p, STREAM_3WHS_ACK_DATA_INJECT);
                         return -1;
@@ -1634,7 +1634,7 @@ static int StreamTcpPacketStateSynRecv(ThreadVars *tv, Packet *p,
                             ssn);
                     StreamTcpSetEvent(p, STREAM_3WHS_ACK_IN_WRONG_DIR);
                     return -1;
-                }
+                }*/
                 ack_indicates_missed_3whs_ack_packet = true;
             }
         }
