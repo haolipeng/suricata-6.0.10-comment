@@ -111,6 +111,7 @@ typedef struct TcpStream_ {
     /* reassembly */
     uint32_t base_seq;              /**< seq where we are left with reassebly. Matches STREAM_BASE_OFFSET below. */
 
+	//TODO:app_progress_rel和raw_progress_rel的区别是什么呢？
     uint32_t app_progress_rel;      /**< app-layer progress relative to STREAM_BASE_OFFSET */
     uint32_t raw_progress_rel;      /**< raw reassembly progress relative to STREAM_BASE_OFFSET */
     uint32_t log_progress_rel;      /**< streaming logger progress relative to STREAM_BASE_OFFSET */
@@ -163,7 +164,9 @@ enum TcpState
 /** Flag for TCP Timestamp option */
 #define STREAMTCP_FLAG_TIMESTAMP                    0x0008
 /** Server supports wscale (even though it can be 0) */
+//server端支持WSCALE
 #define STREAMTCP_FLAG_SERVER_WSCALE                0x0010
+
 /** Closed by RST */
 #define STREAMTCP_FLAG_CLOSED_BY_RST                0x0020
 /** Flag to indicate that the session is handling asynchronous stream.*/
@@ -175,8 +178,10 @@ enum TcpState
  *  (http://www.packetstan.com/2010/06/recently-ive-been-on-campaign-to-make.html) */
 #define STREAMTCP_FLAG_DETECTION_EVASION_ATTEMPT    0x0100
 /** Flag to indicate the client (SYN pkt) permits SACK */
+//标记client支持SACK
 #define STREAMTCP_FLAG_CLIENT_SACKOK                0x0200
 /** Flag to indicate both sides of the session permit SACK (SYN + SYN/ACK) */
+//标识通信的双方是否支持SACK
 #define STREAMTCP_FLAG_SACKOK                       0x0400
 // vacancy
 /** 3WHS confirmed by server -- if suri sees 3whs ACK but server doesn't (pkt
@@ -197,6 +202,7 @@ enum TcpState
 
 // bit 0 vacant
 /** Flag to avoid stream reassembly/app layer inspection for the stream */
+//不做重组和应用层分析
 #define STREAMTCP_STREAM_FLAG_NOREASSEMBLY                  BIT_U16(1)
 /** we received a keep alive */
 #define STREAMTCP_STREAM_FLAG_KEEPALIVE                     BIT_U16(2)
@@ -209,9 +215,9 @@ enum TcpState
 #define STREAMTCP_STREAM_FLAG_TIMESTAMP                     BIT_U16(5)
 /** Flag to indicate the zero value of timestamp */
 #define STREAMTCP_STREAM_FLAG_ZERO_TIMESTAMP                BIT_U16(6)
-/** App proto detection completed */
+/** App proto detection completed 应用层探测完成*/
 #define STREAMTCP_STREAM_FLAG_APPPROTO_DETECTION_COMPLETED  BIT_U16(7)
-/** App proto detection skipped */
+/** App proto detection skipped 应用层探测略过*/
 #define STREAMTCP_STREAM_FLAG_APPPROTO_DETECTION_SKIPPED    BIT_U16(8)
 /** Raw reassembly disabled for new segments */
 #define STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED              BIT_U16(9)
@@ -262,9 +268,9 @@ typedef struct TcpSession_ {
     uint8_t state:4;                        /**< tcp state from state enum 会话状态*/
     uint8_t pstate:4;                       /**< previous state */
     uint8_t queue_len;                      /**< length of queue list below */
-    int8_t data_first_seen_dir;         //首次出现的数据的方向
+    int8_t data_first_seen_dir;         //首次出现的数据的方向,STREAM_TOSERVER或STREAM_TOCLIENT
     /** track all the tcp flags we've seen */
-    uint8_t tcp_packet_flags;           //保存了两个方向数据包tcp头的所有flag
+    uint8_t tcp_packet_flags;           //保存了两个方向数据包tcp头的所有flag，输出到eve json中
     /* coccinelle: TcpSession:flags:STREAMTCP_FLAG */
     uint16_t flags;                     //tcp会话的标记
     uint32_t reassembly_depth;      /**< reassembly depth for the stream */

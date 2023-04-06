@@ -77,7 +77,7 @@ static inline int InsertSegmentDataCustom(TcpStream *stream, TcpSegment *seg, ui
     uint64_t stream_offset;
     uint16_t data_offset;
 
-    //对比数据seq序号与stream->base_seq,大于等于
+    //对比数据seq序号与stream->base_seq(大于等于)
     //计算stream offset和data offset
     if (likely(SEQ_GEQ(seg->seq, stream->base_seq))) {
         //计算数据写入在StreamingBuffer中的偏移和长度
@@ -578,7 +578,11 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
     TcpSegment *dup_seg = NULL;
 
     /* insert segment into list. Note: doesn't handle the data */
+	// 2：没插入，数据重叠
+	// 1: 插入，检测到重叠
+	// 0：插入，没有重叠
     int r = DoInsertSegment (stream, seg, &dup_seg, p);
+	
     SCLogDebug("DoInsertSegment returned %d", r);
     if (r < 0) {
         StatsIncr(tv, ra_ctx->counter_tcp_reass_list_fail);
@@ -586,7 +590,8 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
         SCReturnInt(-1);
     }
 
-    if (likely(r == 0)) {//没有数据覆盖
+	//没有数据覆盖
+    if (likely(r == 0)) {
         /* no overlap, straight data insert */
         int res = InsertSegmentDataCustom(stream, seg, pkt_data, pkt_datalen);
         if (res < 0) {

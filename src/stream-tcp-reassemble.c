@@ -641,7 +641,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         StreamTcpSetOSPolicy(stream, p);
     }
 
-    //同时标识session的STREAMTCP_FLAG_APP_LAYER_DISABLED和stram的STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED，
+    //标识session的STREAMTCP_FLAG_APP_LAYER_DISABLED和stram的STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED，
     // app and raw reassembly disable则无需重组
     if ((ssn->flags & STREAMTCP_FLAG_APP_LAYER_DISABLED) &&
         (stream->flags & STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED)) {
@@ -668,7 +668,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
     if (size > p->payload_len)
         size = p->payload_len;
 
-    //获取一个TcpSegment,设置其seq序列号和payload_len
+    //获取一个TcpSegment,
     TcpSegment *seg = StreamTcpGetSegment(tv, ra_ctx);
     if (seg == NULL) {
         SCLogDebug("segment_pool is empty");
@@ -676,6 +676,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         SCReturnInt(-1);
     }
 
+	//设置TcpSegment的seq序列号和payload_len
     TCP_SEG_LEN(seg) = size;
     seg->seq = TCP_GET_SEQ(p);
 
@@ -684,6 +685,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         seg->seq += 1;
 
     /* proto detection skipped, but now we do get data. Set event. */
+	// 略过协议识别，设置事件
     if (RB_EMPTY(&stream->seg_tree) &&
         stream->flags & STREAMTCP_STREAM_FLAG_APPPROTO_DETECTION_SKIPPED) {
 
@@ -1938,6 +1940,7 @@ int StreamTcpReassembleHandleSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
 
     /* in stream inline mode even if we have no data we call the reassembly
      * functions to handle EOF */
+     //在stream inline模式下，即使即使没有数据
     if (dir == UPDATE_DIR_PACKET || dir == UPDATE_DIR_BOTH) {
         SCLogDebug("inline (%s) or PKT_PSEUDO_STREAM_END (%s)",
                 StreamTcpInlineMode()?"true":"false",
