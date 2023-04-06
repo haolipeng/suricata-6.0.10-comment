@@ -333,18 +333,6 @@ static void StreamTcpSessionPoolCleanup(void *s)
     }
 }
 
-/**
- *  \brief See if stream engine is dropping invalid packet in inline mode
- *
- *  \retval 0 no
- *  \retval 1 yes
- */
-int StreamTcpInlineDropInvalid(void)
-{
-    return ((stream_config.flags & STREAMTCP_INIT_FLAG_INLINE)
-            && (stream_config.flags & STREAMTCP_INIT_FLAG_DROP_INVALID));
-}
-
 /* hack: stream random range code expects random values in range of 0-RAND_MAX,
  * but we can get both <0 and >RAND_MAX values from RandomGet
  */
@@ -458,16 +446,9 @@ void StreamTcpInitConfig(char quiet)
          * backward compatibility */
         if (strcmp(temp_stream_inline_str, "auto") == 0) {
 
-        } else if (ConfGetBool("stream.inline", &inl) == 1) {
-            if (inl) {
-                stream_config.flags |= STREAMTCP_INIT_FLAG_INLINE;
-            }
         }
     } else {
-        /* default to 'auto' */
-        /*if (EngineModeIsIPS()) {
-            stream_config.flags |= STREAMTCP_INIT_FLAG_INLINE;
-        }*/
+
     }
     stream_config.ssn_memcap_policy = ExceptionPolicyParse("stream.memcap-policy", true);
     stream_config.reassembly_memcap_policy =
@@ -1646,7 +1627,7 @@ static int StreamTcpPacketStateSynRecv(ThreadVars *tv, Packet *p,
             return -1;
 
             /* SYN/ACK followed by more TOCLIENT suggesting packet loss */
-        } else if (PKT_IS_TOCLIENT(p) && !StreamTcpInlineMode() &&
+        } else if (PKT_IS_TOCLIENT(p) &&
                    SEQ_GT(TCP_GET_SEQ(p), ssn->client.next_seq) &&
                    SEQ_GT(TCP_GET_ACK(p), ssn->client.last_ack)) {
             SCLogDebug("ssn %p: ACK for missing data", ssn);
@@ -4508,13 +4489,6 @@ error:
         ReCalculateChecksum(p);
     }
 
-    if (StreamTcpInlineDropInvalid()) {
-        /* disable payload inspection as we're dropping this packet
-         * anyway. Doesn't disable all detection, so we can still
-         * match on the stream event that was set. */
-        DecodeSetNoPayloadInspectionFlag(p);
-        PacketDrop(p, ACTION_DROP, PKT_DROP_REASON_STREAM_ERROR);
-    }
     SCReturnInt(-1);
 }
 
@@ -5723,7 +5697,7 @@ void StreamTcpDetectLogFlush(ThreadVars *tv, StreamTcpThread *stt, Flow *f, Pack
     ssn->client.flags |= STREAMTCP_STREAM_FLAG_TRIGGER_RAW;
     ssn->server.flags |= STREAMTCP_STREAM_FLAG_TRIGGER_RAW;
     bool ts = PKT_IS_TOSERVER(p) ? true : false;
-    ts ^= StreamTcpInlineMode();
+    ts ^= false;
     StreamTcpPseudoPacketCreateDetectLogFlush(tv, stt, p, ssn, pq, ts^0);
     StreamTcpPseudoPacketCreateDetectLogFlush(tv, stt, p, ssn, pq, ts^1);
 }
@@ -5764,14 +5738,12 @@ int StreamTcpSegmentForEach(const Packet *p, uint8_t flag, StreamSegmentCallback
     /* for IDS, return ack'd segments. For IPS all. */
     TcpSegment *seg;
     RB_FOREACH(seg, TCPSEG, &stream->seg_tree) {
-        if (!(stream_config.flags & STREAMTCP_INIT_FLAG_INLINE)) {
-            if (PKT_IS_PSEUDOPKT(p)) {
-                /* use un-ACK'd data as well */
-            } else {
-                /* in IDS mode, use ACK'd data */
-                if (SEQ_GEQ(seg->seq, stream->last_ack)) {
-                    break;
-                }
+        if (PKT_IS_PSEUDOPKT(p)) {
+            /* use un-ACK'd data as well */
+        } else {
+            /* in IDS mode, use ACK'd data */
+            if (SEQ_GEQ(seg->seq, stream->last_ack)) {
+                break;
             }
         }
 
@@ -5794,18 +5766,6 @@ int StreamTcpBypassEnabled(void)
 {
     return (stream_config.flags & STREAMTCP_INIT_FLAG_BYPASS);
 }
-
-/**
- *  \brief See if stream engine is operating in inline mode
- *
- *  \retval 0 no
- *  \retval 1 yes
- */
-int StreamTcpInlineMode(void)
-{
-    return (stream_config.flags & STREAMTCP_INIT_FLAG_INLINE) ? 1 : 0;
-}
-
 
 void TcpSessionSetReassemblyDepth(TcpSession *ssn, uint32_t size)
 {
