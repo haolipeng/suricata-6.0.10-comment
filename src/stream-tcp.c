@@ -1709,15 +1709,11 @@ static int StreamTcpPacketStateSynRecv(ThreadVars *tv, Packet *p,
                     &ssn->client, p, pq);
 
         /* toclient packet: after having missed the 3whs's final ACK */
-        } else if ((ack_indicates_missed_3whs_ack_packet ||
-                           (ssn->flags & STREAMTCP_FLAG_TCP_FAST_OPEN)) &&
+        } else if ((ssn->flags & STREAMTCP_FLAG_TCP_FAST_OPEN) &&
                    SEQ_EQ(TCP_GET_ACK(p), ssn->client.last_ack) &&
                    SEQ_EQ(TCP_GET_SEQ(p), ssn->server.next_seq)) {
-            if (ack_indicates_missed_3whs_ack_packet) {
-                SCLogDebug("ssn %p: packet fits perfectly after a missed 3whs-ACK", ssn);
-            } else {
-                SCLogDebug("ssn %p: (TFO) expected packet fits perfectly after SYN/ACK", ssn);
-            }
+
+            SCLogDebug("ssn %p: (TFO) expected packet fits perfectly after SYN/ACK", ssn);
 
             StreamTcpUpdateNextSeq(ssn, &ssn->server, (TCP_GET_SEQ(p) + p->payload_len));
 

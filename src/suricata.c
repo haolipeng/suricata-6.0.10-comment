@@ -636,12 +636,6 @@ static void PrintUsage(const char *progname)
 #ifdef HAVE_NETMAP
     printf("\t--netmap[=<dev>]                     : run in netmap mode, no value select interfaces from suricata.yaml\n");
 #endif
-#ifdef HAVE_PFRING
-    printf("\t--pfring[=<dev>]                     : run in pfring mode, use interfaces from suricata.yaml\n");
-    printf("\t--pfring-int <dev>                   : run in pfring mode, use interface <dev>\n");
-    printf("\t--pfring-cluster-id <id>             : pfring cluster id \n");
-    printf("\t--pfring-cluster-type <type>         : pfring cluster type for PF_RING 4.1.2 and later cluster_round_robin|cluster_flow\n");
-#endif /* HAVE_PFRING */
     printf("\t--simulate-ips                       : force engine into IPS mode. Useful for QA\n");
 #ifdef HAVE_LIBCAP_NG
     printf("\t--user <user>                        : run suricata as this user after init\n");
@@ -651,15 +645,8 @@ static void PrintUsage(const char *progname)
 #ifdef HAVE_DAG
     printf("\t--dag <dagX:Y>                       : process ERF records from DAG interface X, stream Y\n");
 #endif
-#ifdef HAVE_NAPATECH
-    printf("\t--napatech                           : run Napatech Streams using the API\n");
-#endif
 #ifdef BUILD_UNIX_SOCKET
     printf("\t--unix-socket[=<file>]               : use unix socket to control suricata work\n");
-#endif
-#ifdef WINDIVERT
-    printf("\t--windivert <filter>                 : run in inline WinDivert mode\n");
-    printf("\t--windivert-forward <filter>         : run in inline WinDivert mode, as a gateway\n");
 #endif
 #ifdef HAVE_LIBNET11
     printf("\t--reject-dev <dev>                   : send reject packets from this interface\n");

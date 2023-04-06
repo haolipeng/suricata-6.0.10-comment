@@ -744,6 +744,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
     uint32_t hash_full_passes = 0;
 #endif
 
+    //所有协议的超时时间的最小值
     const uint32_t min_timeout = FlowTimeoutsMin();
     const uint32_t pass_in_sec = min_timeout ? min_timeout * 8 : 60;
 
@@ -772,7 +773,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
     memset(&startts, 0, sizeof(startts));
     gettimeofday(&startts, NULL);
 
-    uint32_t hash_pass_iter = 0;
+    uint32_t hash_pass_iter = 0;//记录下一次从那个bucket开始检查flow超时
     uint32_t emerg_over_cnt = 0;
     uint64_t next_run_ms = 0;
 
@@ -798,6 +799,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             TmThreadsUnsetFlag(th_v, THV_PAUSED);
         }
 
+        //检查紧急模式标志,在FlowGetNew设置FLOW_EMERGENCY
         if (SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY) {
             emerg = true;
         }
@@ -808,10 +810,12 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
 #endif
         /* Get the time */
         memset(&ts, 0, sizeof(ts));
-        TimeGet(&ts);
+        TimeGet(&ts);   //获取最新时间
         SCLogDebug("ts %" PRIdMAX "", (intmax_t)ts.tv_sec);
         const uint64_t ts_ms = ts.tv_sec * 1000 + ts.tv_usec / 1000;
         const uint32_t rt = (uint32_t)ts.tv_sec;
+
+        //避免重复进入紧急模式
         const bool emerge_p = (emerg && !prev_emerg);
         if (emerge_p) {
             next_run_ms = 0;

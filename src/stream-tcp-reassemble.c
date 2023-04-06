@@ -1792,11 +1792,6 @@ int StreamReassembleRaw(TcpSession *ssn, const Packet *p,
                         StreamReassembleRawFunc Callback, void *cb_data,
                         uint64_t *progress_out, bool respect_inspect_depth)
 {
-    /* handle inline separately as the logic is very different */
-    if (StreamTcpInlineMode() == TRUE) {
-        return StreamReassembleRawInline(ssn, p, Callback, cb_data, progress_out);
-    }
-
     TcpStream *stream;
     if (PKT_IS_TOSERVER(p)) {
         stream = &ssn->client;

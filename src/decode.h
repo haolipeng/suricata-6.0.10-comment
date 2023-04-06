@@ -585,7 +585,6 @@ typedef struct Packet_
     /** packet number in the pcap file, matches wireshark */
     uint64_t pcap_cnt;
 
-
     /* engine events */
     PacketEngineEvents events;
 
@@ -633,9 +632,6 @@ typedef struct Packet_
 
 #ifdef PROFILING
     PktProfiling *profile;
-#endif
-#ifdef HAVE_NAPATECH
-    NapatechPacketVars ntpv;
 #endif
 } Packet;
 

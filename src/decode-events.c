@@ -612,22 +612,6 @@ const struct DecodeEvents_ DEvents[] = {
             STREAM_3WHS_ACK_DATA_INJECT,
     },
     {
-            "stream.4whs_synack_with_wrong_ack",
-            STREAM_4WHS_SYNACK_WITH_WRONG_ACK,
-    },
-    {
-            "stream.4whs_synack_with_wrong_syn",
-            STREAM_4WHS_SYNACK_WITH_WRONG_SYN,
-    },
-    {
-            "stream.4whs_wrong_seq",
-            STREAM_4WHS_WRONG_SEQ,
-    },
-    {
-            "stream.4whs_invalid_ack",
-            STREAM_4WHS_INVALID_ACK,
-    },
-    {
             "stream.closewait_ack_out_of_window",
             STREAM_CLOSEWAIT_ACK_OUT_OF_WINDOW,
     },
