@@ -394,9 +394,6 @@ static int StreamTcpReassemblyConfig(char quiet)
     if (overlap_diff_data) {
         StreamTcpReassembleConfigEnableOverlapCheck();
     }
-    if (StreamTcpInlineMode() == TRUE) {
-        StreamTcpReassembleConfigEnableOverlapCheck();
-    }
 
     stream_config.sbcnf.flags = STREAMING_BUFFER_NOFLAGS;
     stream_config.sbcnf.buf_size = 2048;
@@ -641,7 +638,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         StreamTcpSetOSPolicy(stream, p);
     }
 
-    //同时标识session的STREAMTCP_FLAG_APP_LAYER_DISABLED和stram的STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED，
+    //标识session的STREAMTCP_FLAG_APP_LAYER_DISABLED和stram的STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED，
     // app and raw reassembly disable则无需重组
     if ((ssn->flags & STREAMTCP_FLAG_APP_LAYER_DISABLED) &&
         (stream->flags & STREAMTCP_STREAM_FLAG_NEW_RAW_DISABLED)) {
@@ -668,7 +665,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
     if (size > p->payload_len)
         size = p->payload_len;
 
-    //获取一个TcpSegment,设置其seq序列号和payload_len
+    //获取一个TcpSegment,
     TcpSegment *seg = StreamTcpGetSegment(tv, ra_ctx);
     if (seg == NULL) {
         SCLogDebug("segment_pool is empty");
@@ -676,6 +673,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         SCReturnInt(-1);
     }
 
+	//设置TcpSegment的seq序列号和payload_len
     TCP_SEG_LEN(seg) = size;
     seg->seq = TCP_GET_SEQ(p);
 
@@ -684,6 +682,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         seg->seq += 1;
 
     /* proto detection skipped, but now we do get data. Set event. */
+	// 略过协议识别，设置事件
     if (RB_EMPTY(&stream->seg_tree) &&
         stream->flags & STREAMTCP_STREAM_FLAG_APPPROTO_DETECTION_SKIPPED) {
 
@@ -1071,7 +1070,7 @@ static inline uint32_t AdjustToAcked(const Packet *p,
     uint32_t adjusted = data_len;
 
     /* get window of data that is acked */
-    if (StreamTcpInlineMode() == FALSE) {
+    if (1) {
         SCLogDebug("ssn->state %s", StreamTcpStateAsString(ssn->state));
         if (data_len == 0 || ((ssn->state < TCP_CLOSED ||
                                       (ssn->state == TCP_CLOSED &&
@@ -1360,17 +1359,11 @@ bool StreamReassembleRawHasDataReady(TcpSession *ssn, Packet *p)
                          STREAMTCP_STREAM_FLAG_DISABLE_RAW))
         return false;
 
-    if (StreamTcpInlineMode() == FALSE) {
-        if ((STREAM_RAW_PROGRESS(stream) == STREAM_BASE_OFFSET(stream) + stream->sb.buf_offset)) {
-            return false;
-        }
-        if (StreamTcpReassembleRawCheckLimit(ssn, stream, p) == 1) {
-            return true;
-        }
-    } else {
-        if (p->payload_len > 0 && (p->flags & PKT_STREAM_ADD)) {
-            return true;
-        }
+    if ((STREAM_RAW_PROGRESS(stream) == STREAM_BASE_OFFSET(stream) + stream->sb.buf_offset)) {
+        return false;
+    }
+    if (StreamTcpReassembleRawCheckLimit(ssn, stream, p) == 1) {
+        return true;
     }
     return false;
 }
@@ -1790,11 +1783,6 @@ int StreamReassembleRaw(TcpSession *ssn, const Packet *p,
                         StreamReassembleRawFunc Callback, void *cb_data,
                         uint64_t *progress_out, bool respect_inspect_depth)
 {
-    /* handle inline separately as the logic is very different */
-    if (StreamTcpInlineMode() == TRUE) {
-        return StreamReassembleRawInline(ssn, p, Callback, cb_data, progress_out);
-    }
-
     TcpStream *stream;
     if (PKT_IS_TOSERVER(p)) {
         stream = &ssn->client;
@@ -1856,9 +1844,7 @@ int StreamTcpReassembleHandleSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
     /* default IDS: update opposing side (triggered by ACK) */
     enum StreamUpdateDir dir = UPDATE_DIR_OPPOSING;
     /* inline and stream end and flow timeout packets trigger same dir handling */
-    if (StreamTcpInlineMode()) {
-        dir = UPDATE_DIR_PACKET;
-    } else if (p->flags & PKT_PSEUDO_STREAM_END) {
+    if (p->flags & PKT_PSEUDO_STREAM_END) {
         dir = UPDATE_DIR_PACKET;
     } else if (p->tcph->th_flags & TH_RST) { // accepted rst
         dir = UPDATE_DIR_PACKET;
@@ -1938,9 +1924,10 @@ int StreamTcpReassembleHandleSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
 
     /* in stream inline mode even if we have no data we call the reassembly
      * functions to handle EOF */
+     //在stream inline模式下，即使即使没有数据
     if (dir == UPDATE_DIR_PACKET || dir == UPDATE_DIR_BOTH) {
         SCLogDebug("inline (%s) or PKT_PSEUDO_STREAM_END (%s)",
-                StreamTcpInlineMode()?"true":"false",
+                "false",
                 (p->flags & PKT_PSEUDO_STREAM_END) ?"true":"false");
         if (StreamTcpReassembleAppLayer(tv, ra_ctx, ssn, stream, p, dir) < 0) {
             SCReturnInt(-1);

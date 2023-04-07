@@ -421,6 +421,7 @@ static TmEcode DecodePcapFile(ThreadVars *tv, Packet *p, void *data)
     }
 
     DecoderFunc decoder;
+    //校验链路层类型，并选择合适的解析函数
     if(ValidateLinkType(p->datalink, &decoder) == TM_ECODE_OK) {
 
         /* call the decoder */

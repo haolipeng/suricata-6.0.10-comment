@@ -447,6 +447,7 @@ typedef struct Flow_
 #endif
 
     /** protocol specific data pointer, e.g. for TcpSession */
+    //协议特定的数据指针，例如对于 TcpSession
     void *protoctx;
 
     /** mapping to Flow's protocol specific protocols for timeouts

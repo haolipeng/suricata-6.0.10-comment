@@ -284,9 +284,7 @@ static int TCPProtoDetectTriggerOpposingSide(ThreadVars *tv,
         return -1;
     }
 
-    enum StreamUpdateDir dir = StreamTcpInlineMode() ?
-                                                UPDATE_DIR_OPPOSING :
-                                                UPDATE_DIR_PACKET;
+    enum StreamUpdateDir dir = UPDATE_DIR_PACKET;
     int ret = StreamTcpReassembleAppLayer(tv, ra_ctx, ssn,
             opposing_stream, p, dir);
     return ret;

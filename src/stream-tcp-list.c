@@ -77,7 +77,7 @@ static inline int InsertSegmentDataCustom(TcpStream *stream, TcpSegment *seg, ui
     uint64_t stream_offset;
     uint16_t data_offset;
 
-    //对比数据seq序号与stream->base_seq,大于等于
+    //对比数据seq序号与stream->base_seq(大于等于)
     //计算stream offset和data offset
     if (likely(SEQ_GEQ(seg->seq, stream->base_seq))) {
         //计算数据写入在StreamingBuffer中的偏移和长度
@@ -241,22 +241,8 @@ static int DoHandleDataOverlap(TcpStream *stream, const TcpSegment *list,
     int data_is_different = 0;
     int use_new_data = 0;
 
-    if (StreamTcpInlineMode()) {
-        SCLogDebug("inline mode");
-        if (StreamTcpInlineSegmentCompare(stream, p, list) != 0) {
-            SCLogDebug("already accepted data not the same as packet data, rewrite packet");
-            StreamTcpInlineSegmentReplacePacket(stream, p, list);
-            data_is_different = 1;
-
-            /* in inline mode we check for different data unconditionally,
-             * but setting events still depends on config */
-            if (check_overlap_different_data) {
-                StreamTcpSetEvent(p, STREAM_REASSEMBLY_OVERLAP_DIFFERENT_DATA);
-            }
-        }
-
-    /* IDS mode */
-    } else {
+    /* IDS mode, not IPS inline mode*/
+    if(1) {
         if (check_overlap_different_data) {
             if (StreamTcpInlineSegmentCompare(stream, p, list) != 0) {
                 SCLogDebug("data is different from what is in the list");
@@ -578,7 +564,11 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
     TcpSegment *dup_seg = NULL;
 
     /* insert segment into list. Note: doesn't handle the data */
+	// 2：没插入，数据重叠
+	// 1: 插入，检测到重叠
+	// 0：插入，没有重叠
     int r = DoInsertSegment (stream, seg, &dup_seg, p);
+	
     SCLogDebug("DoInsertSegment returned %d", r);
     if (r < 0) {
         StatsIncr(tv, ra_ctx->counter_tcp_reass_list_fail);
@@ -586,7 +576,8 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
         SCReturnInt(-1);
     }
 
-    if (likely(r == 0)) {//没有数据覆盖
+	//没有数据覆盖
+    if (likely(r == 0)) {
         /* no overlap, straight data insert */
         int res = InsertSegmentDataCustom(stream, seg, pkt_data, pkt_datalen);
         if (res < 0) {
@@ -704,17 +695,6 @@ static inline uint64_t GetLeftEdge(Flow *f, TcpSession *ssn, TcpStream *stream)
     if (use_raw) {
         uint64_t raw_progress = STREAM_RAW_PROGRESS(stream);
 
-        if (StreamTcpInlineMode() == TRUE) {
-            uint32_t chunk_size = (stream == &ssn->client) ?
-                stream_config.reassembly_toserver_chunk_size :
-                stream_config.reassembly_toclient_chunk_size;
-            if (raw_progress < (uint64_t)chunk_size) {
-                raw_progress = 0;
-            } else {
-                raw_progress -= (uint64_t)chunk_size;
-            }
-        }
-
         /* apply min inspect depth: if it is set we need to keep data
          * before the raw progress. */
         if (use_app && stream->min_inspect_depth) {
@@ -758,14 +738,14 @@ static inline uint64_t GetLeftEdge(Flow *f, TcpSession *ssn, TcpStream *stream)
         last_ack_abs += (stream->last_ack - stream->base_seq);
     }
     /* in IDS mode we shouldn't see the base_seq pass last_ack */
-    DEBUG_VALIDATE_BUG_ON(last_ack_abs < left_edge && StreamTcpInlineMode() == FALSE && !f->ffr &&
+    DEBUG_VALIDATE_BUG_ON(last_ack_abs < left_edge  && !f->ffr &&
                           ssn->state < TCP_CLOSED);
     left_edge = MIN(left_edge, last_ack_abs);
 
     /* if we're told to look for overlaps with different data we should
      * consider data that is ack'd as well. Injected packets may have
      * been ack'd or injected packet may be too late. */
-    if (StreamTcpInlineMode() == FALSE && check_overlap_different_data) {
+    if (check_overlap_different_data) {
         const uint32_t window = stream->window ? stream->window : 4096;
         if (window < left_edge)
             left_edge -= window;

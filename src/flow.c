@@ -288,6 +288,7 @@ void FlowSwap(Flow *f)
 
 /**
  *  \brief determine the direction of the packet compared to the flow
+ *  判断数据包相对于流的方向
  *  \retval 0 to_server
  *  \retval 1 to_client
  */

@@ -324,18 +324,11 @@ static TmEcode OutputStreamingLog(ThreadVars *tv, Packet *p, void *thread_data)
         SCReturnInt(TM_ECODE_OK);
     }
 
-    if (!(StreamTcpInlineMode())) {
-        if (PKT_IS_TOCLIENT(p)) {
-            flags |= OUTPUT_STREAMING_FLAG_TOSERVER;
-        } else {
-            flags |= OUTPUT_STREAMING_FLAG_TOCLIENT;
-        }
+
+    if (PKT_IS_TOCLIENT(p)) {
+        flags |= OUTPUT_STREAMING_FLAG_TOSERVER;
     } else {
-        if (PKT_IS_TOSERVER(p)) {
-            flags |= OUTPUT_STREAMING_FLAG_TOSERVER;
-        } else {
-            flags |= OUTPUT_STREAMING_FLAG_TOCLIENT;
-        }
+        flags |= OUTPUT_STREAMING_FLAG_TOCLIENT;
     }
 
     if (op_thread_data->loggers & (1<<STREAMING_TCP_DATA)) {
