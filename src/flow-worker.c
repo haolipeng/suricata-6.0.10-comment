@@ -494,7 +494,7 @@ static TmEcode FlowWorker(ThreadVars *tv, Packet *p, void *data)
         TimeSetByThread(tv->id, &p->ts);
     }
 
-    /* handle Flow */
+    /* handle Flow 处理flow数据流*/
     if (p->flags & PKT_WANTS_FLOW) {
         FLOWWORKER_PROFILING_START(p, PROFILE_FLOWWORKER_FLOW);
 
