@@ -1,6 +1,5 @@
 *.o
 *.lo
-*.in
 *.[ch]e
 *.log
 *.rule
