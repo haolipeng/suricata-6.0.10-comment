@@ -598,7 +598,7 @@ old_postuninstall_cmds=''
 old_archive_cmds='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $tool_oldlib'
 lock_old_archive_extraction='no'
 CC='gcc'
-CFLAGS='-g -O2 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist'
+CFLAGS='-g -O0 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist'
 compiler='g++'
 GCC='yes'
 lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
@@ -741,7 +741,7 @@ postdeps_CXX='-lstdc++ -lm -lgcc_s -lc -lgcc_s'
 compiler_lib_search_path_CXX='-L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib/x86_64-linux-gnu -L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib/../lib -L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib/x86_64-linux-gnu -L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L. -L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib -L/home/work/goProject/src/neuvector_debug/dp/third-party/.objs/lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../..'
 
 LTCC='gcc'
-LTCFLAGS='-g -O2'
+LTCFLAGS='-g -O0'
 compiler='gcc'
 
 # A function that is used when there is no print builtin or printf.
@@ -919,7 +919,7 @@ S["am__fastdepCXX_FALSE"]="#"
 S["am__fastdepCXX_TRUE"]=""
 S["CXXDEPMODE"]="depmode=gcc3"
 S["ac_ct_CXX"]="g++"
-S["CXXFLAGS"]="-g -O2"
+S["CXXFLAGS"]="-g -O0"
 S["CXX"]="g++"
 S["RUST_BUILD_STD_FALSE"]=""
 S["RUST_BUILD_STD_TRUE"]="#"
@@ -1074,7 +1074,7 @@ S["EXEEXT"]=""
 S["ac_ct_CC"]="gcc"
 S["CPPFLAGS"]="-I/usr/include   -I/usr/lib/htp/include"
 S["LDFLAGS"]=" -rdynamic -L/usr/lib"
-S["CFLAGS"]="-g -O2 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist"
+S["CFLAGS"]="-g -O0 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist"
 S["CC"]="gcc"
 S["host_os"]="linux-gnu"
 S["host_vendor"]="pc"

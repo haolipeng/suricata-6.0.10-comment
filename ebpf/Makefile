@@ -136,7 +136,7 @@ CARGO_HOME = /root/.cargo
 CBINDGEN = /root/.cargo/bin/cbindgen
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist
+CFLAGS = -g -O0 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist
 CLANG = /usr/bin/clang
 CLANG_CFLAGS = 
 CONFIGURE_DATAROOTDIR = /usr/share

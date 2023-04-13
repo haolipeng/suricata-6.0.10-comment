@@ -73,7 +73,7 @@ printf(
 "  GCC march native enabled:                yes\n"
 "  GCC Profile enabled:                     no\n"
 "  Position Independent Executable enabled: no\n"
-"  CFLAGS                                   -g -O2 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist\n"
+"  CFLAGS                                   -g -O0 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist\n"
 "  PCAP_CFLAGS                               -I/usr/include\n"
 "  SECCFLAGS                                \n"
 );
