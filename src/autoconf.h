@@ -378,10 +378,10 @@
 /* #undef HAVE_NON_POSIX_MKDIR */
 
 /* libnspr available */
-/* #undef HAVE_NSPR */
+#define HAVE_NSPR 1
 
 /* libnss available */
-/* #undef HAVE_NSS */
+#define HAVE_NSS 1
 
 /* Recent ebpf fanout support is available */
 /* #undef HAVE_PACKET_EBPF */
@@ -696,7 +696,7 @@
 /* #undef PROFILING */
 
 /* Git revision */
-#define REVISION 6bcab6f90 2023-03-13
+#define REVISION b7e6114ee 2023-04-13
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

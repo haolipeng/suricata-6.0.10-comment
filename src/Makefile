@@ -154,10 +154,10 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	app-layer-nfs-udp.$(OBJEXT) app-layer-ntp.$(OBJEXT) \
 	app-layer-register.$(OBJEXT) app-layer-tftp.$(OBJEXT) \
 	app-layer-ikev2.$(OBJEXT) app-layer-krb5.$(OBJEXT) \
-	app-layer-rfb.$(OBJEXT) \
-	app-layer-template.$(OBJEXT) app-layer-template-rust.$(OBJEXT) \
-	app-layer-rdp.$(OBJEXT) app-layer-ssh.$(OBJEXT) \
-	app-layer-ssl.$(OBJEXT) app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
+	app-layer-rfb.$(OBJEXT) app-layer-template.$(OBJEXT) \
+	app-layer-template-rust.$(OBJEXT) app-layer-rdp.$(OBJEXT) \
+	app-layer-ssh.$(OBJEXT) app-layer-ssl.$(OBJEXT) \
+	app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
 	conf-yaml-loader.$(OBJEXT) counters.$(OBJEXT) \
 	datasets.$(OBJEXT) datasets-string.$(OBJEXT) \
 	datasets-sha256.$(OBJEXT) datasets-md5.$(OBJEXT) \
@@ -329,8 +329,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	output-json-tftp.$(OBJEXT) output-json-smb.$(OBJEXT) \
 	output-json-ikev2.$(OBJEXT) output-json-krb5.$(OBJEXT) \
 	output-json-dhcp.$(OBJEXT) output-json-snmp.$(OBJEXT) \
-	output-json-rfb.$(OBJEXT) \
-	output-json-template.$(OBJEXT) \
+	output-json-rfb.$(OBJEXT) output-json-template.$(OBJEXT) \
 	output-json-template-rust.$(OBJEXT) output-json-rdp.$(OBJEXT) \
 	output-json-dcerpc.$(OBJEXT) output-json-metadata.$(OBJEXT) \
 	output-lua.$(OBJEXT) output-packet.$(OBJEXT) \
@@ -536,7 +535,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/app-layer-htp-xff.Po ./$(DEPDIR)/app-layer-htp.Po \
 	./$(DEPDIR)/app-layer-http2.Po ./$(DEPDIR)/app-layer-ikev2.Po \
 	./$(DEPDIR)/app-layer-krb5.Po ./$(DEPDIR)/app-layer-modbus.Po \
-	./$(DEPDIR)/app-layer-mqtt.Po ./$(DEPDIR)/app-layer-nfs-tcp.Po \
+	./$(DEPDIR)/app-layer-nfs-tcp.Po \
 	./$(DEPDIR)/app-layer-nfs-udp.Po ./$(DEPDIR)/app-layer-ntp.Po \
 	./$(DEPDIR)/app-layer-parser.Po \
 	./$(DEPDIR)/app-layer-protos.Po ./$(DEPDIR)/app-layer-rdp.Po \
@@ -669,8 +668,8 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-krb5-sname.Po ./$(DEPDIR)/detect-l3proto.Po \
 	./$(DEPDIR)/detect-lua-extensions.Po ./$(DEPDIR)/detect-lua.Po \
 	./$(DEPDIR)/detect-mark.Po ./$(DEPDIR)/detect-metadata.Po \
-	./$(DEPDIR)/detect-modbus.Po \
-	./$(DEPDIR)/detect-msg.Po ./$(DEPDIR)/detect-nfs-procedure.Po \
+	./$(DEPDIR)/detect-modbus.Po ./$(DEPDIR)/detect-msg.Po \
+	./$(DEPDIR)/detect-nfs-procedure.Po \
 	./$(DEPDIR)/detect-nfs-version.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
 	./$(DEPDIR)/detect-offset.Po ./$(DEPDIR)/detect-parse.Po \
@@ -770,7 +769,6 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/output-json-ikev2.Po \
 	./$(DEPDIR)/output-json-krb5.Po \
 	./$(DEPDIR)/output-json-metadata.Po \
-	./$(DEPDIR)/output-json-mqtt.Po \
 	./$(DEPDIR)/output-json-netflow.Po \
 	./$(DEPDIR)/output-json-nfs.Po ./$(DEPDIR)/output-json-rdp.Po \
 	./$(DEPDIR)/output-json-rfb.Po ./$(DEPDIR)/output-json-sip.Po \
@@ -992,7 +990,7 @@ AUTOCONF = ${SHELL} /home/work/suricata/missing autoconf
 AUTOHEADER = ${SHELL} /home/work/suricata/missing autoheader
 AUTOMAKE = ${SHELL} /home/work/suricata/missing automake-1.16
 AWK = mawk
-CARGO = /usr/bin/cargo
+CARGO = /root/.cargo/bin/cargo
 CARGO_BUILD_TARGET = 
 CARGO_HOME = /root/.cargo
 CBINDGEN = /root/.cargo/bin/cbindgen
@@ -1006,7 +1004,7 @@ CONFIGURE_LOCALSTATEDIR = /var
 CONFIGURE_PREFIX = /usr
 CONFIGURE_SYSCONDIR = /etc
 CPP = gcc -E
-CPPFLAGS = -I/usr/include   -I/usr/lib/htp/include
+CPPFLAGS = -I/usr/include   -I/usr/lib/htp/include -I/usr/include/nspr -I/usr/include/nss -I/usr/include/nspr
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -1059,7 +1057,7 @@ LIBPRELUDE_LDFLAGS =
 LIBPRELUDE_LIBS = 
 LIBPRELUDE_PREFIX = 
 LIBPRELUDE_PTHREAD_CFLAGS = 
-LIBS = -llz4 -lmagic -lcap-ng -lhtp -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lhtp
+LIBS = -llz4 -lmagic -lcap-ng -lhtp -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lhtp -lplds4 -lplc4 -lnspr4 -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIB_FUZZING_ENGINE = 
 LIPO = 
@@ -1097,8 +1095,8 @@ PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = /usr/lib/pkgconfig
 POW_LIB = 
 RANLIB = ranlib
-RUSTC = /usr/bin/rustc
-RUSTUP_HOME_PATH = no
+RUSTC = /root/.cargo/bin/rustc
+RUSTUP_HOME_PATH = /root/.rustup
 RUST_FEATURES =  function-macro
 RUST_LDADD = ../rust/target/debug/libsuricata.a -ldl -lrt -lm
 RUST_SURICATA_LIB = ../rust/target/debug/libsuricata.a
@@ -1149,7 +1147,7 @@ e_rustdir = /home/work/suricata/rust
 e_sysconfdir = /etc/suricata/
 exec_prefix = ${prefix}
 have_cargo_vendor_bin = 
-have_rustup = no
+have_rustup = /root/.cargo/bin/rustup
 host = x86_64-pc-linux-gnu
 host_alias = 
 host_cpu = x86_64
@@ -1167,10 +1165,10 @@ libhtp_CFLAGS = -I/usr/lib/htp/include
 libhtp_LIBS = -lhtp
 libnetfilter_queue_CFLAGS = 
 libnetfilter_queue_LIBS = 
-libnspr_CFLAGS = 
-libnspr_LIBS = 
-libnss_CFLAGS = 
-libnss_LIBS = 
+libnspr_CFLAGS = -I/usr/include/nspr
+libnspr_LIBS = -lplds4 -lplc4 -lnspr4
+libnss_CFLAGS = -I/usr/include/nss -I/usr/include/nspr
+libnss_LIBS = -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
 localedir = ${datarootdir}/locale
 localstatedir = /var
 mandir = ${datarootdir}/man
@@ -1182,7 +1180,7 @@ program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
 rust_vendor_comment = # 
-rustup_home = 
+rustup_home = RUSTUP_HOME=$(RUSTUP_HOME_PATH)
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
@@ -2058,7 +2056,6 @@ include ./$(DEPDIR)/app-layer-http2.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-ikev2.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-krb5.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-modbus.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-mqtt.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-nfs-tcp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-nfs-udp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-ntp.Po # am--include-marker
@@ -2247,22 +2244,6 @@ include ./$(DEPDIR)/detect-lua.Po # am--include-marker
 include ./$(DEPDIR)/detect-mark.Po # am--include-marker
 include ./$(DEPDIR)/detect-metadata.Po # am--include-marker
 include ./$(DEPDIR)/detect-modbus.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-clientid.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-flags.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-password.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-username.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-willmessage.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-connect-willtopic.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-flags.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-protocol-version.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-publish-message.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-publish-topic.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-qos.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-reason-code.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-subscribe-topic.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-type.Po # am--include-marker
-include ./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po # am--include-marker
 include ./$(DEPDIR)/detect-msg.Po # am--include-marker
 include ./$(DEPDIR)/detect-nfs-procedure.Po # am--include-marker
 include ./$(DEPDIR)/detect-nfs-version.Po # am--include-marker
@@ -2404,7 +2385,6 @@ include ./$(DEPDIR)/output-json-http2.Po # am--include-marker
 include ./$(DEPDIR)/output-json-ikev2.Po # am--include-marker
 include ./$(DEPDIR)/output-json-krb5.Po # am--include-marker
 include ./$(DEPDIR)/output-json-metadata.Po # am--include-marker
-include ./$(DEPDIR)/output-json-mqtt.Po # am--include-marker
 include ./$(DEPDIR)/output-json-netflow.Po # am--include-marker
 include ./$(DEPDIR)/output-json-nfs.Po # am--include-marker
 include ./$(DEPDIR)/output-json-rdp.Po # am--include-marker
@@ -2815,7 +2795,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
 	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
 	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
-	-rm -f ./$(DEPDIR)/app-layer-mqtt.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -3004,22 +2983,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
 	-rm -f ./$(DEPDIR)/detect-modbus.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-clientid.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-flags.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-password.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-username.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willmessage.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willtopic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-flags.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-protocol-version.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-publish-message.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-publish-topic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-qos.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-reason-code.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-subscribe-topic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-type.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3161,7 +3124,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
 	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
-	-rm -f ./$(DEPDIR)/output-json-mqtt.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
@@ -3406,7 +3368,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
 	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
 	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
-	-rm -f ./$(DEPDIR)/app-layer-mqtt.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -3595,22 +3556,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
 	-rm -f ./$(DEPDIR)/detect-modbus.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-clientid.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-flags.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-password.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-username.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willmessage.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willtopic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-flags.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-protocol-version.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-publish-message.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-publish-topic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-qos.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-reason-code.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-subscribe-topic.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-type.Po
-	-rm -f ./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3752,7 +3697,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
 	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
-	-rm -f ./$(DEPDIR)/output-json-mqtt.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
