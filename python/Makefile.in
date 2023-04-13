@@ -359,9 +359,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu python/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign python/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu python/Makefile
+	  $(AUTOMAKE) --foreign python/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -459,9 +459,9 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-@HAVE_PYTHON_FALSE@install-exec-local:
-@HAVE_PYTHON_FALSE@clean-local:
 @HAVE_PYTHON_FALSE@uninstall-local:
+@HAVE_PYTHON_FALSE@clean-local:
+@HAVE_PYTHON_FALSE@install-exec-local:
 clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-local mostlyclean-am

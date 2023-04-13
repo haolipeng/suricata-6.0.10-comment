@@ -154,15 +154,15 @@ am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/suricata.logrotate.in $(srcdir)/suricata.service.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/work/suricata-6.0.10/missing aclocal-1.16
+ACLOCAL = ${SHELL} /home/work/suricata/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
-AUTOCONF = ${SHELL} /home/work/suricata-6.0.10/missing autoconf
-AUTOHEADER = ${SHELL} /home/work/suricata-6.0.10/missing autoheader
-AUTOMAKE = ${SHELL} /home/work/suricata-6.0.10/missing automake-1.16
+AUTOCONF = ${SHELL} /home/work/suricata/missing autoconf
+AUTOHEADER = ${SHELL} /home/work/suricata/missing autoheader
+AUTOMAKE = ${SHELL} /home/work/suricata/missing automake-1.16
 AWK = mawk
-CARGO = /root/.cargo/bin/cargo
+CARGO = /usr/bin/cargo
 CARGO_BUILD_TARGET = 
 CARGO_HOME = /root/.cargo
 CBINDGEN = /root/.cargo/bin/cbindgen
@@ -176,7 +176,7 @@ CONFIGURE_LOCALSTATEDIR = /var
 CONFIGURE_PREFIX = /usr
 CONFIGURE_SYSCONDIR = /etc
 CPP = gcc -E
-CPPFLAGS = -I/usr/include   -I/usr/lib/htp/include -I/usr/include/nspr -I/usr/include/nss -I/usr/include/nspr
+CPPFLAGS = -I/usr/include   -I/usr/lib/htp/include
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -229,7 +229,7 @@ LIBPRELUDE_LDFLAGS =
 LIBPRELUDE_LIBS = 
 LIBPRELUDE_PREFIX = 
 LIBPRELUDE_PTHREAD_CFLAGS = 
-LIBS = -llz4 -lmagic -lcap-ng -lhtp -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lhtp -lplds4 -lplc4 -lnspr4 -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
+LIBS = -llz4 -lmagic -lcap-ng -lhtp -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lhtp
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIB_FUZZING_ENGINE = 
 LIPO = 
@@ -242,7 +242,7 @@ LUAJIT_LIBS =
 LUA_CFLAGS = 
 LUA_INT8 = 
 LUA_LIBS = 
-MAKEINFO = ${SHELL} /home/work/suricata-6.0.10/missing makeinfo
+MAKEINFO = ${SHELL} /home/work/suricata/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /usr/bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -267,8 +267,8 @@ PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = /usr/lib/pkgconfig
 POW_LIB = 
 RANLIB = ranlib
-RUSTC = /root/.cargo/bin/rustc
-RUSTUP_HOME_PATH = /root/.rustup
+RUSTC = /usr/bin/rustc
+RUSTUP_HOME_PATH = no
 RUST_FEATURES =  function-macro
 RUST_LDADD = ../rust/target/debug/libsuricata.a -ldl -lrt -lm
 RUST_SURICATA_LIB = ../rust/target/debug/libsuricata.a
@@ -281,10 +281,10 @@ SHELL = /bin/bash
 STRIP = strip
 SURICATA_UPDATE_DIR = 
 VERSION = 6.0.10
-abs_builddir = /home/work/suricata-6.0.10/etc
-abs_srcdir = /home/work/suricata-6.0.10/etc
-abs_top_builddir = /home/work/suricata-6.0.10
-abs_top_srcdir = /home/work/suricata-6.0.10
+abs_builddir = /home/work/suricata/etc
+abs_srcdir = /home/work/suricata/etc
+abs_top_builddir = /home/work/suricata
+abs_top_srcdir = /home/work/suricata
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -315,11 +315,11 @@ e_logfilesdir = /var/log/suricata/files
 e_magic_file = 
 e_magic_file_comment = #
 e_rundir = /var/run/
-e_rustdir = /home/work/suricata-6.0.10/rust
+e_rustdir = /home/work/suricata/rust
 e_sysconfdir = /etc/suricata/
 exec_prefix = ${prefix}
 have_cargo_vendor_bin = 
-have_rustup = /root/.cargo/bin/rustup
+have_rustup = no
 host = x86_64-pc-linux-gnu
 host_alias = 
 host_cpu = x86_64
@@ -328,7 +328,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/work/suricata-6.0.10/install-sh
+install_sh = ${SHELL} /home/work/suricata/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 libhs_CFLAGS = 
@@ -337,10 +337,10 @@ libhtp_CFLAGS = -I/usr/lib/htp/include
 libhtp_LIBS = -lhtp
 libnetfilter_queue_CFLAGS = 
 libnetfilter_queue_LIBS = 
-libnspr_CFLAGS = -I/usr/include/nspr
-libnspr_LIBS = -lplds4 -lplc4 -lnspr4
-libnss_CFLAGS = -I/usr/include/nss -I/usr/include/nspr
-libnss_LIBS = -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
+libnspr_CFLAGS = 
+libnspr_LIBS = 
+libnss_CFLAGS = 
+libnss_LIBS = 
 localedir = ${datarootdir}/locale
 localstatedir = /var
 mandir = ${datarootdir}/man
@@ -352,7 +352,7 @@ program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
 rust_vendor_comment = # 
-rustup_home = RUSTUP_HOME=$(RUSTUP_HOME_PATH)
+rustup_home = 
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
@@ -381,9 +381,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu etc/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign etc/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu etc/Makefile
+	  $(AUTOMAKE) --foreign etc/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

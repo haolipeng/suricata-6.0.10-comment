@@ -154,10 +154,10 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	app-layer-nfs-udp.$(OBJEXT) app-layer-ntp.$(OBJEXT) \
 	app-layer-register.$(OBJEXT) app-layer-tftp.$(OBJEXT) \
 	app-layer-ikev2.$(OBJEXT) app-layer-krb5.$(OBJEXT) \
-	app-layer-rfb.$(OBJEXT) app-layer-template.$(OBJEXT) \
-	app-layer-template-rust.$(OBJEXT) app-layer-rdp.$(OBJEXT) \
-	app-layer-ssh.$(OBJEXT) app-layer-ssl.$(OBJEXT) \
-	app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
+	app-layer-rfb.$(OBJEXT) \
+	app-layer-template.$(OBJEXT) app-layer-template-rust.$(OBJEXT) \
+	app-layer-rdp.$(OBJEXT) app-layer-ssh.$(OBJEXT) \
+	app-layer-ssl.$(OBJEXT) app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
 	conf-yaml-loader.$(OBJEXT) counters.$(OBJEXT) \
 	datasets.$(OBJEXT) datasets-string.$(OBJEXT) \
 	datasets-sha256.$(OBJEXT) datasets-md5.$(OBJEXT) \
@@ -329,7 +329,8 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	output-json-tftp.$(OBJEXT) output-json-smb.$(OBJEXT) \
 	output-json-ikev2.$(OBJEXT) output-json-krb5.$(OBJEXT) \
 	output-json-dhcp.$(OBJEXT) output-json-snmp.$(OBJEXT) \
-	output-json-rfb.$(OBJEXT) output-json-template.$(OBJEXT) \
+	output-json-rfb.$(OBJEXT) \
+	output-json-template.$(OBJEXT) \
 	output-json-template-rust.$(OBJEXT) output-json-rdp.$(OBJEXT) \
 	output-json-dcerpc.$(OBJEXT) output-json-metadata.$(OBJEXT) \
 	output-lua.$(OBJEXT) output-packet.$(OBJEXT) \
@@ -535,7 +536,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/app-layer-htp-xff.Po ./$(DEPDIR)/app-layer-htp.Po \
 	./$(DEPDIR)/app-layer-http2.Po ./$(DEPDIR)/app-layer-ikev2.Po \
 	./$(DEPDIR)/app-layer-krb5.Po ./$(DEPDIR)/app-layer-modbus.Po \
-	./$(DEPDIR)/app-layer-nfs-tcp.Po \
+	./$(DEPDIR)/app-layer-mqtt.Po ./$(DEPDIR)/app-layer-nfs-tcp.Po \
 	./$(DEPDIR)/app-layer-nfs-udp.Po ./$(DEPDIR)/app-layer-ntp.Po \
 	./$(DEPDIR)/app-layer-parser.Po \
 	./$(DEPDIR)/app-layer-protos.Po ./$(DEPDIR)/app-layer-rdp.Po \
@@ -668,8 +669,8 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-krb5-sname.Po ./$(DEPDIR)/detect-l3proto.Po \
 	./$(DEPDIR)/detect-lua-extensions.Po ./$(DEPDIR)/detect-lua.Po \
 	./$(DEPDIR)/detect-mark.Po ./$(DEPDIR)/detect-metadata.Po \
-	./$(DEPDIR)/detect-modbus.Po ./$(DEPDIR)/detect-msg.Po \
-	./$(DEPDIR)/detect-nfs-procedure.Po \
+	./$(DEPDIR)/detect-modbus.Po \
+	./$(DEPDIR)/detect-msg.Po ./$(DEPDIR)/detect-nfs-procedure.Po \
 	./$(DEPDIR)/detect-nfs-version.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
 	./$(DEPDIR)/detect-offset.Po ./$(DEPDIR)/detect-parse.Po \
@@ -769,6 +770,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/output-json-ikev2.Po \
 	./$(DEPDIR)/output-json-krb5.Po \
 	./$(DEPDIR)/output-json-metadata.Po \
+	./$(DEPDIR)/output-json-mqtt.Po \
 	./$(DEPDIR)/output-json-netflow.Po \
 	./$(DEPDIR)/output-json-nfs.Po ./$(DEPDIR)/output-json-rdp.Po \
 	./$(DEPDIR)/output-json-rfb.Po ./$(DEPDIR)/output-json-sip.Po \
@@ -1882,9 +1884,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/Makefile
+	  $(AUTOMAKE) --foreign src/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -2056,6 +2058,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-ikev2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-krb5.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-modbus.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-mqtt.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-nfs-tcp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-nfs-udp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-ntp.Po@am__quote@ # am--include-marker
@@ -2244,6 +2247,22 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mark.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-metadata.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-modbus.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-clientid.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-flags.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-password.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-username.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-willmessage.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-connect-willtopic.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-flags.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-protocol-version.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-publish-message.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-publish-topic.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-qos.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-reason-code.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-subscribe-topic.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-type.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-msg.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-nfs-procedure.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-nfs-version.Po@am__quote@ # am--include-marker
@@ -2385,6 +2404,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-ikev2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-krb5.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-metadata.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-mqtt.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-netflow.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-nfs.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-rdp.Po@am__quote@ # am--include-marker
@@ -2795,6 +2815,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
 	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
 	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
+	-rm -f ./$(DEPDIR)/app-layer-mqtt.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -2983,6 +3004,22 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
 	-rm -f ./$(DEPDIR)/detect-modbus.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-clientid.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-flags.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-password.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-username.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willmessage.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willtopic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-flags.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-protocol-version.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-publish-message.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-publish-topic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-qos.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-reason-code.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-subscribe-topic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-type.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3124,6 +3161,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
 	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
+	-rm -f ./$(DEPDIR)/output-json-mqtt.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
@@ -3368,6 +3406,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
 	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
 	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
+	-rm -f ./$(DEPDIR)/app-layer-mqtt.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -3556,6 +3595,22 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
 	-rm -f ./$(DEPDIR)/detect-modbus.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connack-sessionpresent.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-clientid.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-flags.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-password.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-username.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willmessage.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-connect-willtopic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-flags.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-protocol-version.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-publish-message.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-publish-topic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-qos.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-reason-code.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-subscribe-topic.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-type.Po
+	-rm -f ./$(DEPDIR)/detect-mqtt-unsubscribe-topic.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3697,6 +3752,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
 	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
+	-rm -f ./$(DEPDIR)/output-json-mqtt.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
