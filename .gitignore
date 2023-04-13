@@ -40,7 +40,6 @@ src/*.orig
 src/*.plist/*
 src/TAGS
 stamp-h1
-src/build-info.h
 test.sh
 .vscode/*
 /.idea/
