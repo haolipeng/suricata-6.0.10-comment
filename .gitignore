@@ -14,17 +14,10 @@ TAGS
 aclocal.m4
 autoconf.h
 autom4te.cache/
-compile
-config.guess
 config.h
-config.log
-config.status
-config.sub
-depcomp
 doc/userguide/suricata.1
 etc/suricata.logrotate
 etc/suricata.service
-install-sh
 libhtp/TAGS
 libhtp/aclocal.m4
 libhtp/autom4te.cache/
@@ -38,9 +31,6 @@ libhtp/htp/libhtp.la
 libhtp/libtool
 libhtp/stamp-h1
 libhtp/test/TAGS
-libtool
-ltmain.sh
-missing
 qa/log/
 qa/coccinelle/struct-flags.cocci
 rust/*/target/*
