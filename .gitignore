@@ -1,6 +1,5 @@
 *.o
 *.lo
-*.in
 *.[ch]e
 *.log
 *.rule
@@ -11,8 +10,6 @@
 *~
 m4/
 TAGS
-aclocal.m4
-autoconf.h
 autom4te.cache/
 config.h
 doc/userguide/suricata.1
