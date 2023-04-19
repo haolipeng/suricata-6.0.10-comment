@@ -281,9 +281,11 @@ static uint32_t ProcessAsideQueue(FlowManagerTimeoutThread *td, FlowTimeoutCount
     while ((f = FlowQueuePrivateGetFromTop(&td->aside_queue)) != NULL) {
         /* flow is still locked */
 
+		//超时流需要重组，将其发回原来处理它的线程，由原线程的FlowWorker中FlowWorkerProcessInjectedFlows完成重组老化回收
         if (f->proto == IPPROTO_TCP && !(f->flags & FLOW_TIMEOUT_REASSEMBLY_DONE) &&
                 !FlowIsBypassed(f) && FlowForceReassemblyNeedReassembly(f) == 1) {
             /* Send the flow to its thread */
+			//需要重组，则把flow放入原线程的tv->flow_queue队列中
             FlowForceReassemblyForFlow(f);
             FLOWLOCK_UNLOCK(f);
             /* flow ownership is passed to the worker thread */
@@ -293,14 +295,17 @@ static uint32_t ProcessAsideQueue(FlowManagerTimeoutThread *td, FlowTimeoutCount
         }
         FLOWLOCK_UNLOCK(f);
 
+		//把flow添加到临时回收对列recycle
         FlowQueuePrivateAppendFlow(&recycle, f);
         if (recycle.len == 100) {
+			//recycle队列元素满100后，放入全局回收队列flow_recycle_q
             FlowQueueAppendPrivate(&flow_recycle_q, &recycle);
             FlowWakeupFlowRecyclerThread();//唤醒FlowRecycler线程
         }
         cnt++;
     }
     if (recycle.len) {
+		//recycle队列元素小于100时即剩下的零头flow，将recycle队列放入全局回收队列中
         FlowQueueAppendPrivate(&flow_recycle_q, &recycle);
         FlowWakeupFlowRecyclerThread();
     }
