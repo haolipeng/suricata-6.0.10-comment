@@ -276,6 +276,8 @@ static uint32_t ProcessAsideQueue(FlowManagerTimeoutThread *td, FlowTimeoutCount
 
     uint32_t cnt = 0;
     Flow *f;
+	
+	//循环取出每个超时的flow
     while ((f = FlowQueuePrivateGetFromTop(&td->aside_queue)) != NULL) {
         /* flow is still locked */
 
@@ -294,7 +296,7 @@ static uint32_t ProcessAsideQueue(FlowManagerTimeoutThread *td, FlowTimeoutCount
         FlowQueuePrivateAppendFlow(&recycle, f);
         if (recycle.len == 100) {
             FlowQueueAppendPrivate(&flow_recycle_q, &recycle);
-            FlowWakeupFlowRecyclerThread();
+            FlowWakeupFlowRecyclerThread();//唤醒FlowRecycler线程
         }
         cnt++;
     }
@@ -331,12 +333,13 @@ static void FlowManagerHashRowTimeout(FlowManagerTimeoutThread *td,
          * be modified when we have both the flow and hash row lock */
 
         /* timeout logic goes here */
+		//检查flow是否超时，返回0表示未超时
         if (FlowManagerFlowTimeout(f, ts, next_ts, emergency) == 0) {
 
             counters->flows_notimeout++;
 
             prev_f = f;
-            f = f->next;
+            f = f->next;//未超时则继续检查下个flow
             continue;
         }
 
@@ -346,6 +349,7 @@ static void FlowManagerHashRowTimeout(FlowManagerTimeoutThread *td,
 
         /* never prune a flow that is used by a packet we
          * are currently processing in one of the threads */
+        //flow流被当前处理的数据包所引用，则不能老化
         if (f->use_cnt > 0 || !FlowBypassedTimeout(f, ts, counters)) {
             FLOWLOCK_UNLOCK(f);
             prev_f = f;
@@ -355,15 +359,19 @@ static void FlowManagerHashRowTimeout(FlowManagerTimeoutThread *td,
             f = f->next;
             continue;
         }
-
+		
+		//走到此都是超时的，设置标志为超时老化
         f->flow_end_flags |= FLOW_END_FLAG_TIMEOUT;
 
         counters->flows_timeout++;
 
+		//从bucket上移除flow
         RemoveFromHash(f, prev_f);
 
+		//将超时的flow添加到aside_queue队列中
         FlowQueuePrivateAppendFlow(&td->aside_queue, f);
         /* flow is still locked in the queue */
+		//注意此时的锁的状态
 
         f = next_flow;
     } while (f != NULL);
@@ -401,6 +409,10 @@ static void FlowManagerHashRowClearEvictedList(FlowManagerTimeoutThread *td,
  *
  *  \retval cnt number of timed out flow
  */
+ //hash_min和hash_max是flow bucket的范围值
+ //先把老化的flow移入参数td->aside_queue队列
+ //再从aside_queue队列移入回收线程的队列flow_recycle_q
+ 
 static uint32_t FlowTimeoutHash(FlowManagerTimeoutThread *td,
         struct timeval *ts,
         const uint32_t hash_min, const uint32_t hash_max,
@@ -422,26 +434,42 @@ static uint32_t FlowTimeoutHash(FlowManagerTimeoutThread *td,
 
     for (uint32_t idx = hash_min; idx < hash_max; idx+=BITS) {
         TYPE check_bits = 0;
+		//取小数，有可能bucket个数不足64
         const uint32_t check = MIN(BITS, (hash_max - idx));
+
+		//循环64次(或小于64次)，检查64个bucket是否有超时的flow，有则设置一位到check_bits
         for (uint32_t i = 0; i < check; i++) {
             FlowBucket *fb = &flow_hash[idx+i];
+			//设计一个位图，每一个bit上表示一个bucket上是否有需要老化的flow
             check_bits |= (TYPE)(SC_ATOMIC_LOAD_EXPLICIT(fb->next_ts, SC_ATOMIC_MEMORY_ORDER_RELAXED) <= (int32_t)ts->tv_sec) << (TYPE)i;
         }
+		
+		//bucket上无flow需要老化，则继续下一轮64个bucket的超时判断
         if (check_bits == 0)
             continue;
 
+
+		//有超时的，则循环这64个bucket，然后老化之
         for (uint32_t i = 0; i < check; i++) {
             FlowBucket *fb = &flow_hash[idx+i];
+			
+			//判断每个FlowBucket和当前时间
             if ((check_bits & ((TYPE)1 << (TYPE)i)) != 0 && SC_ATOMIC_GET(fb->next_ts) <= (int32_t)ts->tv_sec) {
                 FBLOCK_LOCK(fb);
                 Flow *evicted = NULL;
+			
+				//在建立流或获取流时检测到flow流超时，把flow放入evicted链表中，等待FlowManager处理
                 if (fb->evicted != NULL || fb->head != NULL) {
                     if (fb->evicted != NULL) {
                         /* transfer out of bucket so we can do additional work outside
                          * of the bucket lock */
+                        //方便在bucket lock之外做额外的操作
                         evicted = fb->evicted;
                         fb->evicted = NULL;
                     }
+
+					//flow bucket上有超时flow,将超时的流放到了td->aside_queue队列，
+					//然后再将td->aside_queue队列的flow移入回收线程的队列
                     if (fb->head != NULL) {
                         int32_t next_ts = 0;
                         FlowManagerHashRowTimeout(td, fb->head, ts, emergency, counters, &next_ts);
@@ -462,10 +490,12 @@ static uint32_t FlowTimeoutHash(FlowManagerTimeoutThread *td,
                     FlowManagerHashRowClearEvictedList(td, evicted, ts, counters);
                 }
             } else {
+				//没有超时的bucket
                 rows_skipped++;
             }
         }
         if (td->aside_queue.len) {
+			//处理超时的flow，
             cnt += ProcessAsideQueue(td, counters);
         }
     }
@@ -781,21 +811,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
     {
         if (TmThreadsCheckFlag(th_v, THV_PAUSE)) {
             TmThreadsSetFlag(th_v, THV_PAUSED);
-#ifdef FM_PROFILE
-            struct timeval pause_startts;
-            memset(&pause_startts, 0, sizeof(pause_startts));
-            gettimeofday(&pause_startts, NULL);
-#endif
             TmThreadTestThreadUnPaused(th_v);
-#ifdef FM_PROFILE
-            struct timeval pause_endts;
-            memset(&pause_endts, 0, sizeof(pause_endts));
-            gettimeofday(&pause_endts, NULL);
-            struct timeval pause_time;
-            memset(&pause_time, 0, sizeof(pause_time));
-            timersub(&pause_endts, &pause_startts, &pause_time);
-            timeradd(&paused, &pause_time, &paused);
-#endif
             TmThreadsUnsetFlag(th_v, THV_PAUSED);
         }
 
@@ -803,11 +819,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
         if (SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY) {
             emerg = true;
         }
-#ifdef FM_PROFILE
-        struct timeval run_startts;
-        memset(&run_startts, 0, sizeof(run_startts));
-        gettimeofday(&run_startts, NULL);
-#endif
+		
         /* Get the time */
         memset(&ts, 0, sizeof(ts));
         TimeGet(&ts);   //获取最新时间
@@ -829,7 +841,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
                 const uint32_t spare_perc = sq_len * 100 / flow_config.prealloc;
                 /* see if we still have enough spare flows */
                 if (spare_perc < 90 || spare_perc > 110) {
-                    FlowSparePoolUpdate(sq_len);
+                    FlowSparePoolUpdate(sq_len);//超过预分配比例后，会进行增减操作
                 }
             }
             const uint32_t secs_passed = rt - flow_last_sec;
@@ -840,12 +852,6 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             if (emerg) {
                 /* in emergency mode, do a full pass of the hash table */
                 FlowTimeoutHash(&ftd->timeout, &ts, ftd->min, ftd->max, &counters);
-#ifdef FM_PROFILE
-                hash_full_passes++;
-                hash_passes++;
-                hash_passes_chunks += 1;
-                hash_row_checks += counters.rows_checked;
-#endif
                 StatsIncr(th_v, ftd->cnt.flow_mgr_full_pass);
             } else {
                 /* non-emergency mode: scan part of the hash */
@@ -856,17 +862,10 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
                     hash_pass_iter++;
                     if (hash_pass_iter == pass_in_sec) {
                         hash_pass_iter = 0;
-#ifdef FM_PROFILE
-                        hash_full_passes++;
-#endif
+
                         StatsIncr(th_v, ftd->cnt.flow_mgr_full_pass);
                     }
                 }
-#ifdef FM_PROFILE
-                hash_passes++;
-                hash_row_checks += counters.rows_checked;
-                hash_passes_chunks += chunks;
-#endif
             }
             flow_last_sec = rt;
 
@@ -932,11 +931,13 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
                 StatsIncr(th_v, ftd->cnt.flow_emerg_mode_over);
             }
         }
+		//正常模式下，下次轮询时间
         next_run_ms = ts_ms + 667;
         if (emerg)
-            next_run_ms = ts_ms + 250;
-        }
+            next_run_ms = ts_ms + 250;//紧急模式的轮询间隔时间
+        }//end with if (ts_ms >= next_run_ms)
         if (flow_last_sec == 0) {
+			//第一次走这里
             flow_last_sec = rt;
         }
 
@@ -950,26 +951,11 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
         }
 
 
-#ifdef FM_PROFILE
-        struct timeval run_endts;
-        memset(&run_endts, 0, sizeof(run_endts));
-        gettimeofday(&run_endts, NULL);
-        struct timeval run_time;
-        memset(&run_time, 0, sizeof(run_time));
-        timersub(&run_endts, &run_startts, &run_time);
-        timeradd(&active, &run_time, &active);
-#endif
-
         if (TmThreadsCheckFlag(th_v, THV_KILL)) {
             StatsSyncCounters(th_v);
             break;
         }
 
-#ifdef FM_PROFILE
-        struct timeval sleep_startts;
-        memset(&sleep_startts, 0, sizeof(sleep_startts));
-        gettimeofday(&sleep_startts, NULL);
-#endif
 
         if (emerg || !time_is_live) {
             usleep(250);
@@ -995,16 +981,6 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             SCCtrlMutexUnlock(&flow_manager_ctrl_mutex);
         }
 
-#ifdef FM_PROFILE
-        struct timeval sleep_endts;
-        memset(&sleep_endts, 0, sizeof(sleep_endts));
-        gettimeofday(&sleep_endts, NULL);
-
-        struct timeval sleep_time;
-        memset(&sleep_time, 0, sizeof(sleep_time));
-        timersub(&sleep_endts, &sleep_startts, &sleep_time);
-        timeradd(&sleeping, &sleep_time, &sleeping);
-#endif
         SCLogDebug("woke up... %s", SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY ? "emergency":"");
 
         StatsSyncCountersIfSignalled(th_v);
@@ -1013,22 +989,6 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
               "timed out, %"PRIu32" flows in closed state", new_cnt,
               established_cnt, closing_cnt);
 
-#ifdef FM_PROFILE
-    SCLogNotice("hash passes %u avg chunks %u full %u rows %u (rows/s %u)",
-            hash_passes, hash_passes_chunks / (hash_passes ? hash_passes : 1),
-            hash_full_passes, hash_row_checks,
-            hash_row_checks / ((uint32_t)active.tv_sec?(uint32_t)active.tv_sec:1));
-
-    gettimeofday(&endts, NULL);
-    struct timeval total_run_time;
-    timersub(&endts, &startts, &total_run_time);
-
-    SCLogNotice("FM: active %u.%us out of %u.%us; sleeping %u.%us, paused %u.%us",
-            (uint32_t)active.tv_sec, (uint32_t)active.tv_usec,
-            (uint32_t)total_run_time.tv_sec, (uint32_t)total_run_time.tv_usec,
-            (uint32_t)sleeping.tv_sec, (uint32_t)sleeping.tv_usec,
-            (uint32_t)paused.tv_sec, (uint32_t)paused.tv_usec);
-#endif
     return TM_ECODE_OK;
 }
 

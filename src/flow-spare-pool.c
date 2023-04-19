@@ -137,14 +137,14 @@ FlowQueuePrivate FlowSpareGetFromPool(void)
     }
 
     /* top if full or its the only block we have */
+	//第一个flow队列容量大于等于100，或者flow_spare_pool中只有一个flow队列
     if (flow_spare_pool->queue.len >= flow_spare_pool_block_size || flow_spare_pool->next == NULL) {
+		//直接取第一个队列
         FlowSparePool *p = flow_spare_pool;
         flow_spare_pool = p->next;
         DEBUG_VALIDATE_BUG_ON(flow_spare_pool_flow_cnt < p->queue.len);
         flow_spare_pool_flow_cnt -= p->queue.len;
-#ifdef FSP_VALIDATE
-        Validate(flow_spare_pool, flow_spare_pool_flow_cnt);
-#endif
+
         SCMutexUnlock(&flow_spare_pool_m);
 
         FlowQueuePrivate ret = p->queue;
@@ -152,13 +152,12 @@ FlowQueuePrivate FlowSpareGetFromPool(void)
         return ret;
     /* next should always be full if it exists */
     } else if (flow_spare_pool->next != NULL) {
+    	//如果第二个flow队列存在，则取第二个flow队列
         FlowSparePool *p = flow_spare_pool->next;
         flow_spare_pool->next = p->next;
         DEBUG_VALIDATE_BUG_ON(flow_spare_pool_flow_cnt < p->queue.len);
         flow_spare_pool_flow_cnt -= p->queue.len;
-#ifdef FSP_VALIDATE
-        Validate(flow_spare_pool, flow_spare_pool_flow_cnt);
-#endif
+
         SCMutexUnlock(&flow_spare_pool_m);
 
         FlowQueuePrivate ret = p->queue;

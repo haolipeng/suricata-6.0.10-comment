@@ -55,6 +55,7 @@ Flow *FlowAlloc(void)
     Flow *f;
     size_t size = sizeof(Flow) + FlowStorageSize();
 
+	//检测是否超出内存最大值
     if (!(FLOW_CHECK_MEMCAP(size))) {
         return NULL;
     }
