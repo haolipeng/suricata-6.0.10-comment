@@ -485,37 +485,25 @@ static inline Flow *FlowSpareSync(ThreadVars *tv, FlowLookupStruct *fls,
     Flow *f = NULL;
     bool spare_sync = false;
     if (emerg) {
+		//紧急模式下，保证同一秒的包仅能从全局flow内存池获取一次flow队列，如果太快，
+        //就会频繁对全局flow内存池上锁
         if ((uint32_t)p->ts.tv_sec > fls->emerg_spare_sync_stamp) {
             fls->spare_queue = FlowSpareGetFromPool(); /* local empty, (re)populate and try again */
             spare_sync = true;
             f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
             if (f == NULL) {
                 /* wait till next full sec before retrying */
+				//将数据包时间戳赋值给fls->emerg_spare_sync_stamp
                 fls->emerg_spare_sync_stamp = (uint32_t)p->ts.tv_sec;
             }
         }
     } else {
+    	//从全局内存池中拿出一个flow队列
         fls->spare_queue = FlowSpareGetFromPool(); /* local empty, (re)populate and try again */
+		//从flow队列中取出一个flow
         f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
         spare_sync = true;
     }
-#ifdef UNITTESTS
-    if (tv && fls->dtv) {
-#endif
-        if (spare_sync) {
-            if (f != NULL) {
-                StatsAddUI64(tv, fls->dtv->counter_flow_spare_sync_avg, fls->spare_queue.len+1);
-                if (fls->spare_queue.len < 99) {
-                    StatsIncr(tv, fls->dtv->counter_flow_spare_sync_incomplete);
-                }
-            } else if (fls->spare_queue.len == 0) {
-                StatsIncr(tv, fls->dtv->counter_flow_spare_sync_empty);
-            }
-            StatsIncr(tv, fls->dtv->counter_flow_spare_sync);
-        }
-#ifdef UNITTESTS
-    }
-#endif
     return f;
 }
 
@@ -551,7 +539,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
 
     /* get a flow from the spare queue */
 	//每个线程拥有一个FlowLookupStruct指针fls
-	//从线程所属的flow空闲队列里获取flow，如果获取成功则返回flow
+	//从线程所属的flow空闲队列spare_queue里获取flow，如果获取成功则返回flow
     Flow *f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
     if (f == NULL) {
 		//获取flow失败，则从全局flow内存池中获取一个flow队列，再从flow队列中获取flow
@@ -569,7 +557,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
                 FlowWakeupFlowManagerThread();
             }
 
-			//从全局flow_hash表中的bucket中，将引用计数为0的项进行复用
+			//从全局flow_hash表中的bucket链表中，将引用计数为0的项进行复用
             f = FlowGetUsedFlow(tv, fls->dtv, &p->ts);
             if (f == NULL) {
                 NoFlowHandleIPS(p);
@@ -1120,17 +1108,6 @@ static Flow *FlowGetUsedFlow(ThreadVars *tv, DecodeThreadVars *dtv, const struct
         f->flow_end_flags |= FLOW_END_FLAG_FORCED;
         if (SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY)
             f->flow_end_flags |= FLOW_END_FLAG_EMERGENCY;
-
-        /* invoke flow log api */
-#ifdef UNITTESTS
-        if (dtv) {
-#endif
-            if (dtv->output_flow_thread_data) {
-                (void)OutputFlowLog(tv, dtv->output_flow_thread_data, f);
-            }
-#ifdef UNITTESTS
-        }
-#endif
 
         FlowClearMemory(f, f->protomap);
 
