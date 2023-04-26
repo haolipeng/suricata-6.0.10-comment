@@ -1252,48 +1252,7 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
     while ((opt = getopt_long(argc, argv, short_opts, long_opts, &option_index)) != -1) {
         switch (opt) {
         case 0:
-            if (strcmp((long_opts[option_index]).name , "pfring") == 0 ||
-                strcmp((long_opts[option_index]).name , "pfring-int") == 0) {
-#ifdef HAVE_PFRING
-                suri->run_mode = RUNMODE_PFRING;
-                if (optarg != NULL) {
-                    memset(suri->pcap_dev, 0, sizeof(suri->pcap_dev));
-                    strlcpy(suri->pcap_dev, optarg,
-                            ((strlen(optarg) < sizeof(suri->pcap_dev)) ?
-                             (strlen(optarg) + 1) : sizeof(suri->pcap_dev)));
-                    LiveRegisterDeviceName(optarg);
-                }
-#else
-                SCLogError(SC_ERR_NO_PF_RING,"PF_RING not enabled. Make sure "
-                        "to pass --enable-pfring to configure when building.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_PFRING */
-            }
-            else if(strcmp((long_opts[option_index]).name , "pfring-cluster-id") == 0){
-#ifdef HAVE_PFRING
-                if (ConfSetFinal("pfring.cluster-id", optarg) != 1) {
-                    fprintf(stderr, "ERROR: Failed to set pfring.cluster-id.\n");
-                    return TM_ECODE_FAILED;
-                }
-#else
-                SCLogError(SC_ERR_NO_PF_RING,"PF_RING not enabled. Make sure "
-                        "to pass --enable-pfring to configure when building.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_PFRING */
-            }
-            else if(strcmp((long_opts[option_index]).name , "pfring-cluster-type") == 0){
-#ifdef HAVE_PFRING
-                if (ConfSetFinal("pfring.cluster-type", optarg) != 1) {
-                    fprintf(stderr, "ERROR: Failed to set pfring.cluster-type.\n");
-                    return TM_ECODE_FAILED;
-                }
-#else
-                SCLogError(SC_ERR_NO_PF_RING,"PF_RING not enabled. Make sure "
-                        "to pass --enable-pfring to configure when building.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_PFRING */
-            }
-            else if (strcmp((long_opts[option_index]).name , "capture-plugin") == 0){
+            if (strcmp((long_opts[option_index]).name , "capture-plugin") == 0){
                 suri->run_mode = RUNMODE_PLUGIN;
                 suri->capture_plugin_name = optarg;
             }
@@ -1305,44 +1264,6 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
                 if (ParseCommandLineAfpacket(suri, optarg) != TM_ECODE_OK) {
                     return TM_ECODE_FAILED;
                 }
-            } else if (strcmp((long_opts[option_index]).name , "netmap") == 0){
-#ifdef HAVE_NETMAP
-                if (suri->run_mode == RUNMODE_UNKNOWN) {
-                    suri->run_mode = RUNMODE_NETMAP;
-                    if (optarg) {
-                        LiveRegisterDeviceName(optarg);
-                        memset(suri->pcap_dev, 0, sizeof(suri->pcap_dev));
-                        strlcpy(suri->pcap_dev, optarg,
-                                ((strlen(optarg) < sizeof(suri->pcap_dev)) ?
-                                 (strlen(optarg) + 1) : sizeof(suri->pcap_dev)));
-                    }
-                } else if (suri->run_mode == RUNMODE_NETMAP) {
-                    if (optarg) {
-                        LiveRegisterDeviceName(optarg);
-                    } else {
-                        SCLogInfo("Multiple netmap option without interface on each is useless");
-                        break;
-                    }
-                } else {
-                    SCLogError(SC_ERR_MULTIPLE_RUN_MODE, "more than one run mode "
-                            "has been specified");
-                    PrintUsage(argv[0]);
-                    return TM_ECODE_FAILED;
-                }
-#else
-                    SCLogError(SC_ERR_NO_NETMAP, "NETMAP not enabled.");
-                    return TM_ECODE_FAILED;
-#endif
-            } else if (strcmp((long_opts[option_index]).name, "nflog") == 0) {
-#ifdef HAVE_NFLOG
-                if (suri->run_mode == RUNMODE_UNKNOWN) {
-                    suri->run_mode = RUNMODE_NFLOG;
-                    LiveBuildDeviceListCustom("nflog", "group");
-                }
-#else
-                SCLogError(SC_ERR_NFLOG_NOSUPPORT, "NFLOG not enabled.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_NFLOG */
             } else if (strcmp((long_opts[option_index]).name , "pcap") == 0) {
                 if (ParseCommandLinePcapLive(suri, optarg) != TM_ECODE_OK) {
                     return TM_ECODE_FAILED;
@@ -1398,20 +1319,7 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
             } else if(strcmp((long_opts[option_index]).name, "engine-analysis") == 0) {
                 // do nothing for now
             }
-#ifdef OS_WIN32
-            else if(strcmp((long_opts[option_index]).name, "service-install") == 0) {
-                suri->run_mode = RUNMODE_INSTALL_SERVICE;
-                return TM_ECODE_OK;
-            }
-            else if(strcmp((long_opts[option_index]).name, "service-remove") == 0) {
-                suri->run_mode = RUNMODE_REMOVE_SERVICE;
-                return TM_ECODE_OK;
-            }
-            else if(strcmp((long_opts[option_index]).name, "service-change-params") == 0) {
-                suri->run_mode = RUNMODE_CHANGE_SERVICE_PARAMS;
-                return TM_ECODE_OK;
-            }
-#endif /* OS_WIN32 */
+
             else if(strcmp((long_opts[option_index]).name, "pidfile") == 0) {
                 suri->pid_filename = SCStrdup(optarg);
                 if (suri->pid_filename == NULL) {
@@ -1458,32 +1366,7 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
                     return TM_ECODE_FAILED;
                 }
             }
-            else if (strcmp((long_opts[option_index]).name, "dag") == 0) {
-#ifdef HAVE_DAG
-                if (suri->run_mode == RUNMODE_UNKNOWN) {
-                    suri->run_mode = RUNMODE_DAG;
-                }
-                else if (suri->run_mode != RUNMODE_DAG) {
-                    SCLogError(SC_ERR_MULTIPLE_RUN_MODE,
-                        "more than one run mode has been specified");
-                    PrintUsage(argv[0]);
-                    return TM_ECODE_FAILED;
-                }
-                LiveRegisterDeviceName(optarg);
-#else
-                SCLogError(SC_ERR_DAG_REQUIRED, "libdag and a DAG card are required"
-						" to receive packets using --dag.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_DAG */
-            } else if (strcmp((long_opts[option_index]).name, "napatech") == 0) {
-#ifdef HAVE_NAPATECH
-                suri->run_mode = RUNMODE_NAPATECH;
-#else
-                SCLogError(SC_ERR_NAPATECH_REQUIRED, "libntapi and a Napatech adapter are required"
-                                                     " to capture packets using --napatech.");
-                return TM_ECODE_FAILED;
-#endif /* HAVE_NAPATECH */
-            } else if (strcmp((long_opts[option_index]).name, "pcap-buffer-size") == 0) {
+            else if (strcmp((long_opts[option_index]).name, "pcap-buffer-size") == 0) {
 #ifdef HAVE_PCAP_SET_BUFF
                 if (ConfSetFinal("pcap.buffer-size", optarg) != 1) {
                     fprintf(stderr, "ERROR: Failed to set pcap-buffer-size.\n");
@@ -1496,61 +1379,7 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
             } else if (strcmp((long_opts[option_index]).name, "build-info") == 0) {
                 suri->run_mode = RUNMODE_PRINT_BUILDINFO;
                 return TM_ECODE_OK;
-            } else if (strcmp((long_opts[option_index]).name, "windivert-forward") == 0) {
-#ifdef WINDIVERT
-                if (suri->run_mode == RUNMODE_UNKNOWN) {
-                    suri->run_mode = RUNMODE_WINDIVERT;
-                    if (WinDivertRegisterQueue(true, optarg) == -1) {
-                        exit(EXIT_FAILURE);
-                    }
-                } else if (suri->run_mode == RUNMODE_WINDIVERT) {
-                    if (WinDivertRegisterQueue(true, optarg) == -1) {
-                        exit(EXIT_FAILURE);
-                    }
-                } else {
-                    SCLogError(SC_ERR_MULTIPLE_RUN_MODE, "more than one run mode "
-                                                        "has been specified");
-                    PrintUsage(argv[0]);
-                    exit(EXIT_FAILURE);
-                }
-            }
-            else if(strcmp((long_opts[option_index]).name, "windivert") == 0) {
-                if (suri->run_mode == RUNMODE_UNKNOWN) {
-                    suri->run_mode = RUNMODE_WINDIVERT;
-                    if (WinDivertRegisterQueue(false, optarg) == -1) {
-                        exit(EXIT_FAILURE);
-                    }
-                } else if (suri->run_mode == RUNMODE_WINDIVERT) {
-                    if (WinDivertRegisterQueue(false, optarg) == -1) {
-                        exit(EXIT_FAILURE);
-                    }
-                } else {
-                    SCLogError(SC_ERR_MULTIPLE_RUN_MODE, "more than one run mode "
-                                                        "has been specified");
-                    PrintUsage(argv[0]);
-                    exit(EXIT_FAILURE);
-                }
-#else
-                SCLogError(SC_ERR_WINDIVERT_NOSUPPORT,"WinDivert not enabled. Make sure to pass --enable-windivert to configure when building.");
-                return TM_ECODE_FAILED;
-#endif /* WINDIVERT */
-            } else if(strcmp((long_opts[option_index]).name, "reject-dev") == 0) {
-#ifdef HAVE_LIBNET11
-                BUG_ON(optarg == NULL); /* for static analysis */
-                extern char *g_reject_dev;
-                extern uint16_t g_reject_dev_mtu;
-                g_reject_dev = optarg;
-                int mtu = GetIfaceMTU(g_reject_dev);
-                if (mtu > 0) {
-                    g_reject_dev_mtu = (uint16_t)mtu;
-                }
-#else
-                SCLogError(SC_ERR_LIBNET_NOT_ENABLED,
-                        "Libnet 1.1 support not enabled. Compile Suricata with libnet support.");
-                return TM_ECODE_FAILED;
-#endif
-            }
-            else if (strcmp((long_opts[option_index]).name, "set") == 0) {
+            }else if (strcmp((long_opts[option_index]).name, "set") == 0) {
                 if (optarg != NULL) {
                     /* Quick validation. */
                     char *val = strchr(optarg, '=');
@@ -1704,46 +1533,8 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
 
             break;
         case 'q':
-#ifdef NFQ
-            if (suri->run_mode == RUNMODE_UNKNOWN) {
-                suri->run_mode = RUNMODE_NFQ;
-                EngineModeSetIPS();
-                if (NFQParseAndRegisterQueues(optarg) == -1)
-                    return TM_ECODE_FAILED;
-            } else if (suri->run_mode == RUNMODE_NFQ) {
-                if (NFQParseAndRegisterQueues(optarg) == -1)
-                    return TM_ECODE_FAILED;
-            } else {
-                SCLogError(SC_ERR_MULTIPLE_RUN_MODE, "more than one run mode "
-                                                     "has been specified");
-                PrintUsage(argv[0]);
-                return TM_ECODE_FAILED;
-            }
-#else
-            SCLogError(SC_ERR_NFQ_NOSUPPORT,"NFQUEUE not enabled. Make sure to pass --enable-nfqueue to configure when building.");
-            return TM_ECODE_FAILED;
-#endif /* NFQ */
             break;
         case 'd':
-#ifdef IPFW
-            if (suri->run_mode == RUNMODE_UNKNOWN) {
-                suri->run_mode = RUNMODE_IPFW;
-                EngineModeSetIPS();
-                if (IPFWRegisterQueue(optarg) == -1)
-                    return TM_ECODE_FAILED;
-            } else if (suri->run_mode == RUNMODE_IPFW) {
-                if (IPFWRegisterQueue(optarg) == -1)
-                    return TM_ECODE_FAILED;
-            } else {
-                SCLogError(SC_ERR_MULTIPLE_RUN_MODE, "more than one run mode "
-                                                     "has been specified");
-                PrintUsage(argv[0]);
-                return TM_ECODE_FAILED;
-            }
-#else
-            SCLogError(SC_ERR_IPFW_NOSUPPORT,"IPFW not enabled. Make sure to pass --enable-ipfw to configure when building.");
-            return TM_ECODE_FAILED;
-#endif /* IPFW */
             break;
         case 'r':
             BUG_ON(optarg == NULL); /* for static analysis */
