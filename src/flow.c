@@ -514,7 +514,7 @@ void FlowHandlePacket(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
 
 /** \brief initialize the configuration
  *  \warning Not thread safe */
-void FlowInitConfig(char quiet)
+void  FlowInitConfig(char quiet)
 {
     SCLogDebug("initializing flow engine...");
 

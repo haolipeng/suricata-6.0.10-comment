@@ -180,66 +180,62 @@ detect-engine-register.o: detect-engine-register.c \
  queue.h threadvars.h util-affinity.h tm-queues.h packet-queue.h \
  counters.h decode-events.h flow-worker.h source-pcap.h \
  source-af-packet.h /usr/include/linux/if_packet.h action-globals.h \
- decode-erspan.h decode-ethernet.h decode-chdlc.h decode-gre.h \
- decode-geneve.h decode-ppp.h decode-pppoe.h decode-sll.h decode-ipv4.h \
- decode-ipv6.h decode-icmpv4.h decode-tcp.h decode-sctp.h decode-udp.h \
- decode-icmpv6.h decode-raw.h decode-null.h decode-vlan.h decode-vntag.h \
- decode-vxlan.h decode-mpls.h detect-reference.h app-layer-protos.h \
- detect.h flow.h util-exception-policy.h util-var.h util-device.h \
- unix-manager.h detect-tag.h suricata.h runmodes.h runmode-pcap.h \
- runmode-pcap-file.h runmode-af-packet.h runmode-unix-socket.h \
- util-time.h util-macset.h flow-queue.h detect-engine-proto.h \
- detect-metadata.h detect-engine-register.h util-prefilter.h util-mpm.h \
- util-spm.h util-spm-bs.h util-spm-bs2bm.h util-spm-bm.h util-hash.h \
- util-hashlist.h util-radix-tree.h util-file.h /usr/include/nss/sechash.h \
- /usr/include/nss/seccomon.h /usr/include/nss/utilrename.h \
- /usr/include/nspr/prtypes.h /usr/include/nspr/prcpucfg.h \
- /usr/include/nspr/obsolete/protypes.h /usr/include/nss/secport.h \
- /usr/include/nspr/prlink.h /usr/include/nspr/prtypes.h \
- /usr/include/nspr/prlog.h /usr/include/nspr/plarena.h \
- /usr/include/nspr/plstr.h /usr/include/nss/hasht.h \
- /usr/include/nss/secoidt.h /usr/include/nss/secitem.h \
- /usr/include/nspr/plhash.h util-streaming-buffer.h tree.h reputation.h \
- host.h util-storage.h detect-mark.h stream.h util-var-name.h \
- app-layer-events.h detect-threshold.h detect-engine-build.h util-path.h \
- util-conf.h debug.h flow-private.h flow-hash.h flow-bit.h detect-parse.h \
- detect-engine.h tm-threads.h tmqh-packetpool.h tm-modules.h \
- detect-engine-profile.h detect-engine-siggroup.h detect-engine-address.h \
- detect-engine-port.h detect-engine-mpm.h detect-content.h \
- detect-uricontent.h detect-engine-iponly.h detect-engine-threshold.h \
- ippair.h detect-engine-prefilter.h detect-engine-state.h \
- detect-engine-payload.h detect-engine-dcepayload.h detect-dns-opcode.h \
- detect-dns-query.h detect-tls-sni.h app-layer-ssl.h app-layer-parser.h \
- stream-tcp-private.h util-pool.h util-pool-thread.h rust.h \
- rust-context.h app-layer-krb5.h app-layer-ikev2.h app-layer-ntp.h \
- app-layer-snmp.h app-layer-tftp.h ../rust/gen/rust-bindings.h rust.h \
- util-config.h util-ja3.h detect-tls-certs.h \
- detect-tls-cert-fingerprint.h detect-tls-cert-issuer.h \
- detect-tls-cert-subject.h detect-tls-cert-serial.h detect-tls-ja3-hash.h \
- detect-tls-ja3-string.h detect-tls-ja3s-hash.h detect-tls-ja3s-string.h \
- detect-engine-analyzer.h detect-http-cookie.h detect-http-method.h \
- detect-http-ua.h detect-http-host.h detect-nfs-procedure.h \
- detect-nfs-version.h detect-engine-event.h detect-config.h \
- detect-smb-share.h detect-base64-decode.h app-layer-template.h \
- detect-base64-data.h detect-ipopts.h detect-tcp-flags.h \
- detect-fragbits.h detect-fragoffset.h detect-gid.h detect-tcp-ack.h \
- detect-tcp-seq.h detect-pcre.h detect-depth.h detect-nocase.h \
- detect-rawbytes.h detect-bytetest.h detect-bytemath.h detect-bytejump.h \
- detect-sameip.h detect-l3proto.h detect-ipproto.h detect-within.h \
- detect-distance.h detect-offset.h detect-sid.h detect-prefilter.h \
- detect-priority.h detect-classtype.h detect-msg.h detect-rev.h \
- detect-flow.h detect-tcp-window.h detect-ftpbounce.h detect-isdataat.h \
- detect-id.h detect-rpc.h detect-asn1.h detect-filename.h \
- detect-fileext.h detect-filestore.h detect-filemagic.h detect-filemd5.h \
- detect-filesha1.h detect-filesha256.h detect-filesize.h detect-dataset.h \
- datasets.h util-thash.h datasets-reputation.h detect-datarep.h \
- detect-dsize.h detect-flowvar.h detect-flowint.h detect-pktvar.h \
- detect-noalert.h detect-flowbits.h detect-hostbits.h detect-xbits.h \
- detect-csum.h detect-stream_size.h detect-engine-sigorder.h detect-ttl.h \
+ decode-ethernet.h decode-gre.h decode-sll.h decode-ipv4.h decode-ipv6.h \
+ decode-icmpv4.h decode-tcp.h decode-udp.h decode-icmpv6.h decode-raw.h \
+ decode-null.h decode-vlan.h decode-vxlan.h detect-reference.h \
+ app-layer-protos.h detect.h flow.h util-exception-policy.h util-var.h \
+ util-device.h unix-manager.h detect-tag.h suricata.h runmodes.h \
+ runmode-pcap.h runmode-pcap-file.h runmode-af-packet.h \
+ runmode-unix-socket.h util-time.h util-macset.h flow-queue.h \
+ detect-engine-proto.h detect-metadata.h detect-engine-register.h \
+ util-prefilter.h util-mpm.h util-spm.h util-spm-bs.h util-spm-bs2bm.h \
+ util-spm-bm.h util-hash.h util-hashlist.h util-radix-tree.h util-file.h \
+ /usr/include/nss/sechash.h /usr/include/nss/seccomon.h \
+ /usr/include/nss/utilrename.h /usr/include/nspr/prtypes.h \
+ /usr/include/nspr/prcpucfg.h /usr/include/nspr/obsolete/protypes.h \
+ /usr/include/nss/secport.h /usr/include/nspr/prlink.h \
+ /usr/include/nspr/prtypes.h /usr/include/nspr/prlog.h \
+ /usr/include/nspr/plarena.h /usr/include/nspr/plstr.h \
+ /usr/include/nss/hasht.h /usr/include/nss/secoidt.h \
+ /usr/include/nss/secitem.h /usr/include/nspr/plhash.h \
+ util-streaming-buffer.h tree.h reputation.h host.h util-storage.h \
+ detect-mark.h stream.h util-var-name.h app-layer-events.h \
+ detect-threshold.h detect-engine-build.h util-path.h util-conf.h debug.h \
+ flow-private.h flow-hash.h flow-bit.h detect-parse.h detect-engine.h \
+ tm-threads.h tmqh-packetpool.h tm-modules.h detect-engine-profile.h \
+ detect-engine-siggroup.h detect-engine-address.h detect-engine-port.h \
+ detect-engine-mpm.h detect-content.h detect-uricontent.h \
+ detect-engine-iponly.h detect-engine-threshold.h ippair.h \
+ detect-engine-prefilter.h detect-engine-state.h detect-engine-payload.h \
+ detect-dns-opcode.h detect-dns-query.h detect-tls-sni.h app-layer-ssl.h \
+ app-layer-parser.h stream-tcp-private.h util-pool.h util-pool-thread.h \
+ rust.h rust-context.h app-layer-ntp.h app-layer-snmp.h app-layer-tftp.h \
+ ../rust/gen/rust-bindings.h rust.h util-config.h util-ja3.h \
+ detect-tls-certs.h detect-tls-cert-fingerprint.h \
+ detect-tls-cert-issuer.h detect-tls-cert-subject.h \
+ detect-tls-cert-serial.h detect-tls-ja3-hash.h detect-tls-ja3-string.h \
+ detect-tls-ja3s-hash.h detect-tls-ja3s-string.h detect-engine-analyzer.h \
+ detect-http-cookie.h detect-http-method.h detect-http-ua.h \
+ detect-http-host.h detect-nfs-procedure.h detect-nfs-version.h \
+ detect-engine-event.h detect-config.h detect-smb-share.h \
+ detect-base64-decode.h app-layer-template.h detect-base64-data.h \
+ detect-ipopts.h detect-tcp-flags.h detect-fragbits.h detect-fragoffset.h \
+ detect-gid.h detect-tcp-ack.h detect-tcp-seq.h detect-pcre.h \
+ detect-depth.h detect-nocase.h detect-rawbytes.h detect-bytetest.h \
+ detect-bytemath.h detect-bytejump.h detect-sameip.h detect-l3proto.h \
+ detect-ipproto.h detect-within.h detect-distance.h detect-offset.h \
+ detect-sid.h detect-prefilter.h detect-priority.h detect-classtype.h \
+ detect-msg.h detect-rev.h detect-flow.h detect-tcp-window.h \
+ detect-ftpbounce.h detect-isdataat.h detect-id.h detect-rpc.h \
+ detect-asn1.h detect-filename.h detect-fileext.h detect-filestore.h \
+ detect-filemagic.h detect-filemd5.h detect-filesha1.h \
+ detect-filesha256.h detect-filesize.h detect-dataset.h datasets.h \
+ util-thash.h datasets-reputation.h detect-datarep.h detect-dsize.h \
+ detect-flowvar.h detect-flowint.h detect-pktvar.h detect-noalert.h \
+ detect-flowbits.h detect-hostbits.h detect-xbits.h detect-csum.h \
+ detect-stream_size.h detect-engine-sigorder.h detect-ttl.h \
  detect-fast-pattern.h detect-itype.h detect-icode.h detect-icmp-id.h \
- detect-icmp-seq.h detect-icmpv4hdr.h detect-dce-iface.h \
- app-layer-dcerpc-common.h util-byte.h /usr/include/byteswap.h \
- detect-dce-opnum.h detect-dce-stub-data.h detect-urilen.h detect-bsize.h \
+ detect-icmp-seq.h detect-icmpv4hdr.h detect-urilen.h detect-bsize.h \
  detect-detection-filter.h detect-http-client-body.h \
  detect-http-server-body.h detect-http-header.h \
  detect-http-header-names.h detect-http-headers.h \
@@ -251,10 +247,6 @@ detect-engine-register.o: detect-engine-register.c \
  detect-app-layer-protocol.h detect-template.h detect-template2.h \
  detect-tcphdr.h detect-tcpmss.h detect-udphdr.h detect-icmpv6hdr.h \
  detect-icmpv6-mtu.h detect-ipv4hdr.h detect-ipv6hdr.h \
- detect-krb5-cname.h detect-krb5-errcode.h detect-krb5-msgtype.h \
- detect-krb5-sname.h detect-sip-method.h detect-sip-uri.h \
- detect-sip-protocol.h detect-sip-stat-code.h detect-sip-stat-msg.h \
- detect-sip-request-line.h detect-sip-response-line.h \
  detect-rfb-secresult.h detect-rfb-sectype.h detect-rfb-name.h \
  detect-target.h detect-template-rust-buffer.h detect-snmp-version.h \
  detect-snmp-community.h detect-snmp-pdu_type.h detect-template-buffer.h \
@@ -273,10 +265,8 @@ detect-engine-register.o: detect-engine-register.c \
  detect-ssh-software-version.h detect-ssh-hassh.h \
  detect-ssh-hassh-server.h detect-ssh-hassh-string.h \
  detect-ssh-hassh-server-string.h detect-http-stat-code.h \
- detect-ssl-version.h detect-ssl-state.h detect-modbus.h \
- app-layer-modbus.h detect-cipservice.h app-layer-enip-common.h \
- detect-dnp3.h pkt-var.h conf-yaml-loader.h stream-tcp.h \
- stream-tcp-inline.h util-lua.h util-classification-config.h \
+ detect-ssl-version.h detect-ssl-state.h pkt-var.h conf-yaml-loader.h \
+ stream-tcp.h stream-tcp-inline.h util-lua.h util-classification-config.h \
  util-threshold-config.h util-print.h util-unittest.h \
  util-unittest-helper.h util-privs.h /usr/include/cap-ng.h \
  /usr/include/linux/capability.h util-validate.h util-mpm-ac.h
@@ -793,19 +783,9 @@ source-af-packet.h:
 
 action-globals.h:
 
-decode-erspan.h:
-
 decode-ethernet.h:
 
-decode-chdlc.h:
-
 decode-gre.h:
-
-decode-geneve.h:
-
-decode-ppp.h:
-
-decode-pppoe.h:
 
 decode-sll.h:
 
@@ -817,8 +797,6 @@ decode-icmpv4.h:
 
 decode-tcp.h:
 
-decode-sctp.h:
-
 decode-udp.h:
 
 decode-icmpv6.h:
@@ -829,11 +807,7 @@ decode-null.h:
 
 decode-vlan.h:
 
-decode-vntag.h:
-
 decode-vxlan.h:
-
-decode-mpls.h:
 
 detect-reference.h:
 
@@ -999,8 +973,6 @@ detect-engine-state.h:
 
 detect-engine-payload.h:
 
-detect-engine-dcepayload.h:
-
 detect-dns-opcode.h:
 
 detect-dns-query.h:
@@ -1020,10 +992,6 @@ util-pool-thread.h:
 rust.h:
 
 rust-context.h:
-
-app-layer-krb5.h:
-
-app-layer-ikev2.h:
 
 app-layer-ntp.h:
 
@@ -1211,18 +1179,6 @@ detect-icmp-seq.h:
 
 detect-icmpv4hdr.h:
 
-detect-dce-iface.h:
-
-app-layer-dcerpc-common.h:
-
-util-byte.h:
-
-/usr/include/byteswap.h:
-
-detect-dce-opnum.h:
-
-detect-dce-stub-data.h:
-
 detect-urilen.h:
 
 detect-bsize.h:
@@ -1292,28 +1248,6 @@ detect-icmpv6-mtu.h:
 detect-ipv4hdr.h:
 
 detect-ipv6hdr.h:
-
-detect-krb5-cname.h:
-
-detect-krb5-errcode.h:
-
-detect-krb5-msgtype.h:
-
-detect-krb5-sname.h:
-
-detect-sip-method.h:
-
-detect-sip-uri.h:
-
-detect-sip-protocol.h:
-
-detect-sip-stat-code.h:
-
-detect-sip-stat-msg.h:
-
-detect-sip-request-line.h:
-
-detect-sip-response-line.h:
 
 detect-rfb-secresult.h:
 
@@ -1410,16 +1344,6 @@ detect-http-stat-code.h:
 detect-ssl-version.h:
 
 detect-ssl-state.h:
-
-detect-modbus.h:
-
-app-layer-modbus.h:
-
-detect-cipservice.h:
-
-app-layer-enip-common.h:
-
-detect-dnp3.h:
 
 pkt-var.h:
 

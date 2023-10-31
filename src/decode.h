@@ -69,13 +69,8 @@ enum PktSrcEnum {
 
 #include "action-globals.h"
 
-#include "decode-erspan.h"
 #include "decode-ethernet.h"
-#include "decode-chdlc.h"
 #include "decode-gre.h"
-#include "decode-geneve.h"
-#include "decode-ppp.h"
-#include "decode-pppoe.h"
 #include "decode-sll.h"
 #include "decode-ipv4.h"
 #include "decode-ipv6.h"
@@ -83,13 +78,10 @@ enum PktSrcEnum {
 #include "decode-icmpv6.h"
 #include "decode-tcp.h"
 #include "decode-udp.h"
-#include "decode-sctp.h"
 #include "decode-raw.h"
 #include "decode-null.h"
 #include "decode-vlan.h"
-#include "decode-vntag.h"
 #include "decode-vxlan.h"
-#include "decode-mpls.h"
 
 #include "detect-reference.h"
 
@@ -548,15 +540,9 @@ typedef struct Packet_
 
     UDPHdr *udph;
 
-    SCTPHdr *sctph;
-
     ICMPV4Hdr *icmpv4h;
 
     ICMPV6Hdr *icmpv6h;
-
-    PPPHdr *ppph;
-    PPPOESessionHdr *pppoesh;
-    PPPOEDiscoveryHdr *pppoedh;
 
     GREHdr *greh;
 
@@ -816,18 +802,12 @@ void CaptureStatsSetup(ThreadVars *tv, CaptureStats *s);
         if ((p)->udph != NULL) {                                                                   \
             CLEAR_UDP_PACKET((p));                                                                 \
         }                                                                                          \
-        if ((p)->sctph != NULL) {                                                                  \
-            CLEAR_SCTP_PACKET((p));                                                                \
-        }                                                                                          \
         if ((p)->icmpv4h != NULL) {                                                                \
             CLEAR_ICMPV4_PACKET((p));                                                              \
         }                                                                                          \
         if ((p)->icmpv6h != NULL) {                                                                \
             CLEAR_ICMPV6_PACKET((p));                                                              \
         }                                                                                          \
-        (p)->ppph = NULL;                                                                          \
-        (p)->pppoesh = NULL;                                                                       \
-        (p)->pppoedh = NULL;                                                                       \
         (p)->greh = NULL;                                                                          \
         (p)->payload = NULL;                                                                       \
         (p)->payload_len = 0;                                                                      \
@@ -982,9 +962,6 @@ const char *PacketDropReasonToString(enum PacketDropReason r);
 /* decoder functions */
 int DecodeEthernet(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeSll(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodePPP(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodePPPOESession(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodePPPOEDiscovery(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeNull(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeRaw(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeIPV4(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint16_t);
@@ -993,18 +970,12 @@ int DecodeICMPV4(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, ui
 int DecodeICMPV6(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeTCP(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint16_t);
 int DecodeUDP(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint16_t);
-int DecodeSCTP(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint16_t);
 int DecodeGRE(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeVLAN(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeVNTag(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeIEEE8021ah(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodeGeneve(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeVXLAN(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeVNTag(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodeMPLS(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodeERSPAN(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodeERSPANTypeI(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
-int DecodeCHDLC(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 int DecodeTEMPLATE(ThreadVars *, DecodeThreadVars *, Packet *, const uint8_t *, uint32_t);
 
 #ifdef UNITTESTS
@@ -1250,18 +1221,12 @@ static inline void DecodeLinkLayer(ThreadVars *tv, DecodeThreadVars *dtv,
         case LINKTYPE_LINUX_SLL:
             DecodeSll(tv, dtv, p, data, len);
             break;
-        case LINKTYPE_PPP:
-            DecodePPP(tv, dtv, p, data, len);
-            break;
         case LINKTYPE_RAW:
         case LINKTYPE_GRE_OVER_IP:
             DecodeRaw(tv, dtv, p, data, len);
             break;
         case LINKTYPE_NULL:
             DecodeNull(tv, dtv, p, data, len);
-            break;
-       case LINKTYPE_CISCO_HDLC:
-            DecodeCHDLC(tv, dtv, p, data, len);
             break;
         default:
             SCLogError(SC_ERR_DATALINK_UNIMPLEMENTED, "datalink type "
@@ -1286,12 +1251,6 @@ static inline bool DecodeNetworkLayer(ThreadVars *tv, DecodeThreadVars *dtv,
             DecodeIPV6(tv, dtv, p, data, ip_len);
             break;
         }
-        case ETHERNET_TYPE_PPPOE_SESS:
-            DecodePPPOESession(tv, dtv, p, data, len);
-            break;
-        case ETHERNET_TYPE_PPPOE_DISC:
-            DecodePPPOEDiscovery(tv, dtv, p, data, len);
-            break;
         case ETHERNET_TYPE_VLAN:
         case ETHERNET_TYPE_8021AD:
         case ETHERNET_TYPE_8021QINQ:
@@ -1306,19 +1265,12 @@ static inline bool DecodeNetworkLayer(ThreadVars *tv, DecodeThreadVars *dtv,
             break;
         case ETHERNET_TYPE_ARP:
             break;
-        case ETHERNET_TYPE_MPLS_UNICAST:
-        case ETHERNET_TYPE_MPLS_MULTICAST:
-            DecodeMPLS(tv, dtv, p, data, len);
-            break;
         case ETHERNET_TYPE_DCE:
             if (unlikely(len < ETHERNET_DCE_HEADER_LEN)) {
                 ENGINE_SET_INVALID_EVENT(p, DCE_PKT_TOO_SMALL);
             } else {
                 DecodeEthernet(tv, dtv, p, data, len);
             }
-            break;
-        case ETHERNET_TYPE_VNTAG:
-            DecodeVNTag(tv, dtv, p, data, len);
             break;
         default:
             SCLogDebug("unknown ether type: %" PRIx16 "", proto);

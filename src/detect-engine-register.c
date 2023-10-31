@@ -44,7 +44,6 @@
 #include "detect-engine-prefilter.h"
 
 #include "detect-engine-payload.h"
-#include "detect-engine-dcepayload.h"
 #include "detect-dns-opcode.h"
 #include "detect-dns-query.h"
 #include "detect-tls-sni.h"
@@ -144,9 +143,6 @@
 #include "detect-icmp-id.h"
 #include "detect-icmp-seq.h"
 #include "detect-icmpv4hdr.h"
-#include "detect-dce-iface.h"
-#include "detect-dce-opnum.h"
-#include "detect-dce-stub-data.h"
 #include "detect-urilen.h"
 #include "detect-bsize.h"
 #include "detect-detection-filter.h"
@@ -182,17 +178,6 @@
 #include "detect-icmpv6-mtu.h"
 #include "detect-ipv4hdr.h"
 #include "detect-ipv6hdr.h"
-#include "detect-krb5-cname.h"
-#include "detect-krb5-errcode.h"
-#include "detect-krb5-msgtype.h"
-#include "detect-krb5-sname.h"
-#include "detect-sip-method.h"
-#include "detect-sip-uri.h"
-#include "detect-sip-protocol.h"
-#include "detect-sip-stat-code.h"
-#include "detect-sip-stat-msg.h"
-#include "detect-sip-request-line.h"
-#include "detect-sip-response-line.h"
 #include "detect-rfb-secresult.h"
 #include "detect-rfb-sectype.h"
 #include "detect-rfb-name.h"
@@ -237,9 +222,6 @@
 #include "detect-http-stat-code.h"
 #include "detect-ssl-version.h"
 #include "detect-ssl-state.h"
-#include "detect-modbus.h"
-#include "detect-cipservice.h"
-#include "detect-dnp3.h"
 
 #include "action-globals.h"
 #include "tm-threads.h"
@@ -463,10 +445,6 @@ void SigTableSetup(void)
 
     DetectDnsQueryRegister();
     DetectDnsOpcodeRegister();
-    DetectModbusRegister();
-    DetectCipServiceRegister();
-    DetectEnipCommandRegister();
-    DetectDNP3Register();
 
     DetectTlsSniRegister();
     DetectTlsIssuerRegister();
@@ -532,9 +510,6 @@ void SigTableSetup(void)
     DetectIcmpIdRegister();
     DetectIcmpSeqRegister();
     DetectIcmpv4HdrRegister();
-    DetectDceIfaceRegister();
-    DetectDceOpnumRegister();
-    DetectDceStubDataRegister();
     DetectSmbNamedPipeRegister();
     DetectSmbShareRegister();
     DetectTlsRegister();
@@ -573,17 +548,6 @@ void SigTableSetup(void)
     DetectICMPv6mtuRegister();
     DetectIpv4hdrRegister();
     DetectIpv6hdrRegister();
-    DetectKrb5CNameRegister();
-    DetectKrb5ErrCodeRegister();
-    DetectKrb5MsgTypeRegister();
-    DetectKrb5SNameRegister();
-    DetectSipMethodRegister();
-    DetectSipUriRegister();
-    DetectSipProtocolRegister();
-    DetectSipStatCodeRegister();
-    DetectSipStatMsgRegister();
-    DetectSipRequestLineRegister();
-    DetectSipResponseLineRegister();
     DetectRfbSecresultRegister();
     DetectRfbSectypeRegister();
     DetectRfbNameRegister();

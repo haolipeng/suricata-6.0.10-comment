@@ -19,8 +19,6 @@
 #define __RUST_CONTEXT_H__
 
 #include "detect-engine-state.h" //DetectEngineState
-#include "app-layer-krb5.h" //KRB5State, KRB5Transaction
-#include "app-layer-ikev2.h" //IKEV2State, IKEV2Transaction
 #include "app-layer-ntp.h" //NTPState, NTPTransaction
 #include "app-layer-snmp.h" //SNMPState, SNMPTransaction
 #include "app-layer-tftp.h" //TFTPState, TFTPTransaction

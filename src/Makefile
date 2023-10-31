@@ -138,44 +138,36 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	alert-prelude.$(OBJEXT) alert-syslog.$(OBJEXT) \
-	app-layer.$(OBJEXT) app-layer-dcerpc.$(OBJEXT) \
-	app-layer-dcerpc-udp.$(OBJEXT) \
-	app-layer-detect-proto.$(OBJEXT) app-layer-dnp3.$(OBJEXT) \
-	app-layer-dnp3-objects.$(OBJEXT) app-layer-enip.$(OBJEXT) \
-	app-layer-enip-common.$(OBJEXT) app-layer-events.$(OBJEXT) \
+	app-layer.$(OBJEXT) \
+	app-layer-detect-proto.$(OBJEXT) app-layer-events.$(OBJEXT) \
 	app-layer-expectation.$(OBJEXT) app-layer-ftp.$(OBJEXT) \
 	app-layer-htp-body.$(OBJEXT) app-layer-htp.$(OBJEXT) \
 	app-layer-htp-file.$(OBJEXT) app-layer-htp-libhtp.$(OBJEXT) \
 	app-layer-htp-mem.$(OBJEXT) app-layer-htp-xff.$(OBJEXT) \
-	app-layer-http2.$(OBJEXT) app-layer-modbus.$(OBJEXT) \
+	app-layer-http2.$(OBJEXT) \
 	app-layer-parser.$(OBJEXT) app-layer-protos.$(OBJEXT) \
 	app-layer-smb.$(OBJEXT) app-layer-smtp.$(OBJEXT) \
 	app-layer-snmp.$(OBJEXT) app-layer-nfs-tcp.$(OBJEXT) \
 	app-layer-nfs-udp.$(OBJEXT) app-layer-ntp.$(OBJEXT) \
 	app-layer-register.$(OBJEXT) app-layer-tftp.$(OBJEXT) \
-	app-layer-ikev2.$(OBJEXT) app-layer-krb5.$(OBJEXT) \
 	app-layer-rfb.$(OBJEXT) app-layer-template.$(OBJEXT) \
 	app-layer-template-rust.$(OBJEXT) app-layer-rdp.$(OBJEXT) \
 	app-layer-ssh.$(OBJEXT) app-layer-ssl.$(OBJEXT) \
-	app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
+	conf.$(OBJEXT) \
 	conf-yaml-loader.$(OBJEXT) counters.$(OBJEXT) \
 	datasets.$(OBJEXT) datasets-string.$(OBJEXT) \
 	datasets-sha256.$(OBJEXT) datasets-md5.$(OBJEXT) \
-	decode.$(OBJEXT) decode-chdlc.$(OBJEXT) \
-	decode-erspan.$(OBJEXT) decode-ethernet.$(OBJEXT) \
-	decode-events.$(OBJEXT) decode-geneve.$(OBJEXT) \
-	decode-gre.$(OBJEXT) decode-icmpv4.$(OBJEXT) \
-	decode-icmpv6.$(OBJEXT) decode-ipv4.$(OBJEXT) \
-	decode-ipv6.$(OBJEXT) decode-null.$(OBJEXT) \
-	decode-ppp.$(OBJEXT) decode-pppoe.$(OBJEXT) \
-	decode-raw.$(OBJEXT) decode-sctp.$(OBJEXT) \
-	decode-sll.$(OBJEXT) decode-tcp.$(OBJEXT) \
-	decode-teredo.$(OBJEXT) decode-udp.$(OBJEXT) \
+	decode.$(OBJEXT) decode-ethernet.$(OBJEXT) \
+	decode-events.$(OBJEXT) decode-gre.$(OBJEXT) \
+	decode-icmpv4.$(OBJEXT) decode-icmpv6.$(OBJEXT) \
+	decode-ipv4.$(OBJEXT) decode-ipv6.$(OBJEXT) \
+	decode-null.$(OBJEXT) decode-raw.$(OBJEXT) \
+	decode-sll.$(OBJEXT) decode-tcp.$(OBJEXT) decode-udp.$(OBJEXT) \
 	decode-vlan.$(OBJEXT) decode-vxlan.$(OBJEXT) \
-	decode-vntag.$(OBJEXT) decode-mpls.$(OBJEXT) \
-	decode-template.$(OBJEXT) defrag-config.$(OBJEXT) \
-	defrag.$(OBJEXT) defrag-hash.$(OBJEXT) defrag-queue.$(OBJEXT) \
-	defrag-timeout.$(OBJEXT) detect-app-layer-event.$(OBJEXT) \
+	decode-template.$(OBJEXT) \
+	defrag-config.$(OBJEXT) defrag.$(OBJEXT) defrag-hash.$(OBJEXT) \
+	defrag-queue.$(OBJEXT) defrag-timeout.$(OBJEXT) \
+	detect-app-layer-event.$(OBJEXT) \
 	detect-app-layer-protocol.$(OBJEXT) detect-asn1.$(OBJEXT) \
 	detect-base64-data.$(OBJEXT) detect-base64-decode.$(OBJEXT) \
 	detect-bsize.$(OBJEXT) detect-byte.$(OBJEXT) \
@@ -185,12 +177,11 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-classtype.$(OBJEXT) detect-config.$(OBJEXT) \
 	detect-content.$(OBJEXT) detect-csum.$(OBJEXT) \
 	detect-datarep.$(OBJEXT) detect-dataset.$(OBJEXT) \
-	detect-dce-iface.$(OBJEXT) detect-dce-opnum.$(OBJEXT) \
-	detect-dce-stub-data.$(OBJEXT) detect-depth.$(OBJEXT) \
-	detect-detection-filter.$(OBJEXT) detect-distance.$(OBJEXT) \
-	detect-dnp3.$(OBJEXT) detect-dns-opcode.$(OBJEXT) \
-	detect-dns-query.$(OBJEXT) detect-tls-ja3-hash.$(OBJEXT) \
-	detect-tls-ja3-string.$(OBJEXT) detect-tls-ja3s-hash.$(OBJEXT) \
+	detect-depth.$(OBJEXT) detect-detection-filter.$(OBJEXT) \
+	detect-distance.$(OBJEXT) \
+	detect-dns-opcode.$(OBJEXT) detect-dns-query.$(OBJEXT) \
+	detect-tls-ja3-hash.$(OBJEXT) detect-tls-ja3-string.$(OBJEXT) \
+	detect-tls-ja3s-hash.$(OBJEXT) \
 	detect-tls-ja3s-string.$(OBJEXT) detect-tls-sni.$(OBJEXT) \
 	detect-tls-cert-issuer.$(OBJEXT) \
 	detect-tls-cert-subject.$(OBJEXT) \
@@ -203,8 +194,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-engine-alert.$(OBJEXT) detect-engine-analyzer.$(OBJEXT) \
 	detect-engine-build.$(OBJEXT) \
 	detect-engine-content-inspection.$(OBJEXT) \
-	detect-engine-dcepayload.$(OBJEXT) detect-engine-dns.$(OBJEXT) \
-	detect-engine-modbus.$(OBJEXT) detect-engine-enip.$(OBJEXT) \
+	detect-engine-dns.$(OBJEXT) \
 	detect-engine-event.$(OBJEXT) detect-engine-file.$(OBJEXT) \
 	detect-engine-iponly.$(OBJEXT) detect-engine-loader.$(OBJEXT) \
 	detect-engine-mpm.$(OBJEXT) detect-engine-payload.$(OBJEXT) \
@@ -252,8 +242,6 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-ipproto.$(OBJEXT) detect-iprep.$(OBJEXT) \
 	detect-ipv4hdr.$(OBJEXT) detect-ipv6hdr.$(OBJEXT) \
 	detect-isdataat.$(OBJEXT) detect-itype.$(OBJEXT) \
-	detect-krb5-cname.$(OBJEXT) detect-krb5-errcode.$(OBJEXT) \
-	detect-krb5-msgtype.$(OBJEXT) detect-krb5-sname.$(OBJEXT) \
 	detect-l3proto.$(OBJEXT) detect-lua.$(OBJEXT) \
 	detect-lua-extensions.$(OBJEXT) detect-mark.$(OBJEXT) \
 	detect-metadata.$(OBJEXT) detect-msg.$(OBJEXT) \
@@ -267,11 +255,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-rev.$(OBJEXT) detect-rpc.$(OBJEXT) \
 	detect-sameip.$(OBJEXT) detect-sid.$(OBJEXT) \
 	detect-snmp-community.$(OBJEXT) detect-snmp-pdu_type.$(OBJEXT) \
-	detect-snmp-version.$(OBJEXT) detect-sip-method.$(OBJEXT) \
-	detect-sip-uri.$(OBJEXT) detect-sip-protocol.$(OBJEXT) \
-	detect-sip-stat-code.$(OBJEXT) detect-sip-stat-msg.$(OBJEXT) \
-	detect-sip-request-line.$(OBJEXT) \
-	detect-sip-response-line.$(OBJEXT) \
+	detect-snmp-version.$(OBJEXT)  \
 	detect-rfb-secresult.$(OBJEXT) detect-rfb-sectype.$(OBJEXT) \
 	detect-rfb-name.$(OBJEXT) detect-ssh-proto.$(OBJEXT) \
 	detect-ssh-proto-version.$(OBJEXT) \
@@ -300,8 +284,8 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-transform-pcrexform.$(OBJEXT) \
 	detect-transform-urldecode.$(OBJEXT) detect-ttl.$(OBJEXT) \
 	detect-uricontent.$(OBJEXT) detect-urilen.$(OBJEXT) \
-	detect-within.$(OBJEXT) detect-modbus.$(OBJEXT) \
-	detect-xbits.$(OBJEXT) detect-cipservice.$(OBJEXT) \
+	detect-within.$(OBJEXT) \
+	detect-xbits.$(OBJEXT) \
 	device-storage.$(OBJEXT) feature.$(OBJEXT) flow-bit.$(OBJEXT) \
 	flow.$(OBJEXT) flow-bypass.$(OBJEXT) flow-hash.$(OBJEXT) \
 	flow-manager.$(OBJEXT) flow-queue.$(OBJEXT) \
@@ -318,20 +302,18 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	output-filedata.$(OBJEXT) output-filestore.$(OBJEXT) \
 	output-flow.$(OBJEXT) output-json-alert.$(OBJEXT) \
 	output-json-anomaly.$(OBJEXT) output-json-dns.$(OBJEXT) \
-	output-json-dnp3.$(OBJEXT) output-json-dnp3-objects.$(OBJEXT) \
 	output-json-drop.$(OBJEXT) output-json-email-common.$(OBJEXT) \
 	output-json-file.$(OBJEXT) output-json-flow.$(OBJEXT) \
 	output-json-ftp.$(OBJEXT) output-json-netflow.$(OBJEXT) \
 	output-json-http.$(OBJEXT) output-json-http2.$(OBJEXT) \
-	output-json-sip.$(OBJEXT) output-json-smtp.$(OBJEXT) \
+	output-json-smtp.$(OBJEXT) \
 	output-json-ssh.$(OBJEXT) output-json-stats.$(OBJEXT) \
 	output-json-tls.$(OBJEXT) output-json-nfs.$(OBJEXT) \
 	output-json-tftp.$(OBJEXT) output-json-smb.$(OBJEXT) \
-	output-json-ikev2.$(OBJEXT) output-json-krb5.$(OBJEXT) \
 	output-json-dhcp.$(OBJEXT) output-json-snmp.$(OBJEXT) \
 	output-json-rfb.$(OBJEXT) output-json-template.$(OBJEXT) \
 	output-json-template-rust.$(OBJEXT) output-json-rdp.$(OBJEXT) \
-	output-json-dcerpc.$(OBJEXT) output-json-metadata.$(OBJEXT) \
+	output-json-metadata.$(OBJEXT) \
 	output-lua.$(OBJEXT) output-packet.$(OBJEXT) \
 	output-stats.$(OBJEXT) output-streaming.$(OBJEXT) \
 	output-tx.$(OBJEXT) output-json.$(OBJEXT) \
@@ -341,7 +323,9 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	runmode-af-packet.$(OBJEXT) runmode-pcap.$(OBJEXT) \
 	runmode-pcap-file.$(OBJEXT) runmode-unittests.$(OBJEXT) \
 	runmode-unix-socket.$(OBJEXT) runmodes.$(OBJEXT) \
-	rust-context.$(OBJEXT) source-pcap.$(OBJEXT) source-af-packet.$(OBJEXT)\
+	rust-context.$(OBJEXT) \
+	source-af-packet.$(OBJEXT) \
+	source-pcap.$(OBJEXT) \
 	source-pcap-file.$(OBJEXT) \
 	source-pcap-file-directory-helper.$(OBJEXT) \
 	source-pcap-file-helper.$(OBJEXT) stream.$(OBJEXT) \
@@ -374,8 +358,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	util-ip.$(OBJEXT) util-ja3.$(OBJEXT) \
 	util-logopenfile.$(OBJEXT) util-log-redis.$(OBJEXT) \
 	util-lua.$(OBJEXT) util-luajit.$(OBJEXT) \
-	util-lua-common.$(OBJEXT) util-lua-dnp3.$(OBJEXT) \
-	util-lua-dnp3-objects.$(OBJEXT) util-lua-dns.$(OBJEXT) \
+	util-lua-common.$(OBJEXT) util-lua-dns.$(OBJEXT) \
 	util-lua-http.$(OBJEXT) util-lua-ja3.$(OBJEXT) \
 	util-lua-tls.$(OBJEXT) util-lua-ssh.$(OBJEXT) \
 	util-lua-hassh.$(OBJEXT) util-lua-smtp.$(OBJEXT) \
@@ -523,24 +506,20 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/app-layer-dcerpc-udp.Po \
 	./$(DEPDIR)/app-layer-dcerpc.Po \
 	./$(DEPDIR)/app-layer-detect-proto.Po \
-	./$(DEPDIR)/app-layer-dnp3-objects.Po \
-	./$(DEPDIR)/app-layer-dnp3.Po \
-	./$(DEPDIR)/app-layer-enip-common.Po \
-	./$(DEPDIR)/app-layer-enip.Po ./$(DEPDIR)/app-layer-events.Po \
+	./$(DEPDIR)/app-layer-events.Po \
 	./$(DEPDIR)/app-layer-expectation.Po \
 	./$(DEPDIR)/app-layer-ftp.Po ./$(DEPDIR)/app-layer-htp-body.Po \
 	./$(DEPDIR)/app-layer-htp-file.Po \
 	./$(DEPDIR)/app-layer-htp-libhtp.Po \
 	./$(DEPDIR)/app-layer-htp-mem.Po \
 	./$(DEPDIR)/app-layer-htp-xff.Po ./$(DEPDIR)/app-layer-htp.Po \
-	./$(DEPDIR)/app-layer-http2.Po ./$(DEPDIR)/app-layer-ikev2.Po \
-	./$(DEPDIR)/app-layer-krb5.Po ./$(DEPDIR)/app-layer-modbus.Po \
+	./$(DEPDIR)/app-layer-http2.Po \
 	./$(DEPDIR)/app-layer-nfs-tcp.Po \
 	./$(DEPDIR)/app-layer-nfs-udp.Po ./$(DEPDIR)/app-layer-ntp.Po \
 	./$(DEPDIR)/app-layer-parser.Po \
 	./$(DEPDIR)/app-layer-protos.Po ./$(DEPDIR)/app-layer-rdp.Po \
 	./$(DEPDIR)/app-layer-register.Po ./$(DEPDIR)/app-layer-rfb.Po \
-	./$(DEPDIR)/app-layer-sip.Po ./$(DEPDIR)/app-layer-smb.Po \
+	./$(DEPDIR)/app-layer-smb.Po \
 	./$(DEPDIR)/app-layer-smtp.Po ./$(DEPDIR)/app-layer-snmp.Po \
 	./$(DEPDIR)/app-layer-ssh.Po ./$(DEPDIR)/app-layer-ssl.Po \
 	./$(DEPDIR)/app-layer-template-rust.Po \
@@ -549,18 +528,14 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/conf-yaml-loader.Po ./$(DEPDIR)/conf.Po \
 	./$(DEPDIR)/counters.Po ./$(DEPDIR)/datasets-md5.Po \
 	./$(DEPDIR)/datasets-sha256.Po ./$(DEPDIR)/datasets-string.Po \
-	./$(DEPDIR)/datasets.Po ./$(DEPDIR)/decode-chdlc.Po \
-	./$(DEPDIR)/decode-erspan.Po ./$(DEPDIR)/decode-ethernet.Po \
-	./$(DEPDIR)/decode-events.Po ./$(DEPDIR)/decode-geneve.Po \
-	./$(DEPDIR)/decode-gre.Po ./$(DEPDIR)/decode-icmpv4.Po \
-	./$(DEPDIR)/decode-icmpv6.Po ./$(DEPDIR)/decode-ipv4.Po \
-	./$(DEPDIR)/decode-ipv6.Po ./$(DEPDIR)/decode-mpls.Po \
-	./$(DEPDIR)/decode-null.Po ./$(DEPDIR)/decode-ppp.Po \
-	./$(DEPDIR)/decode-pppoe.Po ./$(DEPDIR)/decode-raw.Po \
-	./$(DEPDIR)/decode-sctp.Po ./$(DEPDIR)/decode-sll.Po \
-	./$(DEPDIR)/decode-tcp.Po ./$(DEPDIR)/decode-template.Po \
-	./$(DEPDIR)/decode-teredo.Po ./$(DEPDIR)/decode-udp.Po \
-	./$(DEPDIR)/decode-vlan.Po ./$(DEPDIR)/decode-vntag.Po \
+	./$(DEPDIR)/datasets.Po ./$(DEPDIR)/decode-ethernet.Po \
+	./$(DEPDIR)/decode-events.Po ./$(DEPDIR)/decode-gre.Po \
+	./$(DEPDIR)/decode-icmpv4.Po ./$(DEPDIR)/decode-icmpv6.Po \
+	./$(DEPDIR)/decode-ipv4.Po ./$(DEPDIR)/decode-ipv6.Po \
+	./$(DEPDIR)/decode-null.Po ./$(DEPDIR)/decode-raw.Po \
+	./$(DEPDIR)/decode-sll.Po ./$(DEPDIR)/decode-tcp.Po \
+	./$(DEPDIR)/decode-template.Po ./$(DEPDIR)/decode-udp.Po \
+	./$(DEPDIR)/decode-vlan.Po \
 	./$(DEPDIR)/decode-vxlan.Po ./$(DEPDIR)/decode.Po \
 	./$(DEPDIR)/defrag-config.Po ./$(DEPDIR)/defrag-hash.Po \
 	./$(DEPDIR)/defrag-queue.Po ./$(DEPDIR)/defrag-timeout.Po \
@@ -572,16 +547,12 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-byte-extract.Po ./$(DEPDIR)/detect-byte.Po \
 	./$(DEPDIR)/detect-bytejump.Po ./$(DEPDIR)/detect-bytemath.Po \
 	./$(DEPDIR)/detect-bytetest.Po \
-	./$(DEPDIR)/detect-cipservice.Po \
 	./$(DEPDIR)/detect-classtype.Po ./$(DEPDIR)/detect-config.Po \
 	./$(DEPDIR)/detect-content.Po ./$(DEPDIR)/detect-csum.Po \
 	./$(DEPDIR)/detect-datarep.Po ./$(DEPDIR)/detect-dataset.Po \
-	./$(DEPDIR)/detect-dce-iface.Po \
-	./$(DEPDIR)/detect-dce-opnum.Po \
-	./$(DEPDIR)/detect-dce-stub-data.Po \
 	./$(DEPDIR)/detect-depth.Po \
 	./$(DEPDIR)/detect-detection-filter.Po \
-	./$(DEPDIR)/detect-distance.Po ./$(DEPDIR)/detect-dnp3.Po \
+	./$(DEPDIR)/detect-distance.Po \
 	./$(DEPDIR)/detect-dns-opcode.Po \
 	./$(DEPDIR)/detect-dns-query.Po ./$(DEPDIR)/detect-dsize.Po \
 	./$(DEPDIR)/detect-engine-address-ipv4.Po \
@@ -591,9 +562,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-engine-analyzer.Po \
 	./$(DEPDIR)/detect-engine-build.Po \
 	./$(DEPDIR)/detect-engine-content-inspection.Po \
-	./$(DEPDIR)/detect-engine-dcepayload.Po \
 	./$(DEPDIR)/detect-engine-dns.Po \
-	./$(DEPDIR)/detect-engine-enip.Po \
 	./$(DEPDIR)/detect-engine-event.Po \
 	./$(DEPDIR)/detect-engine-file.Po \
 	./$(DEPDIR)/detect-engine-iponly.Po \
@@ -662,13 +631,10 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-ipproto.Po ./$(DEPDIR)/detect-iprep.Po \
 	./$(DEPDIR)/detect-ipv4hdr.Po ./$(DEPDIR)/detect-ipv6hdr.Po \
 	./$(DEPDIR)/detect-isdataat.Po ./$(DEPDIR)/detect-itype.Po \
-	./$(DEPDIR)/detect-krb5-cname.Po \
-	./$(DEPDIR)/detect-krb5-errcode.Po \
-	./$(DEPDIR)/detect-krb5-msgtype.Po \
-	./$(DEPDIR)/detect-krb5-sname.Po ./$(DEPDIR)/detect-l3proto.Po \
+	./$(DEPDIR)/detect-l3proto.Po \
 	./$(DEPDIR)/detect-lua-extensions.Po ./$(DEPDIR)/detect-lua.Po \
 	./$(DEPDIR)/detect-mark.Po ./$(DEPDIR)/detect-metadata.Po \
-	./$(DEPDIR)/detect-modbus.Po ./$(DEPDIR)/detect-msg.Po \
+	./$(DEPDIR)/detect-msg.Po \
 	./$(DEPDIR)/detect-nfs-procedure.Po \
 	./$(DEPDIR)/detect-nfs-version.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
@@ -681,13 +647,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-rfb-secresult.Po \
 	./$(DEPDIR)/detect-rfb-sectype.Po ./$(DEPDIR)/detect-rpc.Po \
 	./$(DEPDIR)/detect-sameip.Po ./$(DEPDIR)/detect-sid.Po \
-	./$(DEPDIR)/detect-sip-method.Po \
-	./$(DEPDIR)/detect-sip-protocol.Po \
-	./$(DEPDIR)/detect-sip-request-line.Po \
-	./$(DEPDIR)/detect-sip-response-line.Po \
-	./$(DEPDIR)/detect-sip-stat-code.Po \
-	./$(DEPDIR)/detect-sip-stat-msg.Po \
-	./$(DEPDIR)/detect-sip-uri.Po ./$(DEPDIR)/detect-smb-share.Po \
+	./$(DEPDIR)/detect-smb-share.Po \
 	./$(DEPDIR)/detect-snmp-community.Po \
 	./$(DEPDIR)/detect-snmp-pdu_type.Po \
 	./$(DEPDIR)/detect-snmp-version.Po \
@@ -756,22 +716,18 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/output-json-alert.Po \
 	./$(DEPDIR)/output-json-anomaly.Po \
 	./$(DEPDIR)/output-json-common.Po \
-	./$(DEPDIR)/output-json-dcerpc.Po \
 	./$(DEPDIR)/output-json-dhcp.Po \
-	./$(DEPDIR)/output-json-dnp3-objects.Po \
-	./$(DEPDIR)/output-json-dnp3.Po ./$(DEPDIR)/output-json-dns.Po \
+	./$(DEPDIR)/output-json-dns.Po \
 	./$(DEPDIR)/output-json-drop.Po \
 	./$(DEPDIR)/output-json-email-common.Po \
 	./$(DEPDIR)/output-json-file.Po \
 	./$(DEPDIR)/output-json-flow.Po ./$(DEPDIR)/output-json-ftp.Po \
 	./$(DEPDIR)/output-json-http.Po \
 	./$(DEPDIR)/output-json-http2.Po \
-	./$(DEPDIR)/output-json-ikev2.Po \
-	./$(DEPDIR)/output-json-krb5.Po \
 	./$(DEPDIR)/output-json-metadata.Po \
 	./$(DEPDIR)/output-json-netflow.Po \
 	./$(DEPDIR)/output-json-nfs.Po ./$(DEPDIR)/output-json-rdp.Po \
-	./$(DEPDIR)/output-json-rfb.Po ./$(DEPDIR)/output-json-sip.Po \
+	./$(DEPDIR)/output-json-rfb.Po  \
 	./$(DEPDIR)/output-json-smb.Po ./$(DEPDIR)/output-json-smtp.Po \
 	./$(DEPDIR)/output-json-snmp.Po ./$(DEPDIR)/output-json-ssh.Po \
 	./$(DEPDIR)/output-json-stats.Po \
@@ -789,6 +745,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/runmode-unittests.Po \
 	./$(DEPDIR)/runmode-unix-socket.Po ./$(DEPDIR)/runmodes.Po \
 	./$(DEPDIR)/rust-context.Po \
+	./$(DEPDIR)/source-af-packet.Po \
 	./$(DEPDIR)/source-pcap-file-directory-helper.Po \
 	./$(DEPDIR)/source-pcap-file-helper.Po \
 	./$(DEPDIR)/source-pcap-file.Po ./$(DEPDIR)/source-pcap.Po \
@@ -826,8 +783,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/util-ioctl.Po ./$(DEPDIR)/util-ip.Po \
 	./$(DEPDIR)/util-ja3.Po ./$(DEPDIR)/util-log-redis.Po \
 	./$(DEPDIR)/util-logopenfile.Po ./$(DEPDIR)/util-lua-common.Po \
-	./$(DEPDIR)/util-lua-dnp3-objects.Po \
-	./$(DEPDIR)/util-lua-dnp3.Po ./$(DEPDIR)/util-lua-dns.Po \
+	./$(DEPDIR)/util-lua-dns.Po \
 	./$(DEPDIR)/util-lua-hassh.Po ./$(DEPDIR)/util-lua-http.Po \
 	./$(DEPDIR)/util-lua-ja3.Po ./$(DEPDIR)/util-lua-smtp.Po \
 	./$(DEPDIR)/util-lua-ssh.Po ./$(DEPDIR)/util-lua-tls.Po \
@@ -1191,7 +1147,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 noinst_HEADERS = action-globals.h \
-    app-layer-nbss.h app-layer-dcerpc-common.h \
+    app-layer-nbss.h \
     debug.h \
 	flow-private.h queue.h \
 	suricata-common.h threadvars.h tree.h \
@@ -1203,13 +1159,7 @@ alert-fastlog.c alert-fastlog.h \
 alert-prelude.c alert-prelude.h \
 alert-syslog.c alert-syslog.h \
 app-layer.c app-layer.h \
-app-layer-dcerpc.c app-layer-dcerpc.h \
-app-layer-dcerpc-udp.c app-layer-dcerpc-udp.h \
 app-layer-detect-proto.c app-layer-detect-proto.h \
-app-layer-dnp3.c app-layer-dnp3.h \
-app-layer-dnp3-objects.c app-layer-dnp3-objects.h \
-app-layer-enip.c app-layer-enip.h \
-app-layer-enip-common.c app-layer-enip-common.h \
 app-layer-events.c app-layer-events.h \
 app-layer-expectation.c app-layer-expectation.h \
 app-layer-ftp.c app-layer-ftp.h \
@@ -1220,7 +1170,6 @@ app-layer-htp-libhtp.c app-layer-htp-libhtp.h \
 app-layer-htp-mem.c app-layer-htp-mem.h \
 app-layer-htp-xff.c app-layer-htp-xff.h \
 app-layer-http2.c app-layer-http2.h \
-app-layer-modbus.c app-layer-modbus.h \
 app-layer-parser.c app-layer-parser.h \
 app-layer-protos.c app-layer-protos.h \
 app-layer-smb.c app-layer-smb.h \
@@ -1231,15 +1180,12 @@ app-layer-nfs-udp.c app-layer-nfs-udp.h \
 app-layer-ntp.c app-layer-ntp.h \
 app-layer-register.c app-layer-register.h \
 app-layer-tftp.c app-layer-tftp.h \
-app-layer-ikev2.c app-layer-ikev2.h \
-app-layer-krb5.c app-layer-krb5.h \
 app-layer-rfb.c app-layer-rfb.h \
 app-layer-template.c app-layer-template.h \
 app-layer-template-rust.c app-layer-template-rust.h \
 app-layer-rdp.c app-layer-rdp.h \
 app-layer-ssh.c app-layer-ssh.h \
 app-layer-ssl.c app-layer-ssl.h \
-app-layer-sip.c app-layer-sip.h \
 conf.c conf.h \
 conf-yaml-loader.c conf-yaml-loader.h \
 counters.c counters.h \
@@ -1248,29 +1194,20 @@ datasets-string.c datasets-string.h \
 datasets-sha256.c datasets-sha256.h \
 datasets-md5.c datasets-md5.h \
 decode.c decode.h \
-decode-chdlc.c decode-chdlc.h \
-decode-erspan.c decode-erspan.h \
 decode-ethernet.c decode-ethernet.h \
 decode-events.c decode-events.h \
-decode-geneve.c decode-geneve.h \
 decode-gre.c decode-gre.h \
 decode-icmpv4.c decode-icmpv4.h \
 decode-icmpv6.c decode-icmpv6.h \
 decode-ipv4.c decode-ipv4.h \
 decode-ipv6.c decode-ipv6.h \
 decode-null.c decode-null.h \
-decode-ppp.c decode-ppp.h \
-decode-pppoe.c decode-pppoe.h \
 decode-raw.c decode-raw.h \
-decode-sctp.c decode-sctp.h \
 decode-sll.c decode-sll.h \
 decode-tcp.c decode-tcp.h \
-decode-teredo.c decode-teredo.h \
 decode-udp.c decode-udp.h \
 decode-vlan.c decode-vlan.h \
 decode-vxlan.c decode-vxlan.h \
-decode-vntag.c decode-vntag.h \
-decode-mpls.c decode-mpls.h \
 decode-template.c decode-template.h \
 defrag-config.c defrag-config.h \
 defrag.c defrag.h \
@@ -1296,13 +1233,9 @@ detect-content.c detect-content.h \
 detect-csum.c detect-csum.h \
 detect-datarep.c detect-datarep.h \
 detect-dataset.c detect-dataset.h \
-detect-dce-iface.c detect-dce-iface.h \
-detect-dce-opnum.c detect-dce-opnum.h \
-detect-dce-stub-data.c detect-dce-stub-data.h \
 detect-depth.c detect-depth.h \
 detect-detection-filter.c detect-detection-filter.h \
 detect-distance.c detect-distance.h \
-detect-dnp3.c detect-dnp3.h \
 detect-dns-opcode.c detect-dns-opcode.h \
 detect-dns-query.c detect-dns-query.h \
 detect-tls-ja3-hash.c detect-tls-ja3-hash.h \
@@ -1324,10 +1257,8 @@ detect-engine-alert.c detect-engine-alert.h \
 detect-engine-analyzer.c detect-engine-analyzer.h \
 detect-engine-build.c detect-engine-build.h \
 detect-engine-content-inspection.c detect-engine-content-inspection.h \
-detect-engine-dcepayload.c detect-engine-dcepayload.h \
 detect-engine-dns.c detect-engine-dns.h \
 detect-engine-modbus.c detect-engine-modbus.h \
-detect-engine-enip.c detect-engine-enip.h \
 detect-engine-event.c detect-engine-event.h \
 detect-engine-file.c detect-engine-file.h \
 detect-engine-iponly.c detect-engine-iponly.h \
@@ -1409,7 +1340,6 @@ detect-ipv4hdr.c detect-ipv4hdr.h \
 detect-ipv6hdr.c detect-ipv6hdr.h \
 detect-isdataat.c detect-isdataat.h \
 detect-itype.c detect-itype.h \
-detect-krb5-cname.c detect-krb5-cname.h \
 detect-krb5-errcode.c detect-krb5-errcode.h \
 detect-krb5-msgtype.c detect-krb5-msgtype.h \
 detect-krb5-sname.c detect-krb5-sname.h \
@@ -1440,13 +1370,6 @@ detect-sid.c detect-sid.h \
 detect-snmp-community.c detect-snmp-community.h \
 detect-snmp-pdu_type.c detect-snmp-pdu_type.h \
 detect-snmp-version.c detect-snmp-version.h \
-detect-sip-method.c detect-sip-method.h \
-detect-sip-uri.c detect-sip-uri.h \
-detect-sip-protocol.c detect-sip-protocol.h \
-detect-sip-stat-code.c detect-sip-stat-code.h \
-detect-sip-stat-msg.c detect-sip-stat-msg.h \
-detect-sip-request-line.c detect-sip-request-line.h \
-detect-sip-response-line.c detect-sip-response-line.h \
 detect-rfb-secresult.c detect-rfb-secresult.h \
 detect-rfb-sectype.c detect-rfb-sectype.h \
 detect-rfb-name.c detect-rfb-name.h \
@@ -1493,9 +1416,7 @@ detect-ttl.c detect-ttl.h \
 detect-uricontent.c detect-uricontent.h \
 detect-urilen.c detect-urilen.h \
 detect-within.c detect-within.h \
-detect-modbus.c detect-modbus.h \
 detect-xbits.c detect-xbits.h \
-detect-cipservice.c detect-cipservice.h \
 device-storage.c device-storage.h \
 feature.c feature.h \
 flow-bit.c flow-bit.h \
@@ -1535,8 +1456,6 @@ output-flow.c output-flow.h \
 output-json-alert.c output-json-alert.h \
 output-json-anomaly.c output-json-anomaly.h \
 output-json-dns.c output-json-dns.h \
-output-json-dnp3.c output-json-dnp3.h \
-output-json-dnp3-objects.c output-json-dnp3-objects.h \
 output-json-drop.c output-json-drop.h \
 output-json-email-common.c output-json-email-common.h \
 output-json-file.c output-json-file.h \
@@ -1545,7 +1464,6 @@ output-json-ftp.c output-json-ftp.h \
 output-json-netflow.c output-json-netflow.h \
 output-json-http.c output-json-http.h \
 output-json-http2.c output-json-http2.h \
-output-json-sip.c output-json-sip.h \
 output-json-smtp.c output-json-smtp.h \
 output-json-ssh.c output-json-ssh.h \
 output-json-stats.c output-json-stats.h \
@@ -1553,15 +1471,12 @@ output-json-tls.c output-json-tls.h \
 output-json-nfs.c output-json-nfs.h \
 output-json-tftp.c output-json-tftp.h \
 output-json-smb.c output-json-smb.h \
-output-json-ikev2.c output-json-ikev2.h \
-output-json-krb5.c output-json-krb5.h \
 output-json-dhcp.c output-json-dhcp.h \
 output-json-snmp.c output-json-snmp.h \
 output-json-rfb.c output-json-rfb.h \
 output-json-template.c output-json-template.h \
 output-json-template-rust.c output-json-template-rust.h \
 output-json-rdp.c output-json-rdp.h \
-output-json-dcerpc.c output-json-dcerpc.h \
 output-json-metadata.c output-json-metadata.h \
 output-lua.c output-lua.h \
 output-packet.c output-packet.h \
@@ -1583,6 +1498,7 @@ runmode-unix-socket.c runmode-unix-socket.h \
 runmodes.c runmodes.h \
 rust.h \
 rust-context.c rust-context.h \
+source-af-packet.c source-af-packet.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
@@ -1651,8 +1567,6 @@ util-log-redis.h util-log-redis.c \
 util-lua.c util-lua.h \
 util-luajit.c util-luajit.h \
 util-lua-common.c util-lua-common.h \
-util-lua-dnp3.c util-lua-dnp3.h \
-util-lua-dnp3-objects.c util-lua-dnp3-objects.h \
 util-lua-dns.c util-lua-dns.h \
 util-lua-http.c util-lua-http.h \
 util-lua-ja3.c util-lua-ja3.h \
@@ -2039,10 +1953,6 @@ include ./$(DEPDIR)/alert-syslog.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-dcerpc-udp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-dcerpc.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-detect-proto.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-dnp3-objects.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-dnp3.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-enip-common.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-enip.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-events.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-expectation.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-ftp.Po # am--include-marker
@@ -2053,9 +1963,6 @@ include ./$(DEPDIR)/app-layer-htp-mem.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-htp-xff.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-htp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-http2.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-ikev2.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-krb5.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-modbus.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-nfs-tcp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-nfs-udp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-ntp.Po # am--include-marker
@@ -2064,7 +1971,6 @@ include ./$(DEPDIR)/app-layer-protos.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-rdp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-register.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-rfb.Po # am--include-marker
-include ./$(DEPDIR)/app-layer-sip.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-smb.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-smtp.Po # am--include-marker
 include ./$(DEPDIR)/app-layer-snmp.Po # am--include-marker
@@ -2081,29 +1987,20 @@ include ./$(DEPDIR)/datasets-md5.Po # am--include-marker
 include ./$(DEPDIR)/datasets-sha256.Po # am--include-marker
 include ./$(DEPDIR)/datasets-string.Po # am--include-marker
 include ./$(DEPDIR)/datasets.Po # am--include-marker
-include ./$(DEPDIR)/decode-chdlc.Po # am--include-marker
-include ./$(DEPDIR)/decode-erspan.Po # am--include-marker
 include ./$(DEPDIR)/decode-ethernet.Po # am--include-marker
 include ./$(DEPDIR)/decode-events.Po # am--include-marker
-include ./$(DEPDIR)/decode-geneve.Po # am--include-marker
 include ./$(DEPDIR)/decode-gre.Po # am--include-marker
 include ./$(DEPDIR)/decode-icmpv4.Po # am--include-marker
 include ./$(DEPDIR)/decode-icmpv6.Po # am--include-marker
 include ./$(DEPDIR)/decode-ipv4.Po # am--include-marker
 include ./$(DEPDIR)/decode-ipv6.Po # am--include-marker
-include ./$(DEPDIR)/decode-mpls.Po # am--include-marker
 include ./$(DEPDIR)/decode-null.Po # am--include-marker
-include ./$(DEPDIR)/decode-ppp.Po # am--include-marker
-include ./$(DEPDIR)/decode-pppoe.Po # am--include-marker
 include ./$(DEPDIR)/decode-raw.Po # am--include-marker
-include ./$(DEPDIR)/decode-sctp.Po # am--include-marker
 include ./$(DEPDIR)/decode-sll.Po # am--include-marker
 include ./$(DEPDIR)/decode-tcp.Po # am--include-marker
 include ./$(DEPDIR)/decode-template.Po # am--include-marker
-include ./$(DEPDIR)/decode-teredo.Po # am--include-marker
 include ./$(DEPDIR)/decode-udp.Po # am--include-marker
 include ./$(DEPDIR)/decode-vlan.Po # am--include-marker
-include ./$(DEPDIR)/decode-vntag.Po # am--include-marker
 include ./$(DEPDIR)/decode-vxlan.Po # am--include-marker
 include ./$(DEPDIR)/decode.Po # am--include-marker
 include ./$(DEPDIR)/defrag-config.Po # am--include-marker
@@ -2123,20 +2020,15 @@ include ./$(DEPDIR)/detect-byte.Po # am--include-marker
 include ./$(DEPDIR)/detect-bytejump.Po # am--include-marker
 include ./$(DEPDIR)/detect-bytemath.Po # am--include-marker
 include ./$(DEPDIR)/detect-bytetest.Po # am--include-marker
-include ./$(DEPDIR)/detect-cipservice.Po # am--include-marker
 include ./$(DEPDIR)/detect-classtype.Po # am--include-marker
 include ./$(DEPDIR)/detect-config.Po # am--include-marker
 include ./$(DEPDIR)/detect-content.Po # am--include-marker
 include ./$(DEPDIR)/detect-csum.Po # am--include-marker
 include ./$(DEPDIR)/detect-datarep.Po # am--include-marker
 include ./$(DEPDIR)/detect-dataset.Po # am--include-marker
-include ./$(DEPDIR)/detect-dce-iface.Po # am--include-marker
-include ./$(DEPDIR)/detect-dce-opnum.Po # am--include-marker
-include ./$(DEPDIR)/detect-dce-stub-data.Po # am--include-marker
 include ./$(DEPDIR)/detect-depth.Po # am--include-marker
 include ./$(DEPDIR)/detect-detection-filter.Po # am--include-marker
 include ./$(DEPDIR)/detect-distance.Po # am--include-marker
-include ./$(DEPDIR)/detect-dnp3.Po # am--include-marker
 include ./$(DEPDIR)/detect-dns-opcode.Po # am--include-marker
 include ./$(DEPDIR)/detect-dns-query.Po # am--include-marker
 include ./$(DEPDIR)/detect-dsize.Po # am--include-marker
@@ -2147,14 +2039,11 @@ include ./$(DEPDIR)/detect-engine-alert.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-analyzer.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-build.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-content-inspection.Po # am--include-marker
-include ./$(DEPDIR)/detect-engine-dcepayload.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-dns.Po # am--include-marker
-include ./$(DEPDIR)/detect-engine-enip.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-event.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-file.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-iponly.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-loader.Po # am--include-marker
-include ./$(DEPDIR)/detect-engine-modbus.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-mpm.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-payload.Po # am--include-marker
 include ./$(DEPDIR)/detect-engine-port.Po # am--include-marker
@@ -2234,16 +2123,11 @@ include ./$(DEPDIR)/detect-ipv4hdr.Po # am--include-marker
 include ./$(DEPDIR)/detect-ipv6hdr.Po # am--include-marker
 include ./$(DEPDIR)/detect-isdataat.Po # am--include-marker
 include ./$(DEPDIR)/detect-itype.Po # am--include-marker
-include ./$(DEPDIR)/detect-krb5-cname.Po # am--include-marker
-include ./$(DEPDIR)/detect-krb5-errcode.Po # am--include-marker
-include ./$(DEPDIR)/detect-krb5-msgtype.Po # am--include-marker
-include ./$(DEPDIR)/detect-krb5-sname.Po # am--include-marker
 include ./$(DEPDIR)/detect-l3proto.Po # am--include-marker
 include ./$(DEPDIR)/detect-lua-extensions.Po # am--include-marker
 include ./$(DEPDIR)/detect-lua.Po # am--include-marker
 include ./$(DEPDIR)/detect-mark.Po # am--include-marker
 include ./$(DEPDIR)/detect-metadata.Po # am--include-marker
-include ./$(DEPDIR)/detect-modbus.Po # am--include-marker
 include ./$(DEPDIR)/detect-msg.Po # am--include-marker
 include ./$(DEPDIR)/detect-nfs-procedure.Po # am--include-marker
 include ./$(DEPDIR)/detect-nfs-version.Po # am--include-marker
@@ -2266,13 +2150,6 @@ include ./$(DEPDIR)/detect-rfb-sectype.Po # am--include-marker
 include ./$(DEPDIR)/detect-rpc.Po # am--include-marker
 include ./$(DEPDIR)/detect-sameip.Po # am--include-marker
 include ./$(DEPDIR)/detect-sid.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-method.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-protocol.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-request-line.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-response-line.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-stat-code.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-stat-msg.Po # am--include-marker
-include ./$(DEPDIR)/detect-sip-uri.Po # am--include-marker
 include ./$(DEPDIR)/detect-smb-share.Po # am--include-marker
 include ./$(DEPDIR)/detect-snmp-community.Po # am--include-marker
 include ./$(DEPDIR)/detect-snmp-pdu_type.Po # am--include-marker
@@ -2370,10 +2247,7 @@ include ./$(DEPDIR)/output-flow.Po # am--include-marker
 include ./$(DEPDIR)/output-json-alert.Po # am--include-marker
 include ./$(DEPDIR)/output-json-anomaly.Po # am--include-marker
 include ./$(DEPDIR)/output-json-common.Po # am--include-marker
-include ./$(DEPDIR)/output-json-dcerpc.Po # am--include-marker
 include ./$(DEPDIR)/output-json-dhcp.Po # am--include-marker
-include ./$(DEPDIR)/output-json-dnp3-objects.Po # am--include-marker
-include ./$(DEPDIR)/output-json-dnp3.Po # am--include-marker
 include ./$(DEPDIR)/output-json-dns.Po # am--include-marker
 include ./$(DEPDIR)/output-json-drop.Po # am--include-marker
 include ./$(DEPDIR)/output-json-email-common.Po # am--include-marker
@@ -2382,14 +2256,11 @@ include ./$(DEPDIR)/output-json-flow.Po # am--include-marker
 include ./$(DEPDIR)/output-json-ftp.Po # am--include-marker
 include ./$(DEPDIR)/output-json-http.Po # am--include-marker
 include ./$(DEPDIR)/output-json-http2.Po # am--include-marker
-include ./$(DEPDIR)/output-json-ikev2.Po # am--include-marker
-include ./$(DEPDIR)/output-json-krb5.Po # am--include-marker
 include ./$(DEPDIR)/output-json-metadata.Po # am--include-marker
 include ./$(DEPDIR)/output-json-netflow.Po # am--include-marker
 include ./$(DEPDIR)/output-json-nfs.Po # am--include-marker
 include ./$(DEPDIR)/output-json-rdp.Po # am--include-marker
 include ./$(DEPDIR)/output-json-rfb.Po # am--include-marker
-include ./$(DEPDIR)/output-json-sip.Po # am--include-marker
 include ./$(DEPDIR)/output-json-smb.Po # am--include-marker
 include ./$(DEPDIR)/output-json-smtp.Po # am--include-marker
 include ./$(DEPDIR)/output-json-snmp.Po # am--include-marker
@@ -2422,6 +2293,7 @@ include ./$(DEPDIR)/source-pcap-file-directory-helper.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap-file-helper.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap-file.Po # am--include-marker
 include ./$(DEPDIR)/source-pcap.Po # am--include-marker
+include ./$(DEPDIR)/source-af-packet.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-inline.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-list.Po # am--include-marker
 include ./$(DEPDIR)/stream-tcp-reassemble.Po # am--include-marker
@@ -2483,8 +2355,6 @@ include ./$(DEPDIR)/util-ja3.Po # am--include-marker
 include ./$(DEPDIR)/util-log-redis.Po # am--include-marker
 include ./$(DEPDIR)/util-logopenfile.Po # am--include-marker
 include ./$(DEPDIR)/util-lua-common.Po # am--include-marker
-include ./$(DEPDIR)/util-lua-dnp3-objects.Po # am--include-marker
-include ./$(DEPDIR)/util-lua-dnp3.Po # am--include-marker
 include ./$(DEPDIR)/util-lua-dns.Po # am--include-marker
 include ./$(DEPDIR)/util-lua-hassh.Po # am--include-marker
 include ./$(DEPDIR)/util-lua-http.Po # am--include-marker
@@ -2778,10 +2648,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc.Po
 	-rm -f ./$(DEPDIR)/app-layer-detect-proto.Po
-	-rm -f ./$(DEPDIR)/app-layer-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/app-layer-dnp3.Po
-	-rm -f ./$(DEPDIR)/app-layer-enip-common.Po
-	-rm -f ./$(DEPDIR)/app-layer-enip.Po
 	-rm -f ./$(DEPDIR)/app-layer-events.Po
 	-rm -f ./$(DEPDIR)/app-layer-expectation.Po
 	-rm -f ./$(DEPDIR)/app-layer-ftp.Po
@@ -2792,9 +2658,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-htp-xff.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp.Po
 	-rm -f ./$(DEPDIR)/app-layer-http2.Po
-	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
-	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
-	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -2803,7 +2666,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-rdp.Po
 	-rm -f ./$(DEPDIR)/app-layer-register.Po
 	-rm -f ./$(DEPDIR)/app-layer-rfb.Po
-	-rm -f ./$(DEPDIR)/app-layer-sip.Po
 	-rm -f ./$(DEPDIR)/app-layer-smb.Po
 	-rm -f ./$(DEPDIR)/app-layer-smtp.Po
 	-rm -f ./$(DEPDIR)/app-layer-snmp.Po
@@ -2820,29 +2682,20 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/datasets-sha256.Po
 	-rm -f ./$(DEPDIR)/datasets-string.Po
 	-rm -f ./$(DEPDIR)/datasets.Po
-	-rm -f ./$(DEPDIR)/decode-chdlc.Po
-	-rm -f ./$(DEPDIR)/decode-erspan.Po
 	-rm -f ./$(DEPDIR)/decode-ethernet.Po
 	-rm -f ./$(DEPDIR)/decode-events.Po
-	-rm -f ./$(DEPDIR)/decode-geneve.Po
 	-rm -f ./$(DEPDIR)/decode-gre.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv4.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv6.Po
 	-rm -f ./$(DEPDIR)/decode-ipv4.Po
 	-rm -f ./$(DEPDIR)/decode-ipv6.Po
-	-rm -f ./$(DEPDIR)/decode-mpls.Po
 	-rm -f ./$(DEPDIR)/decode-null.Po
-	-rm -f ./$(DEPDIR)/decode-ppp.Po
-	-rm -f ./$(DEPDIR)/decode-pppoe.Po
 	-rm -f ./$(DEPDIR)/decode-raw.Po
-	-rm -f ./$(DEPDIR)/decode-sctp.Po
 	-rm -f ./$(DEPDIR)/decode-sll.Po
 	-rm -f ./$(DEPDIR)/decode-tcp.Po
 	-rm -f ./$(DEPDIR)/decode-template.Po
-	-rm -f ./$(DEPDIR)/decode-teredo.Po
 	-rm -f ./$(DEPDIR)/decode-udp.Po
 	-rm -f ./$(DEPDIR)/decode-vlan.Po
-	-rm -f ./$(DEPDIR)/decode-vntag.Po
 	-rm -f ./$(DEPDIR)/decode-vxlan.Po
 	-rm -f ./$(DEPDIR)/decode.Po
 	-rm -f ./$(DEPDIR)/defrag-config.Po
@@ -2862,20 +2715,15 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-bytejump.Po
 	-rm -f ./$(DEPDIR)/detect-bytemath.Po
 	-rm -f ./$(DEPDIR)/detect-bytetest.Po
-	-rm -f ./$(DEPDIR)/detect-cipservice.Po
 	-rm -f ./$(DEPDIR)/detect-classtype.Po
 	-rm -f ./$(DEPDIR)/detect-config.Po
 	-rm -f ./$(DEPDIR)/detect-content.Po
 	-rm -f ./$(DEPDIR)/detect-csum.Po
 	-rm -f ./$(DEPDIR)/detect-datarep.Po
 	-rm -f ./$(DEPDIR)/detect-dataset.Po
-	-rm -f ./$(DEPDIR)/detect-dce-iface.Po
-	-rm -f ./$(DEPDIR)/detect-dce-opnum.Po
-	-rm -f ./$(DEPDIR)/detect-dce-stub-data.Po
 	-rm -f ./$(DEPDIR)/detect-depth.Po
 	-rm -f ./$(DEPDIR)/detect-detection-filter.Po
 	-rm -f ./$(DEPDIR)/detect-distance.Po
-	-rm -f ./$(DEPDIR)/detect-dnp3.Po
 	-rm -f ./$(DEPDIR)/detect-dns-opcode.Po
 	-rm -f ./$(DEPDIR)/detect-dns-query.Po
 	-rm -f ./$(DEPDIR)/detect-dsize.Po
@@ -2886,14 +2734,11 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-engine-analyzer.Po
 	-rm -f ./$(DEPDIR)/detect-engine-build.Po
 	-rm -f ./$(DEPDIR)/detect-engine-content-inspection.Po
-	-rm -f ./$(DEPDIR)/detect-engine-dcepayload.Po
 	-rm -f ./$(DEPDIR)/detect-engine-dns.Po
-	-rm -f ./$(DEPDIR)/detect-engine-enip.Po
 	-rm -f ./$(DEPDIR)/detect-engine-event.Po
 	-rm -f ./$(DEPDIR)/detect-engine-file.Po
 	-rm -f ./$(DEPDIR)/detect-engine-iponly.Po
 	-rm -f ./$(DEPDIR)/detect-engine-loader.Po
-	-rm -f ./$(DEPDIR)/detect-engine-modbus.Po
 	-rm -f ./$(DEPDIR)/detect-engine-mpm.Po
 	-rm -f ./$(DEPDIR)/detect-engine-payload.Po
 	-rm -f ./$(DEPDIR)/detect-engine-port.Po
@@ -2973,16 +2818,11 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-ipv6hdr.Po
 	-rm -f ./$(DEPDIR)/detect-isdataat.Po
 	-rm -f ./$(DEPDIR)/detect-itype.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-cname.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-errcode.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-msgtype.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-sname.Po
 	-rm -f ./$(DEPDIR)/detect-l3proto.Po
 	-rm -f ./$(DEPDIR)/detect-lua-extensions.Po
 	-rm -f ./$(DEPDIR)/detect-lua.Po
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
-	-rm -f ./$(DEPDIR)/detect-modbus.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3005,13 +2845,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-rpc.Po
 	-rm -f ./$(DEPDIR)/detect-sameip.Po
 	-rm -f ./$(DEPDIR)/detect-sid.Po
-	-rm -f ./$(DEPDIR)/detect-sip-method.Po
-	-rm -f ./$(DEPDIR)/detect-sip-protocol.Po
-	-rm -f ./$(DEPDIR)/detect-sip-request-line.Po
-	-rm -f ./$(DEPDIR)/detect-sip-response-line.Po
-	-rm -f ./$(DEPDIR)/detect-sip-stat-code.Po
-	-rm -f ./$(DEPDIR)/detect-sip-stat-msg.Po
-	-rm -f ./$(DEPDIR)/detect-sip-uri.Po
 	-rm -f ./$(DEPDIR)/detect-smb-share.Po
 	-rm -f ./$(DEPDIR)/detect-snmp-community.Po
 	-rm -f ./$(DEPDIR)/detect-snmp-pdu_type.Po
@@ -3109,10 +2942,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/output-json-alert.Po
 	-rm -f ./$(DEPDIR)/output-json-anomaly.Po
 	-rm -f ./$(DEPDIR)/output-json-common.Po
-	-rm -f ./$(DEPDIR)/output-json-dcerpc.Po
 	-rm -f ./$(DEPDIR)/output-json-dhcp.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3.Po
 	-rm -f ./$(DEPDIR)/output-json-dns.Po
 	-rm -f ./$(DEPDIR)/output-json-drop.Po
 	-rm -f ./$(DEPDIR)/output-json-email-common.Po
@@ -3121,14 +2951,11 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/output-json-ftp.Po
 	-rm -f ./$(DEPDIR)/output-json-http.Po
 	-rm -f ./$(DEPDIR)/output-json-http2.Po
-	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
-	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
 	-rm -f ./$(DEPDIR)/output-json-rfb.Po
-	-rm -f ./$(DEPDIR)/output-json-sip.Po
 	-rm -f ./$(DEPDIR)/output-json-smb.Po
 	-rm -f ./$(DEPDIR)/output-json-smtp.Po
 	-rm -f ./$(DEPDIR)/output-json-snmp.Po
@@ -3161,6 +2988,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
 	-rm -f ./$(DEPDIR)/source-pcap.Po
+	-rm -f ./$(DEPDIR)/source-af-packet.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-inline.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-list.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-reassemble.Po
@@ -3222,8 +3050,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/util-log-redis.Po
 	-rm -f ./$(DEPDIR)/util-logopenfile.Po
 	-rm -f ./$(DEPDIR)/util-lua-common.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3.Po
 	-rm -f ./$(DEPDIR)/util-lua-dns.Po
 	-rm -f ./$(DEPDIR)/util-lua-hassh.Po
 	-rm -f ./$(DEPDIR)/util-lua-http.Po
@@ -3351,10 +3177,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc.Po
 	-rm -f ./$(DEPDIR)/app-layer-detect-proto.Po
-	-rm -f ./$(DEPDIR)/app-layer-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/app-layer-dnp3.Po
-	-rm -f ./$(DEPDIR)/app-layer-enip-common.Po
-	-rm -f ./$(DEPDIR)/app-layer-enip.Po
 	-rm -f ./$(DEPDIR)/app-layer-events.Po
 	-rm -f ./$(DEPDIR)/app-layer-expectation.Po
 	-rm -f ./$(DEPDIR)/app-layer-ftp.Po
@@ -3365,9 +3187,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-htp-xff.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp.Po
 	-rm -f ./$(DEPDIR)/app-layer-http2.Po
-	-rm -f ./$(DEPDIR)/app-layer-ikev2.Po
 	-rm -f ./$(DEPDIR)/app-layer-krb5.Po
-	-rm -f ./$(DEPDIR)/app-layer-modbus.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-tcp.Po
 	-rm -f ./$(DEPDIR)/app-layer-nfs-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-ntp.Po
@@ -3376,7 +3196,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-rdp.Po
 	-rm -f ./$(DEPDIR)/app-layer-register.Po
 	-rm -f ./$(DEPDIR)/app-layer-rfb.Po
-	-rm -f ./$(DEPDIR)/app-layer-sip.Po
 	-rm -f ./$(DEPDIR)/app-layer-smb.Po
 	-rm -f ./$(DEPDIR)/app-layer-smtp.Po
 	-rm -f ./$(DEPDIR)/app-layer-snmp.Po
@@ -3393,29 +3212,20 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/datasets-sha256.Po
 	-rm -f ./$(DEPDIR)/datasets-string.Po
 	-rm -f ./$(DEPDIR)/datasets.Po
-	-rm -f ./$(DEPDIR)/decode-chdlc.Po
-	-rm -f ./$(DEPDIR)/decode-erspan.Po
 	-rm -f ./$(DEPDIR)/decode-ethernet.Po
 	-rm -f ./$(DEPDIR)/decode-events.Po
-	-rm -f ./$(DEPDIR)/decode-geneve.Po
 	-rm -f ./$(DEPDIR)/decode-gre.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv4.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv6.Po
 	-rm -f ./$(DEPDIR)/decode-ipv4.Po
 	-rm -f ./$(DEPDIR)/decode-ipv6.Po
-	-rm -f ./$(DEPDIR)/decode-mpls.Po
 	-rm -f ./$(DEPDIR)/decode-null.Po
-	-rm -f ./$(DEPDIR)/decode-ppp.Po
-	-rm -f ./$(DEPDIR)/decode-pppoe.Po
 	-rm -f ./$(DEPDIR)/decode-raw.Po
-	-rm -f ./$(DEPDIR)/decode-sctp.Po
 	-rm -f ./$(DEPDIR)/decode-sll.Po
 	-rm -f ./$(DEPDIR)/decode-tcp.Po
 	-rm -f ./$(DEPDIR)/decode-template.Po
-	-rm -f ./$(DEPDIR)/decode-teredo.Po
 	-rm -f ./$(DEPDIR)/decode-udp.Po
 	-rm -f ./$(DEPDIR)/decode-vlan.Po
-	-rm -f ./$(DEPDIR)/decode-vntag.Po
 	-rm -f ./$(DEPDIR)/decode-vxlan.Po
 	-rm -f ./$(DEPDIR)/decode.Po
 	-rm -f ./$(DEPDIR)/defrag-config.Po
@@ -3435,20 +3245,15 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-bytejump.Po
 	-rm -f ./$(DEPDIR)/detect-bytemath.Po
 	-rm -f ./$(DEPDIR)/detect-bytetest.Po
-	-rm -f ./$(DEPDIR)/detect-cipservice.Po
 	-rm -f ./$(DEPDIR)/detect-classtype.Po
 	-rm -f ./$(DEPDIR)/detect-config.Po
 	-rm -f ./$(DEPDIR)/detect-content.Po
 	-rm -f ./$(DEPDIR)/detect-csum.Po
 	-rm -f ./$(DEPDIR)/detect-datarep.Po
 	-rm -f ./$(DEPDIR)/detect-dataset.Po
-	-rm -f ./$(DEPDIR)/detect-dce-iface.Po
-	-rm -f ./$(DEPDIR)/detect-dce-opnum.Po
-	-rm -f ./$(DEPDIR)/detect-dce-stub-data.Po
 	-rm -f ./$(DEPDIR)/detect-depth.Po
 	-rm -f ./$(DEPDIR)/detect-detection-filter.Po
 	-rm -f ./$(DEPDIR)/detect-distance.Po
-	-rm -f ./$(DEPDIR)/detect-dnp3.Po
 	-rm -f ./$(DEPDIR)/detect-dns-opcode.Po
 	-rm -f ./$(DEPDIR)/detect-dns-query.Po
 	-rm -f ./$(DEPDIR)/detect-dsize.Po
@@ -3459,14 +3264,11 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-engine-analyzer.Po
 	-rm -f ./$(DEPDIR)/detect-engine-build.Po
 	-rm -f ./$(DEPDIR)/detect-engine-content-inspection.Po
-	-rm -f ./$(DEPDIR)/detect-engine-dcepayload.Po
 	-rm -f ./$(DEPDIR)/detect-engine-dns.Po
-	-rm -f ./$(DEPDIR)/detect-engine-enip.Po
 	-rm -f ./$(DEPDIR)/detect-engine-event.Po
 	-rm -f ./$(DEPDIR)/detect-engine-file.Po
 	-rm -f ./$(DEPDIR)/detect-engine-iponly.Po
 	-rm -f ./$(DEPDIR)/detect-engine-loader.Po
-	-rm -f ./$(DEPDIR)/detect-engine-modbus.Po
 	-rm -f ./$(DEPDIR)/detect-engine-mpm.Po
 	-rm -f ./$(DEPDIR)/detect-engine-payload.Po
 	-rm -f ./$(DEPDIR)/detect-engine-port.Po
@@ -3546,16 +3348,11 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-ipv6hdr.Po
 	-rm -f ./$(DEPDIR)/detect-isdataat.Po
 	-rm -f ./$(DEPDIR)/detect-itype.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-cname.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-errcode.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-msgtype.Po
-	-rm -f ./$(DEPDIR)/detect-krb5-sname.Po
 	-rm -f ./$(DEPDIR)/detect-l3proto.Po
 	-rm -f ./$(DEPDIR)/detect-lua-extensions.Po
 	-rm -f ./$(DEPDIR)/detect-lua.Po
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
-	-rm -f ./$(DEPDIR)/detect-modbus.Po
 	-rm -f ./$(DEPDIR)/detect-msg.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-procedure.Po
 	-rm -f ./$(DEPDIR)/detect-nfs-version.Po
@@ -3578,7 +3375,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-rpc.Po
 	-rm -f ./$(DEPDIR)/detect-sameip.Po
 	-rm -f ./$(DEPDIR)/detect-sid.Po
-	-rm -f ./$(DEPDIR)/detect-sip-method.Po
 	-rm -f ./$(DEPDIR)/detect-sip-protocol.Po
 	-rm -f ./$(DEPDIR)/detect-sip-request-line.Po
 	-rm -f ./$(DEPDIR)/detect-sip-response-line.Po
@@ -3682,10 +3478,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/output-json-alert.Po
 	-rm -f ./$(DEPDIR)/output-json-anomaly.Po
 	-rm -f ./$(DEPDIR)/output-json-common.Po
-	-rm -f ./$(DEPDIR)/output-json-dcerpc.Po
 	-rm -f ./$(DEPDIR)/output-json-dhcp.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3.Po
 	-rm -f ./$(DEPDIR)/output-json-dns.Po
 	-rm -f ./$(DEPDIR)/output-json-drop.Po
 	-rm -f ./$(DEPDIR)/output-json-email-common.Po
@@ -3694,14 +3487,11 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/output-json-ftp.Po
 	-rm -f ./$(DEPDIR)/output-json-http.Po
 	-rm -f ./$(DEPDIR)/output-json-http2.Po
-	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
-	-rm -f ./$(DEPDIR)/output-json-krb5.Po
 	-rm -f ./$(DEPDIR)/output-json-metadata.Po
 	-rm -f ./$(DEPDIR)/output-json-netflow.Po
 	-rm -f ./$(DEPDIR)/output-json-nfs.Po
 	-rm -f ./$(DEPDIR)/output-json-rdp.Po
 	-rm -f ./$(DEPDIR)/output-json-rfb.Po
-	-rm -f ./$(DEPDIR)/output-json-sip.Po
 	-rm -f ./$(DEPDIR)/output-json-smb.Po
 	-rm -f ./$(DEPDIR)/output-json-smtp.Po
 	-rm -f ./$(DEPDIR)/output-json-snmp.Po
@@ -3734,6 +3524,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
 	-rm -f ./$(DEPDIR)/source-pcap.Po
+	-rm -f ./$(DEPDIR)/source-af-packet.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-inline.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-list.Po
 	-rm -f ./$(DEPDIR)/stream-tcp-reassemble.Po
@@ -3795,8 +3586,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/util-log-redis.Po
 	-rm -f ./$(DEPDIR)/util-logopenfile.Po
 	-rm -f ./$(DEPDIR)/util-lua-common.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3.Po
 	-rm -f ./$(DEPDIR)/util-lua-dns.Po
 	-rm -f ./$(DEPDIR)/util-lua-hassh.Po
 	-rm -f ./$(DEPDIR)/util-lua-http.Po

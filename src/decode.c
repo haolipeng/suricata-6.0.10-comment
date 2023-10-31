@@ -51,7 +51,6 @@
 #include "suricata.h"
 #include "conf.h"
 #include "decode.h"
-#include "decode-teredo.h"
 #include "util-debug.h"
 #include "util-mem.h"
 #include "app-layer-detect-proto.h"
@@ -102,8 +101,6 @@ static int DecodeTunnel(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p, const 
         uint32_t len, enum DecodeTunnelProto proto)
 {
     switch (proto) {
-        case DECODE_TUNNEL_PPP:
-            return DecodePPP(tv, dtv, p, pkt, len);
         case DECODE_TUNNEL_IPV4:
             return DecodeIPV4(tv, dtv, p, pkt, len);
         case DECODE_TUNNEL_IPV6:
@@ -113,10 +110,6 @@ static int DecodeTunnel(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p, const 
             return DecodeVLAN(tv, dtv, p, pkt, len);
         case DECODE_TUNNEL_ETHERNET:
             return DecodeEthernet(tv, dtv, p, pkt, len);
-        case DECODE_TUNNEL_ERSPANII:
-            return DecodeERSPAN(tv, dtv, p, pkt, len);
-        case DECODE_TUNNEL_ERSPANI:
-            return DecodeERSPANTypeI(tv, dtv, p, pkt, len);
         default:
             SCLogDebug("FIXME: DecodeTunnel: protocol %" PRIu32 " not supported.", proto);
             break;
@@ -832,11 +825,7 @@ void CaptureStatsSetup(ThreadVars *tv, CaptureStats *s)
 
 void DecodeGlobalConfig(void)
 {
-    DecodeTeredoConfig();
-    DecodeGeneveConfig();
     DecodeVXLANConfig();
-    DecodeERSPANConfig();
-    DecodeVNTagConfig();
     intmax_t value = 0;
     if (ConfGetInt("decoder.max-layers", &value) == 1) {
         if (value < 0 || value > UINT8_MAX) {

@@ -44,7 +44,6 @@
 #include "detect-engine.h"
 #include "detect-parse.h"
 #include "detect-engine-state.h"
-#include "detect-engine-dcepayload.h"
 
 #include "detect-flowvar.h"
 
@@ -56,8 +55,6 @@
 #include "app-layer-parser.h"
 #include "app-layer-protos.h"
 #include "app-layer-htp.h"
-#include "app-layer-dcerpc-common.h"
-#include "app-layer-dcerpc.h"
 
 #include "util-unittest.h"
 #include "util-unittest-helper.h"

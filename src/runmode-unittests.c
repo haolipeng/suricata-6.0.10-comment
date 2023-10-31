@@ -34,10 +34,8 @@
 #include "detect-engine-mpm.h"
 #include "detect-engine-sigorder.h"
 #include "detect-engine-payload.h"
-#include "detect-engine-dcepayload.h"
 #include "detect-engine-state.h"
 #include "detect-engine-tag.h"
-#include "detect-engine-modbus.h"
 #include "detect-fast-pattern.h"
 #include "flow.h"
 #include "flow-timeout.h"
@@ -57,8 +55,6 @@
 #include "app-layer-detect-proto.h"
 #include "app-layer-parser.h"
 #include "app-layer.h"
-#include "app-layer-dcerpc.h"
-#include "app-layer-dcerpc-udp.h"
 #include "app-layer-htp.h"
 #include "app-layer-ftp.h"
 #include "app-layer-ssl.h"
@@ -144,14 +140,9 @@ static void RegisterUnittests(void)
     IPPairBitRegisterTests();
     StatsRegisterTests();
     DecodeEthernetRegisterTests();
-    DecodeCHDLCRegisterTests();
-    DecodePPPRegisterTests();
     DecodeVLANRegisterTests();
-    DecodeVNTagRegisterTests();
-    DecodeGeneveRegisterTests();
     DecodeVXLANRegisterTests();
     DecodeRawRegisterTests();
-    DecodePPPOERegisterTests();
     DecodeICMPV4RegisterTests();
     DecodeICMPV6RegisterTests();
     DecodeIPV4RegisterTests();
@@ -159,7 +150,6 @@ static void RegisterUnittests(void)
     DecodeTCPRegisterTests();
     DecodeUDPV4RegisterTests();
     DecodeGRERegisterTests();
-    DecodeMPLSRegisterTests();
     AppLayerProtoDetectUnittestsRegister();
     ConfRegisterTests();
     ConfYamlRegisterTests();
@@ -182,13 +172,11 @@ static void RegisterUnittests(void)
     SCThresholdConfRegisterTests();
     SCRConfRegisterTests();
     PayloadRegisterTests();
-    DcePayloadRegisterTests();
 #ifdef PROFILING
     SCProfilingRegisterTests();
 #endif
     DeStateRegisterTests();
     MemcmpRegisterTests();
-    DetectEngineInspectModbusRegisterTests();
     DetectEngineRegisterTests();
     SCLogRegisterTests();
     MagicRegisterTests();

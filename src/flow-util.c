@@ -184,10 +184,7 @@ void FlowInit(Flow *f, const Packet *p)
         f->icmp_s.type = p->icmp_s.type;
         f->icmp_s.code = p->icmp_s.code;
         FlowSetICMPv6CounterPart(f);
-    } else if (p->sctph != NULL) { /* XXX MACRO */
-        SET_SCTP_SRC_PORT(p,&f->sp);
-        SET_SCTP_DST_PORT(p,&f->dp);
-    } else {
+    }else {
         /* nothing to do for this IP proto. */
         SCLogDebug("no special setup for IP proto %u", p->proto);
     }

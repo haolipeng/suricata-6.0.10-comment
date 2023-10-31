@@ -45,9 +45,6 @@ static int DetectMarkSetup (DetectEngineCtx *, Signature *, const char *);
 static int DetectMarkPacket(DetectEngineThreadCtx *det_ctx, Packet *p,
         const Signature *s, const SigMatchCtx *ctx);
 void DetectMarkDataFree(DetectEngineCtx *, void *ptr);
-#if defined UNITTESTS && defined NFQ
-static void MarkRegisterTests(void);
-#endif
 
 /**
  * \brief Registration function for nfq_set_mark: keyword
@@ -59,119 +56,8 @@ void DetectMarkRegister (void)
     sigmatch_table[DETECT_MARK].Match = DetectMarkPacket;
     sigmatch_table[DETECT_MARK].Setup = DetectMarkSetup;
     sigmatch_table[DETECT_MARK].Free  = DetectMarkDataFree;
-#if defined UNITTESTS && defined NFQ
-    sigmatch_table[DETECT_MARK].RegisterTests = MarkRegisterTests;
-#endif
     DetectSetupParseRegexes(PARSE_REGEX, &parse_regex);
 }
-
-#ifdef NFQ
-/**
- * \internal
- * \brief This function is used to parse mark options passed via mark: keyword
- *
- * \param rawstr Pointer to the user provided mark options
- *
- * \retval 0 on success
- * \retval < 0 on failure
- */
-static void * DetectMarkParse (const char *rawstr)
-{
-    int ret = 0, res = 0;
-    int ov[MAX_SUBSTRINGS];
-    const char *str_ptr = NULL;
-    char *ptr = NULL;
-    char *endptr = NULL;
-    uint32_t mark;
-    uint32_t mask;
-    DetectMarkData *data;
-
-    ret = DetectParsePcreExec(&parse_regex, rawstr, 0, 0, ov, MAX_SUBSTRINGS);
-    if (ret < 1) {
-        SCLogError(SC_ERR_PCRE_MATCH, "pcre_exec parse error, ret %" PRId32 ", string %s", ret, rawstr);
-        return NULL;
-    }
-
-    res = pcre_get_substring((char *)rawstr, ov, MAX_SUBSTRINGS, 1, &str_ptr);
-    if (res < 0) {
-        SCLogError(SC_ERR_PCRE_GET_SUBSTRING, "pcre_get_substring failed");
-        return NULL;
-    }
-
-    ptr = (char *)str_ptr;
-
-    if (ptr == NULL)
-        return NULL;
-
-    errno = 0;
-    mark = strtoul(ptr, &endptr, 0);
-    if (errno == ERANGE) {
-        SCLogError(SC_ERR_NUMERIC_VALUE_ERANGE, "Numeric value out of range");
-        SCFree(ptr);
-        return NULL;
-    }     /* If there is no numeric value in the given string then strtoull(), makes
-             endptr equals to ptr and return 0 as result */
-    else if (endptr == ptr && mark == 0) {
-        SCLogError(SC_ERR_INVALID_NUMERIC_VALUE, "No numeric value");
-        SCFree(ptr);
-        return NULL;
-    } else if (endptr == ptr) {
-        SCLogError(SC_ERR_INVALID_NUMERIC_VALUE, "Invalid numeric value");
-        SCFree(ptr);
-        return NULL;
-    }
-
-    res = pcre_get_substring((char *)rawstr, ov, MAX_SUBSTRINGS, 2, &str_ptr);
-    if (res < 0) {
-        SCLogError(SC_ERR_PCRE_GET_SUBSTRING, "pcre_get_substring failed");
-        return NULL;
-    }
-
-    SCFree(ptr);
-    ptr = (char *)str_ptr;
-
-    if (ptr == NULL) {
-        data = SCMalloc(sizeof(DetectMarkData));
-        if (unlikely(data == NULL)) {
-            return NULL;
-        }
-        data->mark = mark;
-        data->mask = 0xffff;
-        return data;
-    }
-
-    errno = 0;
-    mask = strtoul(ptr, &endptr, 0);
-    if (errno == ERANGE) {
-        SCLogError(SC_ERR_NUMERIC_VALUE_ERANGE, "Numeric value out of range");
-        SCFree(ptr);
-        return NULL;
-    }     /* If there is no numeric value in the given string then strtoull(), makes
-             endptr equals to ptr and return 0 as result */
-    else if (endptr == ptr && mask == 0) {
-        SCLogError(SC_ERR_INVALID_NUMERIC_VALUE, "No numeric value");
-        SCFree(ptr);
-        return NULL;
-    }
-    else if (endptr == ptr) {
-        SCLogError(SC_ERR_INVALID_NUMERIC_VALUE, "Invalid numeric value");
-        SCFree(ptr);
-        return NULL;
-    }
-
-    SCLogDebug("Rule will set mark 0x%x with mask 0x%x", mark, mask);
-    SCFree(ptr);
-
-    data = SCMalloc(sizeof(DetectMarkData));
-    if (unlikely(data == NULL)) {
-        return NULL;
-    }
-    data->mark = mark;
-    data->mask = mask;
-    return data;
-}
-
-#endif /* NFQ */
 
 /**
  * \internal

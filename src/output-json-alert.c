@@ -46,7 +46,6 @@
 #include "detect-reference.h"
 #include "detect-metadata.h"
 #include "app-layer-parser.h"
-#include "app-layer-dnp3.h"
 #include "app-layer-htp.h"
 #include "app-layer-htp-xff.h"
 #include "app-layer-ftp.h"
@@ -57,7 +56,6 @@
 #include "output.h"
 #include "output-json.h"
 #include "output-json-alert.h"
-#include "output-json-dnp3.h"
 #include "output-json-dns.h"
 #include "output-json-http.h"
 #include "output-json-tls.h"
@@ -68,7 +66,6 @@
 #include "output-json-nfs.h"
 #include "output-json-smb.h"
 #include "output-json-flow.h"
-#include "output-json-sip.h"
 #include "output-json-rfb.h"
 
 #include "util-byte.h"
@@ -178,39 +175,6 @@ static void AlertJsonHttp2(const Flow *f, const uint64_t tx_id, JsonBuilder *js)
     }
 
     return;
-}
-
-static void AlertJsonDnp3(const Flow *f, const uint64_t tx_id, JsonBuilder *js)
-{
-    DNP3State *dnp3_state = (DNP3State *)FlowGetAppState(f);
-    if (dnp3_state) {
-        DNP3Transaction *tx = AppLayerParserGetTx(IPPROTO_TCP, ALPROTO_DNP3,
-            dnp3_state, tx_id);
-        if (tx) {
-            JsonBuilderMark mark = { 0, 0, 0 };
-            jb_get_mark(js, &mark);
-            bool logged = false;
-            jb_open_object(js, "dnp3");
-            if (tx->has_request && tx->request_done) {
-                jb_open_object(js, "request");
-                JsonDNP3LogRequest(js, tx);
-                jb_close(js);
-                logged = true;
-            }
-            if (tx->has_response && tx->response_done) {
-                jb_open_object(js, "response");
-                JsonDNP3LogResponse(js, tx);
-                jb_close(js);
-                logged = true;
-            }
-            if (logged) {
-                /* Close dnp3 object. */
-                jb_close(js);
-            } else {
-                jb_restore_mark(js, &mark);
-            }
-        }
-    }
 }
 
 static void AlertJsonDns(const Flow *f, const uint64_t tx_id, JsonBuilder *js)
@@ -507,9 +471,6 @@ static void AlertAddAppLayer(const Packet *p, JsonBuilder *jb,
                 jb_restore_mark(jb, &mark);
             }
             break;
-        case ALPROTO_SIP:
-            JsonSIPAddMetadata(jb, p->flow, tx_id);
-            break;
         case ALPROTO_RFB:
             jb_get_mark(jb, &mark);
             if (!JsonRFBAddMetadata(p->flow, tx_id, jb)) {
@@ -518,9 +479,6 @@ static void AlertAddAppLayer(const Packet *p, JsonBuilder *jb,
             break;
         case ALPROTO_FTPDATA:
             EveFTPDataAddMetadata(p->flow, jb);
-            break;
-        case ALPROTO_DNP3:
-            AlertJsonDnp3(p->flow, tx_id, jb);
             break;
         case ALPROTO_HTTP2:
             AlertJsonHttp2(p->flow, tx_id, jb);

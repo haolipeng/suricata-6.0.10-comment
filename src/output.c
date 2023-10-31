@@ -69,20 +69,15 @@
 #include "output-json-ftp.h"
 #include "output-json-tftp.h"
 #include "output-json-smb.h"
-#include "output-json-ikev2.h"
-#include "output-json-krb5.h"
 #include "output-json-dhcp.h"
 #include "output-json-snmp.h"
-#include "output-json-sip.h"
 #include "output-json-rfb.h"
 #include "output-json-template.h"
 #include "output-json-template-rust.h"
 #include "output-json-rdp.h"
 #include "output-json-http2.h"
 #include "output-lua.h"
-#include "output-json-dnp3.h"
 #include "output-json-metadata.h"
-#include "output-json-dcerpc.h"
 #include "output-filestore.h"
 
 typedef struct RootLogger_ {
@@ -1034,85 +1029,96 @@ void OutputRegisterRootLoggers(void)
 /**
  * \brief Register all non-root logging modules.
  */
-void OutputRegisterLoggers(void)
+/*void OutputRegisterLoggers(void)
 {
-    /* custom format log*/
+    *//* custom format log*//*
     LogCustomFormatRegister();
 
     LuaLogRegister();
-    /* fast log */
+    *//* fast log *//*
     AlertFastLogRegister();
-    /* debug log */
+    *//* debug log *//*
     AlertDebugLogRegister();
-    /* prelue log */
+    *//* prelue log *//*
     AlertPreludeRegister();
-    /* syslog log */
+    *//* syslog log *//*
     AlertSyslogRegister();
     JsonDropLogRegister();
-    /* json log */
+    *//* json log *//*
     OutputJsonRegister();
-    /* email logs */
+    *//* email logs *//*
     JsonSmtpLogRegister();
-    /* http log */
+    *//* http log *//*
     LogHttpLogRegister();
     JsonHttpLogRegister();
     JsonHttp2LogRegister();
-    /* tls log */
+    *//* tls log *//*
     LogTlsLogRegister();
     JsonTlsLogRegister();
     LogTlsStoreRegister();
-    /* ssh */
+    *//* ssh *//*
     JsonSshLogRegister();
-    /* pcap log */
+    *//* pcap log *//*
     PcapLogRegister();
-    /* file log */
+    *//* file log *//*
     JsonFileLogRegister();
     OutputFilestoreRegister();
-    /* dns */
+    *//* dns *//*
     JsonDnsLogRegister();
-    /* tcp streaming data */
+    *//* tcp streaming data *//*
     LogTcpDataLogRegister();
-    /* log stats */
+    *//* log stats *//*
     LogStatsLogRegister();
+
+    JsonAlertLogRegister();
+    JsonAnomalyLogRegister();
+    *//* flow/netflow *//*
+    JsonFlowLogRegister();
+    JsonNetFlowLogRegister();
+    *//* json stats *//*
+    JsonStatsLogRegister();
+
+    *//* DNP3. *//*
+    JsonDNP3LogRegister();
+    JsonMetadataLogRegister();
+
+    *//* NFS JSON logger. *//*
+    JsonNFSLogRegister();
+    *//* TFTP JSON logger. *//*
+    JsonTFTPLogRegister();
+    *//* FTP JSON logger. *//*
+    JsonFTPLogRegister();
+    *//* SMB JSON logger. *//*
+    JsonSMBLogRegister();
+    *//* IKEv2 JSON logger. *//*
+    JsonIKEv2LogRegister();
+    *//* KRB5 JSON logger. *//*
+    JsonKRB5LogRegister();
+    *//* DHCP JSON logger. *//*
+    JsonDHCPLogRegister();
+    *//* SNMP JSON logger. *//*
+    JsonSNMPLogRegister();
+    *//* SIP JSON logger. *//*
+    JsonSIPLogRegister();
+    *//* RFB JSON logger. *//*
+    JsonRFBLogRegister();
+    *//* Template JSON logger. *//*
+    JsonTemplateLogRegister();
+    *//* Template Rust JSON logger. *//*
+    JsonTemplateRustLogRegister();
+    *//* RDP JSON logger. *//*
+    JsonRdpLogRegister();
+    *//* DCERPC JSON logger. *//*
+    JsonDCERPCLogRegister();
+}*/
+
+void OutputRegisterLoggers(void)
+{
+    /* json log */
+    OutputJsonRegister();
 
     JsonAlertLogRegister();
     JsonAnomalyLogRegister();
     /* flow/netflow */
     JsonFlowLogRegister();
-    JsonNetFlowLogRegister();
-    /* json stats */
-    JsonStatsLogRegister();
-
-    /* DNP3. */
-    JsonDNP3LogRegister();
-    JsonMetadataLogRegister();
-
-    /* NFS JSON logger. */
-    JsonNFSLogRegister();
-    /* TFTP JSON logger. */
-    JsonTFTPLogRegister();
-    /* FTP JSON logger. */
-    JsonFTPLogRegister();
-    /* SMB JSON logger. */
-    JsonSMBLogRegister();
-    /* IKEv2 JSON logger. */
-    JsonIKEv2LogRegister();
-    /* KRB5 JSON logger. */
-    JsonKRB5LogRegister();
-    /* DHCP JSON logger. */
-    JsonDHCPLogRegister();
-    /* SNMP JSON logger. */
-    JsonSNMPLogRegister();
-    /* SIP JSON logger. */
-    JsonSIPLogRegister();
-    /* RFB JSON logger. */
-    JsonRFBLogRegister();
-    /* Template JSON logger. */
-    JsonTemplateLogRegister();
-    /* Template Rust JSON logger. */
-    JsonTemplateRustLogRegister();
-    /* RDP JSON logger. */
-    JsonRdpLogRegister();
-    /* DCERPC JSON logger. */
-    JsonDCERPCLogRegister();
 }

@@ -179,31 +179,30 @@ detect-fragbits.o: detect-fragbits.c /usr/include/stdc-predef.h \
  queue.h threadvars.h util-affinity.h tm-queues.h packet-queue.h \
  counters.h decode-events.h flow-worker.h source-pcap.h \
  source-af-packet.h /usr/include/linux/if_packet.h action-globals.h \
- decode-erspan.h decode-ethernet.h decode-chdlc.h decode-gre.h \
- decode-geneve.h decode-ppp.h decode-pppoe.h decode-sll.h decode-ipv4.h \
- decode-ipv6.h decode-icmpv4.h decode-tcp.h decode-sctp.h decode-udp.h \
- decode-icmpv6.h decode-raw.h decode-null.h decode-vlan.h decode-vntag.h \
- decode-vxlan.h decode-mpls.h detect-reference.h app-layer-protos.h \
- detect.h flow.h util-exception-policy.h util-var.h util-device.h \
- unix-manager.h detect-tag.h suricata.h runmodes.h runmode-pcap.h \
- runmode-pcap-file.h runmode-af-packet.h runmode-unix-socket.h \
- util-time.h util-macset.h flow-queue.h detect-engine-proto.h \
- detect-metadata.h detect-engine-register.h util-prefilter.h util-mpm.h \
- util-spm.h util-spm-bs.h util-spm-bs2bm.h util-spm-bm.h util-hash.h \
- util-hashlist.h util-radix-tree.h util-file.h /usr/include/nss/sechash.h \
- /usr/include/nss/seccomon.h /usr/include/nss/utilrename.h \
- /usr/include/nspr/prtypes.h /usr/include/nspr/prcpucfg.h \
- /usr/include/nspr/obsolete/protypes.h /usr/include/nss/secport.h \
- /usr/include/nspr/prlink.h /usr/include/nspr/prtypes.h \
- /usr/include/nspr/prlog.h /usr/include/nspr/plarena.h \
- /usr/include/nspr/plstr.h /usr/include/nss/hasht.h \
- /usr/include/nss/secoidt.h /usr/include/nss/secitem.h \
- /usr/include/nspr/plhash.h util-streaming-buffer.h tree.h reputation.h \
- host.h util-storage.h detect-mark.h stream.h util-var-name.h \
- app-layer-events.h detect-threshold.h detect-engine-build.h util-path.h \
- util-conf.h detect-parse.h detect-engine-prefilter.h \
- detect-engine-state.h detect-engine-prefilter-common.h flow-var.h \
- app-layer.h stream-tcp-private.h util-pool.h util-pool-thread.h \
+ decode-ethernet.h decode-gre.h decode-sll.h decode-ipv4.h decode-ipv6.h \
+ decode-icmpv4.h decode-tcp.h decode-udp.h decode-icmpv6.h decode-raw.h \
+ decode-null.h decode-vlan.h decode-vxlan.h detect-reference.h \
+ app-layer-protos.h detect.h flow.h util-exception-policy.h util-var.h \
+ util-device.h unix-manager.h detect-tag.h suricata.h runmodes.h \
+ runmode-pcap.h runmode-pcap-file.h runmode-af-packet.h \
+ runmode-unix-socket.h util-time.h util-macset.h flow-queue.h \
+ detect-engine-proto.h detect-metadata.h detect-engine-register.h \
+ util-prefilter.h util-mpm.h util-spm.h util-spm-bs.h util-spm-bs2bm.h \
+ util-spm-bm.h util-hash.h util-hashlist.h util-radix-tree.h util-file.h \
+ /usr/include/nss/sechash.h /usr/include/nss/seccomon.h \
+ /usr/include/nss/utilrename.h /usr/include/nspr/prtypes.h \
+ /usr/include/nspr/prcpucfg.h /usr/include/nspr/obsolete/protypes.h \
+ /usr/include/nss/secport.h /usr/include/nspr/prlink.h \
+ /usr/include/nspr/prtypes.h /usr/include/nspr/prlog.h \
+ /usr/include/nspr/plarena.h /usr/include/nspr/plstr.h \
+ /usr/include/nss/hasht.h /usr/include/nss/secoidt.h \
+ /usr/include/nss/secitem.h /usr/include/nspr/plhash.h \
+ util-streaming-buffer.h tree.h reputation.h host.h util-storage.h \
+ detect-mark.h stream.h util-var-name.h app-layer-events.h \
+ detect-threshold.h detect-engine-build.h util-path.h util-conf.h \
+ detect-parse.h detect-engine-prefilter.h detect-engine-state.h \
+ detect-engine-prefilter-common.h flow-var.h app-layer.h \
+ stream-tcp-private.h util-pool.h util-pool-thread.h \
  stream-tcp-reassemble.h app-layer-detect-proto.h util-profiling.h \
  detect-fragbits.h util-unittest.h pkt-var.h
 
@@ -719,19 +718,9 @@ source-af-packet.h:
 
 action-globals.h:
 
-decode-erspan.h:
-
 decode-ethernet.h:
 
-decode-chdlc.h:
-
 decode-gre.h:
-
-decode-geneve.h:
-
-decode-ppp.h:
-
-decode-pppoe.h:
 
 decode-sll.h:
 
@@ -743,8 +732,6 @@ decode-icmpv4.h:
 
 decode-tcp.h:
 
-decode-sctp.h:
-
 decode-udp.h:
 
 decode-icmpv6.h:
@@ -755,11 +742,7 @@ decode-null.h:
 
 decode-vlan.h:
 
-decode-vntag.h:
-
 decode-vxlan.h:
-
-decode-mpls.h:
 
 detect-reference.h:
 

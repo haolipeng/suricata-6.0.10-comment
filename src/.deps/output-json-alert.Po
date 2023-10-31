@@ -179,46 +179,44 @@ output-json-alert.o: output-json-alert.c /usr/include/stdc-predef.h \
  queue.h threadvars.h util-affinity.h tm-queues.h packet-queue.h \
  counters.h decode-events.h flow-worker.h source-pcap.h \
  source-af-packet.h /usr/include/linux/if_packet.h action-globals.h \
- decode-erspan.h decode-ethernet.h decode-chdlc.h decode-gre.h \
- decode-geneve.h decode-ppp.h decode-pppoe.h decode-sll.h decode-ipv4.h \
- decode-ipv6.h decode-icmpv4.h decode-tcp.h decode-sctp.h decode-udp.h \
- decode-icmpv6.h decode-raw.h decode-null.h decode-vlan.h decode-vntag.h \
- decode-vxlan.h decode-mpls.h detect-reference.h app-layer-protos.h \
- detect.h flow.h util-exception-policy.h util-var.h util-device.h \
- unix-manager.h detect-tag.h suricata.h runmodes.h runmode-pcap.h \
- runmode-pcap-file.h runmode-af-packet.h runmode-unix-socket.h \
- util-time.h util-macset.h flow-queue.h detect-engine-proto.h \
- detect-metadata.h detect-engine-register.h util-prefilter.h util-mpm.h \
- util-spm.h util-spm-bs.h util-spm-bs2bm.h util-spm-bm.h util-hash.h \
- util-hashlist.h util-radix-tree.h util-file.h /usr/include/nss/sechash.h \
- /usr/include/nss/seccomon.h /usr/include/nss/utilrename.h \
- /usr/include/nspr/prtypes.h /usr/include/nspr/prcpucfg.h \
- /usr/include/nspr/obsolete/protypes.h /usr/include/nss/secport.h \
- /usr/include/nspr/prlink.h /usr/include/nspr/prtypes.h \
- /usr/include/nspr/prlog.h /usr/include/nspr/plarena.h \
- /usr/include/nspr/plstr.h /usr/include/nss/hasht.h \
- /usr/include/nss/secoidt.h /usr/include/nss/secitem.h \
- /usr/include/nspr/plhash.h util-streaming-buffer.h tree.h reputation.h \
- host.h util-storage.h detect-mark.h stream.h util-var-name.h \
- app-layer-events.h detect-threshold.h detect-engine-build.h util-path.h \
- util-conf.h debug.h tm-threads.h tmqh-packetpool.h tm-modules.h \
- util-logopenfile.h util-buffer.h util-misc.h util-unittest.h \
- util-unittest-helper.h detect-parse.h detect-engine.h flow-private.h \
- flow-hash.h detect-engine-mpm.h detect-content.h detect-uricontent.h \
+ decode-ethernet.h decode-gre.h decode-sll.h decode-ipv4.h decode-ipv6.h \
+ decode-icmpv4.h decode-tcp.h decode-udp.h decode-icmpv6.h decode-raw.h \
+ decode-null.h decode-vlan.h decode-vxlan.h detect-reference.h \
+ app-layer-protos.h detect.h flow.h util-exception-policy.h util-var.h \
+ util-device.h unix-manager.h detect-tag.h suricata.h runmodes.h \
+ runmode-pcap.h runmode-pcap-file.h runmode-af-packet.h \
+ runmode-unix-socket.h util-time.h util-macset.h flow-queue.h \
+ detect-engine-proto.h detect-metadata.h detect-engine-register.h \
+ util-prefilter.h util-mpm.h util-spm.h util-spm-bs.h util-spm-bs2bm.h \
+ util-spm-bm.h util-hash.h util-hashlist.h util-radix-tree.h util-file.h \
+ /usr/include/nss/sechash.h /usr/include/nss/seccomon.h \
+ /usr/include/nss/utilrename.h /usr/include/nspr/prtypes.h \
+ /usr/include/nspr/prcpucfg.h /usr/include/nspr/obsolete/protypes.h \
+ /usr/include/nss/secport.h /usr/include/nspr/prlink.h \
+ /usr/include/nspr/prtypes.h /usr/include/nspr/prlog.h \
+ /usr/include/nspr/plarena.h /usr/include/nspr/plstr.h \
+ /usr/include/nss/hasht.h /usr/include/nss/secoidt.h \
+ /usr/include/nss/secitem.h /usr/include/nspr/plhash.h \
+ util-streaming-buffer.h tree.h reputation.h host.h util-storage.h \
+ detect-mark.h stream.h util-var-name.h app-layer-events.h \
+ detect-threshold.h detect-engine-build.h util-path.h util-conf.h debug.h \
+ tm-threads.h tmqh-packetpool.h tm-modules.h util-logopenfile.h \
+ util-buffer.h util-misc.h util-unittest.h util-unittest-helper.h \
+ detect-parse.h detect-engine.h flow-private.h flow-hash.h \
+ detect-engine-mpm.h detect-content.h detect-uricontent.h \
  app-layer-parser.h detect-engine-state.h stream-tcp-private.h \
- util-pool.h util-pool-thread.h rust.h rust-context.h app-layer-krb5.h \
- app-layer-ikev2.h app-layer-ntp.h app-layer-snmp.h app-layer-tftp.h \
- ../rust/gen/rust-bindings.h rust.h util-config.h app-layer-dnp3.h \
- util-byte.h /usr/include/byteswap.h app-layer-htp.h app-layer-htp-mem.h \
+ util-pool.h util-pool-thread.h rust.h rust-context.h app-layer-ntp.h \
+ app-layer-snmp.h app-layer-tftp.h ../rust/gen/rust-bindings.h rust.h \
+ util-config.h app-layer-htp.h app-layer-htp-mem.h \
  stream-tcp-reassemble.h app-layer-detect-proto.h app-layer-htp-xff.h \
  app-layer-ftp.h util-classification-config.h util-syslog.h output.h \
  output-packet.h output-tx.h output-file.h output-filedata.h \
  output-flow.h output-streaming.h output-stats.h output-json.h \
- output-json-alert.h output-json-dnp3.h output-json-dns.h \
- output-json-http.h output-json-tls.h app-layer-ssl.h util-ja3.h \
- output-json-ssh.h output-json-smtp.h output-json-email-common.h \
- output-json-nfs.h output-json-smb.h output-json-flow.h output-json-sip.h \
- output-json-rfb.h util-privs.h /usr/include/cap-ng.h \
+ output-json-alert.h output-json-dns.h output-json-http.h \
+ output-json-tls.h app-layer-ssl.h util-ja3.h output-json-ssh.h \
+ output-json-smtp.h output-json-email-common.h output-json-nfs.h \
+ output-json-smb.h output-json-flow.h output-json-rfb.h util-byte.h \
+ /usr/include/byteswap.h util-privs.h /usr/include/cap-ng.h \
  /usr/include/linux/capability.h util-print.h util-proto-name.h \
  util-crypt.h util-validate.h
 
@@ -734,19 +732,9 @@ source-af-packet.h:
 
 action-globals.h:
 
-decode-erspan.h:
-
 decode-ethernet.h:
 
-decode-chdlc.h:
-
 decode-gre.h:
-
-decode-geneve.h:
-
-decode-ppp.h:
-
-decode-pppoe.h:
 
 decode-sll.h:
 
@@ -758,8 +746,6 @@ decode-icmpv4.h:
 
 decode-tcp.h:
 
-decode-sctp.h:
-
 decode-udp.h:
 
 decode-icmpv6.h:
@@ -770,11 +756,7 @@ decode-null.h:
 
 decode-vlan.h:
 
-decode-vntag.h:
-
 decode-vxlan.h:
-
-decode-mpls.h:
 
 detect-reference.h:
 
@@ -942,10 +924,6 @@ rust.h:
 
 rust-context.h:
 
-app-layer-krb5.h:
-
-app-layer-ikev2.h:
-
 app-layer-ntp.h:
 
 app-layer-snmp.h:
@@ -957,12 +935,6 @@ app-layer-tftp.h:
 rust.h:
 
 util-config.h:
-
-app-layer-dnp3.h:
-
-util-byte.h:
-
-/usr/include/byteswap.h:
 
 app-layer-htp.h:
 
@@ -1000,8 +972,6 @@ output-json.h:
 
 output-json-alert.h:
 
-output-json-dnp3.h:
-
 output-json-dns.h:
 
 output-json-http.h:
@@ -1024,9 +994,11 @@ output-json-smb.h:
 
 output-json-flow.h:
 
-output-json-sip.h:
-
 output-json-rfb.h:
+
+util-byte.h:
+
+/usr/include/byteswap.h:
 
 util-privs.h:
 

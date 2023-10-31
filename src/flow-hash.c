@@ -53,7 +53,6 @@
 
 extern TcpStreamCnf stream_config;
 
-
 FlowBucket *flow_hash;
 SC_ATOMIC_EXTERN(unsigned int, flow_prune_idx);
 SC_ATOMIC_EXTERN(unsigned int, flow_flags);
@@ -753,7 +752,7 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
         /* got one, now lock, initialize and return */
         FlowInit(f, p);//流初始化
         f->flow_hash = hash;
-        f->fb = fb;
+        f->fb = fb;//flow belong to which flow bucket
         FlowUpdateState(f, FLOW_STATE_NEW);
 
         FlowReference(dest, f);//增加引用计数
@@ -769,9 +768,8 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
     f = fb->head;
     do {
         Flow *next_f = NULL;/*next flow*/
-		//检测流超时
-        const bool timedout =
-            (fb_nextts < (uint32_t)p->ts.tv_sec && FlowIsTimedOut(f, (uint32_t)p->ts.tv_sec, emerg));
+        //检测流超时
+        const bool timedout = (fb_nextts < (uint32_t)p->ts.tv_sec && FlowIsTimedOut(f, (uint32_t)p->ts.tv_sec, emerg));
         if (timedout) {
             FromHashLockTO(f);//FLOWLOCK_WRLOCK(f);
             //超时且引用计数为0，没有packet引用这个flow，则放到线程所属的work queue

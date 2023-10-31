@@ -37,7 +37,6 @@
 #include "decode.h"
 #include "decode-ipv4.h"
 #include "decode-tcp.h"
-#include "decode-sctp.h"
 #include "decode-udp.h"
 #include "packet-queue.h"
 #include "threads.h"

@@ -126,8 +126,6 @@ static const char *RunModeTranslateModeToName(int runmode)
 #endif
         case RUNMODE_PLUGIN:
             return "PLUGIN";
-        case RUNMODE_NFQ:
-            return "NFQ";
         case RUNMODE_NFLOG:
             return "NFLOG";
         case RUNMODE_IPFW:

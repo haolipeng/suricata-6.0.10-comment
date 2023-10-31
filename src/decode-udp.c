@@ -32,9 +32,7 @@
 
 #include "suricata-common.h"
 #include "decode.h"
-#include "decode-geneve.h"
 #include "decode-udp.h"
-#include "decode-teredo.h"
 #include "decode-vxlan.h"
 #include "decode-events.h"
 #include "util-unittest.h"
@@ -88,23 +86,6 @@ int DecodeUDP(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
 
     SCLogDebug("UDP sp: %" PRIu32 " -> dp: %" PRIu32 " - HLEN: %" PRIu32 " LEN: %" PRIu32 "",
         UDP_GET_SRC_PORT(p), UDP_GET_DST_PORT(p), UDP_HEADER_LEN, p->payload_len);
-
-    if (DecodeTeredoEnabledForPort(p->sp, p->dp) &&
-            likely(DecodeTeredo(tv, dtv, p, p->payload, p->payload_len) == TM_ECODE_OK)) {
-        /* Here we have a Teredo packet and don't need to handle app
-         * layer */
-        FlowSetupPacket(p);
-        return TM_ECODE_OK;
-    }
-
-    /* Handle Geneve if configured */
-    if (DecodeGeneveEnabledForPort(p->sp, p->dp) &&
-            unlikely(DecodeGeneve(tv, dtv, p, p->payload, p->payload_len) == TM_ECODE_OK)) {
-        /* Here we have a Geneve packet and don't need to handle app
-         * layer */
-        FlowSetupPacket(p);
-        return TM_ECODE_OK;
-    }
 
     /* Handle VXLAN if configured */
     if (DecodeVXLANEnabledForPort(p->sp, p->dp) &&

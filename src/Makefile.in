@@ -161,21 +161,17 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	conf-yaml-loader.$(OBJEXT) counters.$(OBJEXT) \
 	datasets.$(OBJEXT) datasets-string.$(OBJEXT) \
 	datasets-sha256.$(OBJEXT) datasets-md5.$(OBJEXT) \
-	decode.$(OBJEXT) decode-chdlc.$(OBJEXT) \
-	decode-erspan.$(OBJEXT) decode-ethernet.$(OBJEXT) \
-	decode-events.$(OBJEXT) decode-geneve.$(OBJEXT) \
-	decode-gre.$(OBJEXT) decode-icmpv4.$(OBJEXT) \
-	decode-icmpv6.$(OBJEXT) decode-ipv4.$(OBJEXT) \
-	decode-ipv6.$(OBJEXT) decode-null.$(OBJEXT) \
-	decode-ppp.$(OBJEXT) decode-pppoe.$(OBJEXT) \
-	decode-raw.$(OBJEXT) decode-sctp.$(OBJEXT) \
-	decode-sll.$(OBJEXT) decode-tcp.$(OBJEXT) \
-	decode-teredo.$(OBJEXT) decode-udp.$(OBJEXT) \
+	decode.$(OBJEXT) decode-ethernet.$(OBJEXT) \
+	decode-events.$(OBJEXT) decode-gre.$(OBJEXT) \
+	decode-icmpv4.$(OBJEXT) decode-icmpv6.$(OBJEXT) \
+	decode-ipv4.$(OBJEXT) decode-ipv6.$(OBJEXT) \
+	decode-null.$(OBJEXT) decode-raw.$(OBJEXT) \
+	decode-sll.$(OBJEXT) decode-tcp.$(OBJEXT) decode-udp.$(OBJEXT) \
 	decode-vlan.$(OBJEXT) decode-vxlan.$(OBJEXT) \
-	decode-vntag.$(OBJEXT) decode-mpls.$(OBJEXT) \
-	decode-template.$(OBJEXT) defrag-config.$(OBJEXT) \
-	defrag.$(OBJEXT) defrag-hash.$(OBJEXT) defrag-queue.$(OBJEXT) \
-	defrag-timeout.$(OBJEXT) detect-app-layer-event.$(OBJEXT) \
+	decode-vntag.$(OBJEXT) decode-template.$(OBJEXT) \
+	defrag-config.$(OBJEXT) defrag.$(OBJEXT) defrag-hash.$(OBJEXT) \
+	defrag-queue.$(OBJEXT) defrag-timeout.$(OBJEXT) \
+	detect-app-layer-event.$(OBJEXT) \
 	detect-app-layer-protocol.$(OBJEXT) detect-asn1.$(OBJEXT) \
 	detect-base64-data.$(OBJEXT) detect-base64-decode.$(OBJEXT) \
 	detect-bsize.$(OBJEXT) detect-byte.$(OBJEXT) \
@@ -185,12 +181,11 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	detect-classtype.$(OBJEXT) detect-config.$(OBJEXT) \
 	detect-content.$(OBJEXT) detect-csum.$(OBJEXT) \
 	detect-datarep.$(OBJEXT) detect-dataset.$(OBJEXT) \
-	detect-dce-iface.$(OBJEXT) detect-dce-opnum.$(OBJEXT) \
-	detect-dce-stub-data.$(OBJEXT) detect-depth.$(OBJEXT) \
-	detect-detection-filter.$(OBJEXT) detect-distance.$(OBJEXT) \
-	detect-dnp3.$(OBJEXT) detect-dns-opcode.$(OBJEXT) \
-	detect-dns-query.$(OBJEXT) detect-tls-ja3-hash.$(OBJEXT) \
-	detect-tls-ja3-string.$(OBJEXT) detect-tls-ja3s-hash.$(OBJEXT) \
+	detect-depth.$(OBJEXT) detect-detection-filter.$(OBJEXT) \
+	detect-distance.$(OBJEXT) detect-dnp3.$(OBJEXT) \
+	detect-dns-opcode.$(OBJEXT) detect-dns-query.$(OBJEXT) \
+	detect-tls-ja3-hash.$(OBJEXT) detect-tls-ja3-string.$(OBJEXT) \
+	detect-tls-ja3s-hash.$(OBJEXT) \
 	detect-tls-ja3s-string.$(OBJEXT) detect-tls-sni.$(OBJEXT) \
 	detect-tls-cert-issuer.$(OBJEXT) \
 	detect-tls-cert-subject.$(OBJEXT) \
@@ -341,7 +336,7 @@ am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
 	runmode-af-packet.$(OBJEXT) runmode-pcap.$(OBJEXT) \
 	runmode-pcap-file.$(OBJEXT) runmode-unittests.$(OBJEXT) \
 	runmode-unix-socket.$(OBJEXT) runmodes.$(OBJEXT) \
-	rust-context.$(OBJEXT) source-pcap.$(OBJEXT) source-af-packet.$(OBJEXT)\
+	rust-context.$(OBJEXT) source-pcap.$(OBJEXT) \
 	source-pcap-file.$(OBJEXT) \
 	source-pcap-file-directory-helper.$(OBJEXT) \
 	source-pcap-file-helper.$(OBJEXT) stream.$(OBJEXT) \
@@ -549,17 +544,13 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/conf-yaml-loader.Po ./$(DEPDIR)/conf.Po \
 	./$(DEPDIR)/counters.Po ./$(DEPDIR)/datasets-md5.Po \
 	./$(DEPDIR)/datasets-sha256.Po ./$(DEPDIR)/datasets-string.Po \
-	./$(DEPDIR)/datasets.Po ./$(DEPDIR)/decode-chdlc.Po \
-	./$(DEPDIR)/decode-erspan.Po ./$(DEPDIR)/decode-ethernet.Po \
-	./$(DEPDIR)/decode-events.Po ./$(DEPDIR)/decode-geneve.Po \
-	./$(DEPDIR)/decode-gre.Po ./$(DEPDIR)/decode-icmpv4.Po \
-	./$(DEPDIR)/decode-icmpv6.Po ./$(DEPDIR)/decode-ipv4.Po \
-	./$(DEPDIR)/decode-ipv6.Po ./$(DEPDIR)/decode-mpls.Po \
-	./$(DEPDIR)/decode-null.Po ./$(DEPDIR)/decode-ppp.Po \
-	./$(DEPDIR)/decode-pppoe.Po ./$(DEPDIR)/decode-raw.Po \
-	./$(DEPDIR)/decode-sctp.Po ./$(DEPDIR)/decode-sll.Po \
-	./$(DEPDIR)/decode-tcp.Po ./$(DEPDIR)/decode-template.Po \
-	./$(DEPDIR)/decode-teredo.Po ./$(DEPDIR)/decode-udp.Po \
+	./$(DEPDIR)/datasets.Po ./$(DEPDIR)/decode-ethernet.Po \
+	./$(DEPDIR)/decode-events.Po ./$(DEPDIR)/decode-gre.Po \
+	./$(DEPDIR)/decode-icmpv4.Po ./$(DEPDIR)/decode-icmpv6.Po \
+	./$(DEPDIR)/decode-ipv4.Po ./$(DEPDIR)/decode-ipv6.Po \
+	./$(DEPDIR)/decode-null.Po ./$(DEPDIR)/decode-raw.Po \
+	./$(DEPDIR)/decode-sll.Po ./$(DEPDIR)/decode-tcp.Po \
+	./$(DEPDIR)/decode-template.Po ./$(DEPDIR)/decode-udp.Po \
 	./$(DEPDIR)/decode-vlan.Po ./$(DEPDIR)/decode-vntag.Po \
 	./$(DEPDIR)/decode-vxlan.Po ./$(DEPDIR)/decode.Po \
 	./$(DEPDIR)/defrag-config.Po ./$(DEPDIR)/defrag-hash.Po \
@@ -576,9 +567,6 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/detect-classtype.Po ./$(DEPDIR)/detect-config.Po \
 	./$(DEPDIR)/detect-content.Po ./$(DEPDIR)/detect-csum.Po \
 	./$(DEPDIR)/detect-datarep.Po ./$(DEPDIR)/detect-dataset.Po \
-	./$(DEPDIR)/detect-dce-iface.Po \
-	./$(DEPDIR)/detect-dce-opnum.Po \
-	./$(DEPDIR)/detect-dce-stub-data.Po \
 	./$(DEPDIR)/detect-depth.Po \
 	./$(DEPDIR)/detect-detection-filter.Po \
 	./$(DEPDIR)/detect-distance.Po ./$(DEPDIR)/detect-dnp3.Po \
@@ -1248,29 +1236,21 @@ datasets-string.c datasets-string.h \
 datasets-sha256.c datasets-sha256.h \
 datasets-md5.c datasets-md5.h \
 decode.c decode.h \
-decode-chdlc.c decode-chdlc.h \
-decode-erspan.c decode-erspan.h \
 decode-ethernet.c decode-ethernet.h \
 decode-events.c decode-events.h \
-decode-geneve.c decode-geneve.h \
 decode-gre.c decode-gre.h \
 decode-icmpv4.c decode-icmpv4.h \
 decode-icmpv6.c decode-icmpv6.h \
 decode-ipv4.c decode-ipv4.h \
 decode-ipv6.c decode-ipv6.h \
 decode-null.c decode-null.h \
-decode-ppp.c decode-ppp.h \
-decode-pppoe.c decode-pppoe.h \
 decode-raw.c decode-raw.h \
-decode-sctp.c decode-sctp.h \
 decode-sll.c decode-sll.h \
 decode-tcp.c decode-tcp.h \
-decode-teredo.c decode-teredo.h \
 decode-udp.c decode-udp.h \
 decode-vlan.c decode-vlan.h \
 decode-vxlan.c decode-vxlan.h \
 decode-vntag.c decode-vntag.h \
-decode-mpls.c decode-mpls.h \
 decode-template.c decode-template.h \
 defrag-config.c defrag-config.h \
 defrag.c defrag.h \
@@ -1296,9 +1276,6 @@ detect-content.c detect-content.h \
 detect-csum.c detect-csum.h \
 detect-datarep.c detect-datarep.h \
 detect-dataset.c detect-dataset.h \
-detect-dce-iface.c detect-dce-iface.h \
-detect-dce-opnum.c detect-dce-opnum.h \
-detect-dce-stub-data.c detect-dce-stub-data.h \
 detect-depth.c detect-depth.h \
 detect-detection-filter.c detect-detection-filter.h \
 detect-distance.c detect-distance.h \
@@ -2081,26 +2058,18 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/datasets-sha256.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/datasets-string.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/datasets.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-chdlc.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-erspan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-ethernet.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-events.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-geneve.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-gre.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-icmpv4.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-icmpv6.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-ipv4.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-ipv6.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-mpls.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-null.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-ppp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-pppoe.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-raw.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-sctp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-sll.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-tcp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-template.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-teredo.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-udp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-vlan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decode-vntag.Po@am__quote@ # am--include-marker
@@ -2130,9 +2099,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-csum.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-datarep.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-dataset.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-dce-iface.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-dce-opnum.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-dce-stub-data.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-depth.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-detection-filter.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-distance.Po@am__quote@ # am--include-marker
@@ -2820,26 +2786,18 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/datasets-sha256.Po
 	-rm -f ./$(DEPDIR)/datasets-string.Po
 	-rm -f ./$(DEPDIR)/datasets.Po
-	-rm -f ./$(DEPDIR)/decode-chdlc.Po
-	-rm -f ./$(DEPDIR)/decode-erspan.Po
 	-rm -f ./$(DEPDIR)/decode-ethernet.Po
 	-rm -f ./$(DEPDIR)/decode-events.Po
-	-rm -f ./$(DEPDIR)/decode-geneve.Po
 	-rm -f ./$(DEPDIR)/decode-gre.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv4.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv6.Po
 	-rm -f ./$(DEPDIR)/decode-ipv4.Po
 	-rm -f ./$(DEPDIR)/decode-ipv6.Po
-	-rm -f ./$(DEPDIR)/decode-mpls.Po
 	-rm -f ./$(DEPDIR)/decode-null.Po
-	-rm -f ./$(DEPDIR)/decode-ppp.Po
-	-rm -f ./$(DEPDIR)/decode-pppoe.Po
 	-rm -f ./$(DEPDIR)/decode-raw.Po
-	-rm -f ./$(DEPDIR)/decode-sctp.Po
 	-rm -f ./$(DEPDIR)/decode-sll.Po
 	-rm -f ./$(DEPDIR)/decode-tcp.Po
 	-rm -f ./$(DEPDIR)/decode-template.Po
-	-rm -f ./$(DEPDIR)/decode-teredo.Po
 	-rm -f ./$(DEPDIR)/decode-udp.Po
 	-rm -f ./$(DEPDIR)/decode-vlan.Po
 	-rm -f ./$(DEPDIR)/decode-vntag.Po
@@ -2869,9 +2827,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-csum.Po
 	-rm -f ./$(DEPDIR)/detect-datarep.Po
 	-rm -f ./$(DEPDIR)/detect-dataset.Po
-	-rm -f ./$(DEPDIR)/detect-dce-iface.Po
-	-rm -f ./$(DEPDIR)/detect-dce-opnum.Po
-	-rm -f ./$(DEPDIR)/detect-dce-stub-data.Po
 	-rm -f ./$(DEPDIR)/detect-depth.Po
 	-rm -f ./$(DEPDIR)/detect-detection-filter.Po
 	-rm -f ./$(DEPDIR)/detect-distance.Po
@@ -3393,26 +3348,18 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/datasets-sha256.Po
 	-rm -f ./$(DEPDIR)/datasets-string.Po
 	-rm -f ./$(DEPDIR)/datasets.Po
-	-rm -f ./$(DEPDIR)/decode-chdlc.Po
-	-rm -f ./$(DEPDIR)/decode-erspan.Po
 	-rm -f ./$(DEPDIR)/decode-ethernet.Po
 	-rm -f ./$(DEPDIR)/decode-events.Po
-	-rm -f ./$(DEPDIR)/decode-geneve.Po
 	-rm -f ./$(DEPDIR)/decode-gre.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv4.Po
 	-rm -f ./$(DEPDIR)/decode-icmpv6.Po
 	-rm -f ./$(DEPDIR)/decode-ipv4.Po
 	-rm -f ./$(DEPDIR)/decode-ipv6.Po
-	-rm -f ./$(DEPDIR)/decode-mpls.Po
 	-rm -f ./$(DEPDIR)/decode-null.Po
-	-rm -f ./$(DEPDIR)/decode-ppp.Po
-	-rm -f ./$(DEPDIR)/decode-pppoe.Po
 	-rm -f ./$(DEPDIR)/decode-raw.Po
-	-rm -f ./$(DEPDIR)/decode-sctp.Po
 	-rm -f ./$(DEPDIR)/decode-sll.Po
 	-rm -f ./$(DEPDIR)/decode-tcp.Po
 	-rm -f ./$(DEPDIR)/decode-template.Po
-	-rm -f ./$(DEPDIR)/decode-teredo.Po
 	-rm -f ./$(DEPDIR)/decode-udp.Po
 	-rm -f ./$(DEPDIR)/decode-vlan.Po
 	-rm -f ./$(DEPDIR)/decode-vntag.Po
@@ -3442,9 +3389,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-csum.Po
 	-rm -f ./$(DEPDIR)/detect-datarep.Po
 	-rm -f ./$(DEPDIR)/detect-dataset.Po
-	-rm -f ./$(DEPDIR)/detect-dce-iface.Po
-	-rm -f ./$(DEPDIR)/detect-dce-opnum.Po
-	-rm -f ./$(DEPDIR)/detect-dce-stub-data.Po
 	-rm -f ./$(DEPDIR)/detect-depth.Po
 	-rm -f ./$(DEPDIR)/detect-detection-filter.Po
 	-rm -f ./$(DEPDIR)/detect-distance.Po

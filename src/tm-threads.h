@@ -56,6 +56,7 @@ typedef struct TmSlot_ {
         TmEcode (*PktAcqLoop)(ThreadVars *, void *, void *);
         TmEcode (*Management)(ThreadVars *, void *);
     };
+
     /** linked list of slots, used when a pipeline has multiple slots
      *  in a single thread. */
     struct TmSlot_ *slot_next;

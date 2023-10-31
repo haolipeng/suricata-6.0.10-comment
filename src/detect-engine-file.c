@@ -32,7 +32,6 @@
 
 #include "detect-filestore.h"
 
-#include "detect-engine-dcepayload.h"
 #include "detect-engine-file.h"
 
 #include "stream-tcp.h"
@@ -42,8 +41,6 @@
 #include "app-layer-parser.h"
 #include "app-layer-protos.h"
 #include "app-layer-htp.h"
-#include "app-layer-dcerpc-common.h"
-#include "app-layer-dcerpc.h"
 #include "app-layer-smtp.h"
 
 #include "util-unittest.h"

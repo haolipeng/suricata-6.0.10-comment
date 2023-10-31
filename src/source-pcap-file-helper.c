@@ -248,9 +248,6 @@ TmEcode ValidateLinkType(int datalink, DecoderFunc *DecoderFn)
         case LINKTYPE_ETHERNET:
             *DecoderFn = DecodeEthernet;
             break;
-        case LINKTYPE_PPP:
-            *DecoderFn = DecodePPP;
-            break;
         case LINKTYPE_IPV4:
         case LINKTYPE_RAW:
         case LINKTYPE_RAW2:
@@ -259,9 +256,6 @@ TmEcode ValidateLinkType(int datalink, DecoderFunc *DecoderFn)
             break;
         case LINKTYPE_NULL:
             *DecoderFn = DecodeNull;
-            break;
-        case LINKTYPE_CISCO_HDLC:
-            *DecoderFn = DecodeCHDLC;
             break;
 
         default:

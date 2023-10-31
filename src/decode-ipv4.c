@@ -574,10 +574,6 @@ int DecodeIPV4(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
             DecodeGRE(tv, dtv, p, pkt + IPV4_GET_HLEN(p),
                       IPV4_GET_IPLEN(p) - IPV4_GET_HLEN(p));
             break;
-        case IPPROTO_SCTP:
-            DecodeSCTP(tv, dtv, p, pkt + IPV4_GET_HLEN(p),
-                      IPV4_GET_IPLEN(p) - IPV4_GET_HLEN(p));
-            break;
         case IPPROTO_IPV6:
             {
                 /* spawn off tunnel packet */
@@ -593,10 +589,6 @@ int DecodeIPV4(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
             }
         case IPPROTO_IP:
             /* check PPP VJ uncompressed packets and decode tcp dummy */
-            if(p->ppph != NULL && SCNtohs(p->ppph->protocol) == PPP_VJ_UCOMP)    {
-                DecodeTCP(tv, dtv, p, pkt + IPV4_GET_HLEN(p),
-                          IPV4_GET_IPLEN(p) -  IPV4_GET_HLEN(p));
-            }
             break;
         case IPPROTO_ICMPV6:
             ENGINE_SET_INVALID_EVENT(p, IPV4_WITH_ICMPV6);

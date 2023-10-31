@@ -34,7 +34,6 @@
 #include "decode-icmpv6.h"
 #include "decode.h"
 #include "decode-tcp.h"
-#include "decode-sctp.h"
 #include "decode-udp.h"
 #include "decode-events.h"
 #include "util-unittest.h"

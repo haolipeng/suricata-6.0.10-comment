@@ -46,25 +46,17 @@
 #include "app-layer.h"
 #include "app-layer-protos.h"
 #include "app-layer-parser.h"
-#include "app-layer-dcerpc.h"
-#include "app-layer-dcerpc-udp.h"
 #include "app-layer-smb.h"
 #include "app-layer-htp.h"
 #include "app-layer-ftp.h"
 #include "app-layer-ssl.h"
 #include "app-layer-ssh.h"
 #include "app-layer-smtp.h"
-#include "app-layer-modbus.h"
-#include "app-layer-enip.h"
-#include "app-layer-dnp3.h"
 #include "app-layer-nfs-tcp.h"
 #include "app-layer-nfs-udp.h"
 #include "app-layer-ntp.h"
 #include "app-layer-tftp.h"
-#include "app-layer-ikev2.h"
-#include "app-layer-krb5.h"
 #include "app-layer-snmp.h"
-#include "app-layer-sip.h"
 #include "app-layer-rfb.h"
 #include "app-layer-template.h"
 #include "app-layer-template-rust.h"
@@ -1642,27 +1634,18 @@ void AppLayerParserRegisterProtocolParsers(void)
 
     RegisterHTPParsers();
     RegisterSSLParsers();
-    RegisterDCERPCParsers();
-    RegisterDCERPCUDPParsers();
     RegisterSMBParsers();
     RegisterFTPParsers();
     RegisterSSHParsers();
     RegisterSMTPParsers();
     rs_dns_udp_register_parser();
     rs_dns_tcp_register_parser();
-    RegisterModbusParsers();
-    RegisterENIPUDPParsers();
-    RegisterENIPTCPParsers();
-    RegisterDNP3Parsers();
     RegisterNFSTCPParsers();
     RegisterNFSUDPParsers();
     RegisterNTPParsers();
     RegisterTFTPParsers();
-    RegisterIKEV2Parsers();
-    RegisterKRB5Parsers();
     rs_dhcp_register_parser();
     RegisterSNMPParsers();
-    RegisterSIPParsers();
     RegisterTemplateRustParsers();
     RegisterRFBParsers();
     RegisterTemplateParsers();

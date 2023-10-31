@@ -107,12 +107,7 @@
 #include "app-layer-ssh.h"
 #include "app-layer-ftp.h"
 #include "app-layer-smtp.h"
-#include "app-layer-modbus.h"
-#include "app-layer-enip.h"
-#include "app-layer-dnp3.h"
 #include "app-layer-smb.h"
-#include "app-layer-dcerpc.h"
-
 #include "output-filestore.h"
 
 #include "util-ebpf.h"
@@ -2343,11 +2338,6 @@ int PostConfLoadedSetup(SCInstance *suri)
     if (ConfigGetCaptureValue(suri) != TM_ECODE_OK) {
         SCReturnInt(TM_ECODE_FAILED);
     }
-
-#ifdef NFQ
-    if (suri->run_mode == RUNMODE_NFQ)
-        NFQInitConfig(FALSE);
-#endif
 
     /* Load the Host-OS lookup. */
     SCHInfoLoadFromConfig();

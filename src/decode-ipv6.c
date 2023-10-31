@@ -188,11 +188,6 @@ DecodeIPV6ExtHdrs(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
                 DecodeICMPV6(tv, dtv, p, pkt, plen);
                 SCReturn;
 
-            case IPPROTO_SCTP:
-                IPV6_SET_L4PROTO(p,nh);
-                DecodeSCTP(tv, dtv, p, pkt, plen);
-                SCReturn;
-
             case IPPROTO_ROUTING:
                 IPV6_SET_L4PROTO(p,nh);
                 hdrextlen = 8 + (*(pkt+1) * 8);  /* 8 bytes + length in 8 octet units */
@@ -622,10 +617,6 @@ int DecodeIPV6(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p, const uint8_t *
         case IPPROTO_ICMPV6:
             IPV6_SET_L4PROTO (p, IPPROTO_ICMPV6);
             DecodeICMPV6(tv, dtv, p, pkt + IPV6_HEADER_LEN, IPV6_GET_PLEN(p));
-            return TM_ECODE_OK;
-        case IPPROTO_SCTP:
-            IPV6_SET_L4PROTO (p, IPPROTO_SCTP);
-            DecodeSCTP(tv, dtv, p, pkt + IPV6_HEADER_LEN, IPV6_GET_PLEN(p));
             return TM_ECODE_OK;
         case IPPROTO_IPIP:
             IPV6_SET_L4PROTO(p, IPPROTO_IPIP);

@@ -7,7 +7,6 @@
 *.pcap
 *.pcapng
 .libs/
-*~
 m4/
 TAGS
 autom4te.cache/
