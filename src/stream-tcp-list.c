@@ -124,6 +124,7 @@ static inline int InsertSegmentDataCustom(TcpStream *stream, TcpSegment *seg, ui
  *  \retval true
  *  \retval false
  */
+//检测segment是否与红黑树中的其他segment重叠
 static inline bool CheckOverlap(struct TCPSEG *tree, TcpSegment *seg)
 {
     const uint32_t re = SEG_SEQ_RIGHT_EDGE(seg);
@@ -178,6 +179,7 @@ static int DoInsertSegment (TcpStream *stream, TcpSegment *seg, TcpSegment **dup
     }
 
     /* fast track */
+    // 如果红黑树为空，则插入segment
     if (RB_EMPTY(&stream->seg_tree)) {
         SCLogDebug("empty tree, inserting seg %p seq %" PRIu32 ", "
                    "len %" PRIu32 "", seg, seg->seq, TCP_SEG_LEN(seg));
@@ -186,7 +188,6 @@ static int DoInsertSegment (TcpStream *stream, TcpSegment *seg, TcpSegment **dup
         return 0;
     }
 
-    /* insert and then check if there was any overlap with other segments */
     // 插入然后检查是否与其他segment重叠
     TcpSegment *res = TCPSEG_RB_INSERT(&stream->seg_tree, seg);
     if (res) {
@@ -194,6 +195,7 @@ static int DoInsertSegment (TcpStream *stream, TcpSegment *seg, TcpSegment **dup
         SCLogDebug("seg has a duplicate in the tree seq %u/%u",
                 res->seq, res->payload_len);
         /* exact duplicate SEQ + payload_len */
+        //与现有段完全重复
         *dup_seg = res;
         return 2; // duplicate has overlap by definition.
     } else {
@@ -489,12 +491,15 @@ static int DoHandleDataCheckForward(TcpStream *stream,
 }
 
 /**
- *  \param dup_seg in-tree duplicate of `seg`
+ *  stream:当前处理的tcp流
+ *  seg:当前处理的tcp段
+ *  tree_seg:与当前段完全重复的段
+ *  p:当前处理的数据包
  */
 static int DoHandleData(ThreadVars *tv, TcpReassemblyThreadCtx *ra_ctx,
         TcpStream *stream, TcpSegment *seg, TcpSegment *tree_seg, Packet *p)
 {
-    int result = 0;
+    int result = 0;//记录数据重叠但内容不同的情况
     TcpSegment *handle = seg;
 
     SCLogDebug("insert data for segment %p seq %u len %u re %u",
@@ -503,17 +508,20 @@ static int DoHandleData(ThreadVars *tv, TcpReassemblyThreadCtx *ra_ctx,
     /* create temporary buffer to contain the data we will insert. Overlap
      * handling may update it. By using this we don't have to track whether
      * parts of the data are already inserted or not. */
+    //创建临时缓冲区，复制原始数据包的载荷
     uint8_t buf[p->payload_len];
     memcpy(buf, p->payload, p->payload_len);
 
-    /* if tree_seg is set, we have an exact duplicate that we need to check */
+    /* 如果存在重复的段，调用DoHandleDataOverlap处理数据重叠 */
     if (tree_seg) {
+        //重叠处理可能会修改buf中的数据，比如保留新数据还是保留旧数据
         DoHandleDataOverlap(stream, tree_seg, seg, buf, p);
         handle = tree_seg;
     }
 
-    const bool is_head = !(TCPSEG_RB_PREV(handle));
-    const bool is_tail = !(TCPSEG_RB_NEXT(handle));
+    //确定段在红黑树的位置
+    const bool is_head = !(TCPSEG_RB_PREV(handle));//没有前一个段
+    const bool is_tail = !(TCPSEG_RB_NEXT(handle));//没有后一个段
 
     /* new list head  */
     if (is_head && !is_tail) {
@@ -526,7 +534,7 @@ static int DoHandleData(ThreadVars *tv, TcpReassemblyThreadCtx *ra_ctx,
     /* middle of the list */
     } else if (!is_head && !is_tail) {
         result = DoHandleDataCheckBackwards(stream, handle, buf, p);
-        result |= DoHandleDataCheckForward(stream, handle, buf, p);
+        result |= DoHandleDataCheckForward(stream, handle, buf, p);//合并检查结果
     }
 
     /* we had an overlap with different data */
@@ -537,6 +545,7 @@ static int DoHandleData(ThreadVars *tv, TcpReassemblyThreadCtx *ra_ctx,
 
     /* insert the temp buffer now that we've (possibly) updated
      * it to account for the overlap policies */
+    //将最终的数据插入到流缓冲区
     int res = InsertSegmentDataCustom(stream, handle, buf, p->payload_len);
     if (res < 0) {
         if (res == -1) {
@@ -561,6 +570,7 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
 {
     SCEnter();
 
+    //dup_seg表示与seg完全重复的段
     TcpSegment *dup_seg = NULL;
 
     /* insert segment into list. Note: doesn't handle the data */
@@ -578,7 +588,7 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
 
 	//没有数据覆盖
     if (likely(r == 0)) {
-        /* no overlap, straight data insert */
+        /* 没有覆盖，将数据直接插入到流缓冲区中 */
         int res = InsertSegmentDataCustom(stream, seg, pkt_data, pkt_datalen);
         if (res < 0) {
             if (res == -1) {
@@ -590,7 +600,7 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
             SCReturnInt(-1);
         }
 
-    } else if (r == 1 || r == 2) {
+    } else if (r == 1 || r == 2) { // 有数据重叠
         SCLogDebug("overlap (%s%s)", r == 1 ? "normal" : "", r == 2 ? "duplicate" : "");
 
         if (r == 2) {
@@ -598,11 +608,13 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
         }
 
         /* XXX should we exclude 'retransmissions' here? */
+        // 统计重叠数据包
         StatsIncr(tv, ra_ctx->counter_tcp_reass_overlap);
 
-        /* now let's consider the data in the overlap case */
+        /* 处理数据 */
         int res = DoHandleData(tv, ra_ctx, stream, seg, dup_seg, p);
         if (res < 0) {
+            // 统计重叠数据包插入失败次数
             StatsIncr(tv, ra_ctx->counter_tcp_reass_data_overlap_fail);
 
             if (r == 1) // r == 2 mean seg wasn't added to stream
@@ -615,6 +627,7 @@ int StreamTcpReassembleInsertSegment(ThreadVars *tv, TcpReassemblyThreadCtx *ra_
             SCLogDebug("duplicate segment %u/%u, discard it",
                     seg->seq, seg->payload_len);
 
+            // 将重复段归还到池中
             StreamTcpSegmentReturntoPool(seg);
 #ifdef DEBUG
             if (SCLogDebugEnabled()) {

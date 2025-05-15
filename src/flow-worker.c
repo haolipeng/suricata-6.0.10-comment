@@ -99,13 +99,15 @@ Packet *FlowForceReassemblyPseudoPacketGet(int direction, Flow *f, TcpSession *s
  *
  * \retval cnt number of packets injected
  */
+//处理需要强制重组的流。
+//当流超时或被移除时，确保其中未处理的片段能被处理
 static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *detect_thread)
 {
     Packet *p1 = NULL, *p2 = NULL;
-    const int server = f->ffr_tc;
-    const int client = f->ffr_ts;
+    const int server = f->ffr_tc;//服务器方向的流中是否有未处理的segment
+    const int client = f->ffr_ts;//客户端方向的流中是否有未处理的segment
 
-    /* Get the tcp session for the flow */
+    /* 获取流关联的tcp会话数据 */
     TcpSession *ssn = (TcpSession *)f->protoctx;
 
     /* The packets we use are based on what segments in what direction are
@@ -118,12 +120,14 @@ static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *d
 
     /* insert a pseudo packet in the toserver direction */
     if (client == STREAM_HAS_UNPROCESSED_SEGMENTS_NEED_ONLY_DETECTION) {
+        //如果客户端方向有未处理的segment需要检测，则创建一个方向为toserver的伪造包
         p1 = FlowForceReassemblyPseudoPacketGet(0, f, ssn);
         if (p1 == NULL) {
             return 0;
         }
         PKT_SET_SRC(p1, PKT_SRC_FFR);
 
+        //如果服务器方向也有未处理的segment需检测，则再创建一个方向为toclient的伪造包
         if (server == STREAM_HAS_UNPROCESSED_SEGMENTS_NEED_ONLY_DETECTION) {
             p2 = FlowForceReassemblyPseudoPacketGet(1, f, ssn);
             if (p2 == NULL) {
@@ -132,11 +136,12 @@ static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *d
                 return 0;
             }
             PKT_SET_SRC(p2, PKT_SRC_FFR);
-            p2->flowflags |= FLOW_PKT_LAST_PSEUDO;
+            p2->flowflags |= FLOW_PKT_LAST_PSEUDO;//标记为该流的最后一个伪造数据包
         } else {
-            p1->flowflags |= FLOW_PKT_LAST_PSEUDO;
+            p1->flowflags |= FLOW_PKT_LAST_PSEUDO;//标记为该流的最后一个伪造数据包
         }
     } else {
+        //如果只有服务器方向有未处理的segment需要检测，仅创建一个方向为toclient的伪造包
         if (server == STREAM_HAS_UNPROCESSED_SEGMENTS_NEED_ONLY_DETECTION) {
             p1 = FlowForceReassemblyPseudoPacketGet(1, f, ssn);
             if (p1 == NULL) {
@@ -149,10 +154,11 @@ static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *d
             BUG_ON(1);
         }
     }
-    f->flags |= FLOW_TIMEOUT_REASSEMBLY_DONE;
+    f->flags |= FLOW_TIMEOUT_REASSEMBLY_DONE;//标记流已完成重组处理
 
+    //对伪造数据包执行超时处理
     FlowWorkerFlowTimeout(tv, p1, fw, detect_thread);
-    PacketPoolReturnPacket(p1);
+    PacketPoolReturnPacket(p1);//处理完毕后，将数据包返还给数据包池，释放资源
     if (p2) {
         FlowWorkerFlowTimeout(tv, p2, fw, detect_thread);
         PacketPoolReturnPacket(p2);
@@ -161,6 +167,7 @@ static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *d
     return 1;
 }
 
+//处理工作队列中的流，主要是那些被标记为需要移除/超时的流
 static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
         void *detect_thread, // TODO proper type?
         FlowTimeoutCounters *counters,
@@ -171,10 +178,11 @@ static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
         FLOWLOCK_WRLOCK(f);
         f->flow_end_flags |= FLOW_END_FLAG_TIMEOUT; //TODO emerg
 
+        //对于TCP协议的流，检查是否需要强制重组
         if (f->proto == IPPROTO_TCP) {
             if (!(f->flags & FLOW_TIMEOUT_REASSEMBLY_DONE) && !FlowIsBypassed(f) &&
                     FlowForceReassemblyNeedReassembly(f) == 1 && f->ffr != 0) {
-                int cnt = FlowFinish(tv, f, fw, detect_thread);
+                int cnt = FlowFinish(tv, f, fw, detect_thread);//确保未处理的segment端被分析
                 counters->flows_aside_pkt_inject += cnt;
                 counters->flows_aside_needs_work++;
             }
@@ -189,10 +197,11 @@ static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
         if (fw->output_thread_flow != NULL)
             (void)OutputFlowLog(tv, fw->output_thread_flow, f);
 
+        //清理流内存
         FlowClearMemory (f, f->protomap);
         FLOWLOCK_UNLOCK(f);
         if (fw->fls.spare_queue.len >= 200) { // TODO match to API? 200 = 2 * block size
-            FlowSparePoolReturnFlow(f);
+            FlowSparePoolReturnFlow(f);//将流返回至空闲池
         } else {
             FlowQueuePrivatePrependFlow(&fw->fls.spare_queue, f);
         }
@@ -205,11 +214,13 @@ static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
  */
 static inline TmEcode FlowUpdate(ThreadVars *tv, FlowWorkerThreadData *fw, Packet *p)
 {
+    //更新流状态
     FlowHandlePacketUpdate(p->flow, p, tv, fw->dtv);
 
     int state = p->flow->flow_state;
     switch (state) {
 #ifdef CAPTURE_OFFLOAD
+        //如果流被捕获绕过，则更新计数器
         case FLOW_STATE_CAPTURE_BYPASSED: {
             StatsAddUI64(tv, fw->both_bypass_pkts, 1);
             StatsAddUI64(tv, fw->both_bypass_bytes, GET_PKT_LEN(p));
@@ -219,6 +230,7 @@ static inline TmEcode FlowUpdate(ThreadVars *tv, FlowWorkerThreadData *fw, Packe
             return TM_ECODE_DONE;
         }
 #endif
+        //如果流被本地绕过，则更新计数器
         case FLOW_STATE_LOCAL_BYPASSED: {
             StatsAddUI64(tv, fw->local_bypass_pkts, 1);
             StatsAddUI64(tv, fw->local_bypass_bytes, GET_PKT_LEN(p));
@@ -234,8 +246,10 @@ static inline TmEcode FlowUpdate(ThreadVars *tv, FlowWorkerThreadData *fw, Packe
 
 static TmEcode FlowWorkerThreadDeinit(ThreadVars *tv, void *data);
 
+//初始化流工作线程
 static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void **data)
 {
+    //分配流工作线程数据结构
     FlowWorkerThreadData *fw = SCCalloc(1, sizeof(*fw));
     if (fw == NULL)
         return TM_ECODE_FAILED;
@@ -243,6 +257,7 @@ static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void *
     SC_ATOMIC_INITPTR(fw->detect_thread);
     SC_ATOMIC_SET(fw->detect_thread, NULL);
 
+    //初始化各种计数器
     fw->local_bypass_pkts = StatsRegisterCounter("flow_bypassed.local_pkts", tv);
     fw->local_bypass_bytes = StatsRegisterCounter("flow_bypassed.local_bytes", tv);
     fw->both_bypass_pkts = StatsRegisterCounter("flow_bypassed.local_capture_pkts", tv);
@@ -253,20 +268,21 @@ static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void *
     fw->cnt.flows_removed = StatsRegisterCounter("flow.wrk.flows_evicted", tv);
     fw->cnt.flows_injected = StatsRegisterCounter("flow.wrk.flows_injected", tv);
 
+    //初始化解码线程变量
     fw->fls.dtv = fw->dtv = DecodeThreadVarsAlloc(tv);
     if (fw->dtv == NULL) {
         FlowWorkerThreadDeinit(tv, fw);
         return TM_ECODE_FAILED;
     }
 
-    /* setup TCP */
+    //初始化TCP处理线程
     if (StreamTcpThreadInit(tv, NULL, &fw->stream_thread_ptr) != TM_ECODE_OK) {
         FlowWorkerThreadDeinit(tv, fw);
         return TM_ECODE_FAILED;
     }
 
     if (DetectEngineEnabled()) {
-        /* setup DETECT */
+        //初始化检测引擎线程
         void *detect_thread = NULL;
         if (DetectEngineThreadCtxInit(tv, NULL, &detect_thread) != TM_ECODE_OK) {
             FlowWorkerThreadDeinit(tv, fw);
@@ -275,7 +291,7 @@ static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void *
         SC_ATOMIC_SET(fw->detect_thread, detect_thread);
     }
 
-    /* Setup outputs for this thread. */
+    //初始化日志输出线程
     if (OutputLoggerThreadInit(tv, initdata, &fw->output_thread) != TM_ECODE_OK) {
         FlowWorkerThreadDeinit(tv, fw);
         return TM_ECODE_FAILED;
@@ -295,23 +311,24 @@ static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void *
     return TM_ECODE_OK;
 }
 
+//释放流工作线程相关的资源
 static TmEcode FlowWorkerThreadDeinit(ThreadVars *tv, void *data)
 {
     FlowWorkerThreadData *fw = data;
-
+    //释放解码线程变量
     DecodeThreadVarsFree(tv, fw->dtv);
 
-    /* free TCP */
+    //释放TCP处理线程资源
     StreamTcpThreadDeinit(tv, (void *)fw->stream_thread);
 
-    /* free DETECT */
+    //释放检测引擎线程资源
     void *detect_thread = SC_ATOMIC_GET(fw->detect_thread);
     if (detect_thread != NULL) {
         DetectEngineThreadCtxDeinit(tv, detect_thread);
         SC_ATOMIC_SET(fw->detect_thread, NULL);
     }
 
-    /* Free output. */
+    //释放日志输出线程资源
     OutputLoggerThreadDeinit(tv, fw->output_thread);
     OutputFlowLogThreadDeinit(tv, fw->output_thread_flow);
 

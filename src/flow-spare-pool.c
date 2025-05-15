@@ -40,10 +40,10 @@ typedef struct FlowSparePool {
     struct FlowSparePool *next;
 } FlowSparePool;
 
-static uint32_t flow_spare_pool_flow_cnt = 0;
-static uint32_t flow_spare_pool_block_size = 100;
-static FlowSparePool *flow_spare_pool = NULL;	//记录flow spare flow内存池的链表头
-static SCMutex flow_spare_pool_m = SCMUTEX_INITIALIZER;
+static uint32_t flow_spare_pool_flow_cnt = 0;//记录预分配池中flow对象的总数量
+static uint32_t flow_spare_pool_block_size = 100;//默认每个FlowSparePool块中包含100个flow
+static FlowSparePool *flow_spare_pool = NULL;	//记录流预分配池的链表头指针
+static SCMutex flow_spare_pool_m = SCMUTEX_INITIALIZER;//互斥锁，用于保护预分配池
 
 uint32_t FlowSpareGetPoolSize(void)
 {
@@ -62,6 +62,7 @@ static FlowSparePool *FlowSpareGetPool(void)
     return p;
 }
 
+//在预分配块中创建Flow对象
 static bool FlowSparePoolUpdateBlock(FlowSparePool *p)
 {
     DEBUG_VALIDATE_BUG_ON(p == NULL);
@@ -72,7 +73,7 @@ static bool FlowSparePoolUpdateBlock(FlowSparePool *p)
         Flow *f = FlowAlloc();//申请flow结构体
         if (f == NULL)
             return false;
-		//将Flow对象添加到FlowSparePool的FlowQueuePrivate中
+		//将Flow对象添加到FlowSparePool的FlowQueuePrivate队列中
         FlowQueuePrivateAppendFlow(&p->queue, f);
     }
     return true;
@@ -248,17 +249,18 @@ void FlowSparePoolInit(void)
 {
     SCMutexLock(&flow_spare_pool_m);
     for (uint32_t cnt = 0; cnt < flow_config.prealloc; ) {
+        //为每个FlowSparePool节点分配内存
         FlowSparePool *p = FlowSpareGetPool();
         if (p == NULL) {
             FatalError(SC_ERR_FLOW_INIT, "failed to initialize flow pool");
         }
         FlowSparePoolUpdateBlock(p);
-        cnt += p->queue.len;
+        cnt += p->queue.len;//累加已分配的Flow对象数量
 
         /* prepend to list */
-        p->next = flow_spare_pool;
-        flow_spare_pool = p;
-        flow_spare_pool_flow_cnt = cnt;
+        p->next = flow_spare_pool;//将新创建的FlowSparePool节点添加到预分配池的头部
+        flow_spare_pool = p;//更新链表的头指针
+        flow_spare_pool_flow_cnt = cnt;//更新预分配池中flow对象的总数量
     }
     SCMutexUnlock(&flow_spare_pool_m);
 }

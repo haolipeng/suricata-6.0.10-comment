@@ -611,7 +611,7 @@ uint32_t StreamDataAvailableForProtoDetect(TcpStream *stream)
 }
 
 /**
- *  \brief Insert a packets TCP data into the stream reassembly engine.
+ *  \brief 将tcp数据包插入到流重组引擎中.
  *
  *  \retval 0 good segment, as far as we checked.
  *  \retval -1 badness, reason to drop in inline mode
@@ -620,11 +620,12 @@ uint32_t StreamDataAvailableForProtoDetect(TcpStream *stream)
  *  or it wasn't added because of reassembly depth.
  *
  */
+//处理实际网络流量的主要调用路径
 int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThreadCtx *ra_ctx,
                                 TcpSession *ssn, TcpStream *stream, Packet *p)
 {
     SCEnter();
-
+    // data_first_seen_dir表示数据包的第一个字节是哪个方向的，如果未设置，则根据数据包方向设置
     if (ssn->data_first_seen_dir == 0) {
         if (PKT_IS_TOSERVER(p)) {
             ssn->data_first_seen_dir = STREAM_TOSERVER;
@@ -633,7 +634,7 @@ int StreamTcpReassembleHandleSegmentHandleData(ThreadVars *tv, TcpReassemblyThre
         }
     }
 
-    /* If the OS policy is not set then set the OS policy for this stream */
+    // 如果os策略未设置，则设置os策略
     if (stream->os_policy == 0) {
         StreamTcpSetOSPolicy(stream, p);
     }

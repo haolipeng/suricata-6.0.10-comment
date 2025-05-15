@@ -39,12 +39,12 @@
  * the same hashkey (the hash is a chained hash). When doing modifications
  * to the list, the entire bucket is locked. */
 typedef struct FlowBucket_ {
-    /** head of the list of active flows for this row. */
-	//bucket下挂的链表的表头
-    Flow *head;
-    /** head of the list of evicted flows for this row. Waiting to be
-     *  collected by the Flow Manager. */
-    Flow *evicted;
+//当前桶中活跃流链表的头部
+    Flow *head; 
+    //当流杯检测到超时，且当前处理线程不拥有该流时，该流会从活跃链表中移除，并添加到evicted链表中
+    //等待Flow Manager线程进行回收处理
+    Flow *evicted; //当前桶中被驱逐的流链表的头部
+    //提供对哈希表的并发访问控制
 #ifdef FBLOCK_MUTEX
     SCMutex m;
 #elif defined FBLOCK_SPIN
