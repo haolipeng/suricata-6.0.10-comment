@@ -115,7 +115,9 @@ bin_PROGRAMS = suricata$(EXEEXT) $(am__EXEEXT_1)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libprelude.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(include_HEADERS) \
@@ -134,28 +136,25 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(includedir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = alert-debuglog.$(OBJEXT) alert-fastlog.$(OBJEXT) \
-	alert-prelude.$(OBJEXT) alert-syslog.$(OBJEXT) \
-	app-layer.$(OBJEXT) app-layer-dcerpc.$(OBJEXT) \
+am__objects_1 = app-layer.$(OBJEXT) app-layer-dcerpc.$(OBJEXT) \
 	app-layer-dcerpc-udp.$(OBJEXT) \
 	app-layer-detect-proto.$(OBJEXT) app-layer-dnp3.$(OBJEXT) \
 	app-layer-dnp3-objects.$(OBJEXT) app-layer-enip.$(OBJEXT) \
 	app-layer-enip-common.$(OBJEXT) app-layer-events.$(OBJEXT) \
-	app-layer-expectation.$(OBJEXT) app-layer-ftp.$(OBJEXT) \
-	app-layer-htp-body.$(OBJEXT) app-layer-htp.$(OBJEXT) \
-	app-layer-htp-file.$(OBJEXT) app-layer-htp-libhtp.$(OBJEXT) \
-	app-layer-htp-mem.$(OBJEXT) app-layer-htp-xff.$(OBJEXT) \
-	app-layer-http2.$(OBJEXT) app-layer-modbus.$(OBJEXT) \
-	app-layer-parser.$(OBJEXT) app-layer-protos.$(OBJEXT) \
-	app-layer-smb.$(OBJEXT) app-layer-smtp.$(OBJEXT) \
-	app-layer-snmp.$(OBJEXT) app-layer-nfs-tcp.$(OBJEXT) \
-	app-layer-nfs-udp.$(OBJEXT) app-layer-ntp.$(OBJEXT) \
-	app-layer-register.$(OBJEXT) app-layer-tftp.$(OBJEXT) \
-	app-layer-ikev2.$(OBJEXT) app-layer-krb5.$(OBJEXT) \
-	app-layer-rfb.$(OBJEXT) app-layer-template.$(OBJEXT) \
-	app-layer-template-rust.$(OBJEXT) app-layer-rdp.$(OBJEXT) \
-	app-layer-ssh.$(OBJEXT) app-layer-ssl.$(OBJEXT) \
-	app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
+	app-layer-expectation.$(OBJEXT) app-layer-htp-body.$(OBJEXT) \
+	app-layer-htp.$(OBJEXT) app-layer-htp-file.$(OBJEXT) \
+	app-layer-htp-libhtp.$(OBJEXT) app-layer-htp-mem.$(OBJEXT) \
+	app-layer-htp-xff.$(OBJEXT) app-layer-http2.$(OBJEXT) \
+	app-layer-modbus.$(OBJEXT) app-layer-parser.$(OBJEXT) \
+	app-layer-protos.$(OBJEXT) app-layer-smb.$(OBJEXT) \
+	app-layer-smtp.$(OBJEXT) app-layer-snmp.$(OBJEXT) \
+	app-layer-nfs-tcp.$(OBJEXT) app-layer-nfs-udp.$(OBJEXT) \
+	app-layer-ntp.$(OBJEXT) app-layer-register.$(OBJEXT) \
+	app-layer-tftp.$(OBJEXT) app-layer-ikev2.$(OBJEXT) \
+	app-layer-krb5.$(OBJEXT) app-layer-rfb.$(OBJEXT) \
+	app-layer-template.$(OBJEXT) app-layer-template-rust.$(OBJEXT) \
+	app-layer-rdp.$(OBJEXT) app-layer-ssh.$(OBJEXT) \
+	app-layer-ssl.$(OBJEXT) app-layer-sip.$(OBJEXT) conf.$(OBJEXT) \
 	conf-yaml-loader.$(OBJEXT) counters.$(OBJEXT) \
 	datasets.$(OBJEXT) datasets-string.$(OBJEXT) \
 	datasets-sha256.$(OBJEXT) datasets-md5.$(OBJEXT) \
@@ -510,10 +509,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
-	./$(DEPDIR)/alert-fastlog.Po ./$(DEPDIR)/alert-prelude.Po \
-	./$(DEPDIR)/alert-syslog.Po \
-	./$(DEPDIR)/app-layer-dcerpc-udp.Po \
+am__depfiles_remade = ./$(DEPDIR)/app-layer-dcerpc-udp.Po \
 	./$(DEPDIR)/app-layer-dcerpc.Po \
 	./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/app-layer-dnp3-objects.Po \
@@ -521,7 +517,7 @@ am__depfiles_remade = ./$(DEPDIR)/alert-debuglog.Po \
 	./$(DEPDIR)/app-layer-enip-common.Po \
 	./$(DEPDIR)/app-layer-enip.Po ./$(DEPDIR)/app-layer-events.Po \
 	./$(DEPDIR)/app-layer-expectation.Po \
-	./$(DEPDIR)/app-layer-ftp.Po ./$(DEPDIR)/app-layer-htp-body.Po \
+	./$(DEPDIR)/app-layer-htp-body.Po \
 	./$(DEPDIR)/app-layer-htp-file.Po \
 	./$(DEPDIR)/app-layer-htp-libhtp.Po \
 	./$(DEPDIR)/app-layer-htp-mem.Po \
@@ -1185,10 +1181,6 @@ noinst_HEADERS = action-globals.h \
     util-validate.h
 
 COMMON_SOURCES = \
-alert-debuglog.c alert-debuglog.h \
-alert-fastlog.c alert-fastlog.h \
-alert-prelude.c alert-prelude.h \
-alert-syslog.c alert-syslog.h \
 app-layer.c app-layer.h \
 app-layer-dcerpc.c app-layer-dcerpc.h \
 app-layer-dcerpc-udp.c app-layer-dcerpc-udp.h \
@@ -1199,7 +1191,6 @@ app-layer-enip.c app-layer-enip.h \
 app-layer-enip-common.c app-layer-enip-common.h \
 app-layer-events.c app-layer-events.h \
 app-layer-expectation.c app-layer-expectation.h \
-app-layer-ftp.c app-layer-ftp.h \
 app-layer-htp-body.c app-layer-htp-body.h \
 app-layer-htp.c app-layer-htp.h \
 app-layer-htp-file.c app-layer-htp-file.h \
@@ -1210,12 +1201,6 @@ app-layer-http2.c app-layer-http2.h \
 app-layer-modbus.c app-layer-modbus.h \
 app-layer-parser.c app-layer-parser.h \
 app-layer-protos.c app-layer-protos.h \
-app-layer-smb.c app-layer-smb.h \
-app-layer-smtp.c app-layer-smtp.h \
-app-layer-snmp.c app-layer-snmp.h \
-app-layer-nfs-tcp.c app-layer-nfs-tcp.h \
-app-layer-nfs-udp.c app-layer-nfs-udp.h \
-app-layer-ntp.c app-layer-ntp.h \
 app-layer-register.c app-layer-register.h \
 app-layer-tftp.c app-layer-tftp.h \
 app-layer-ikev2.c app-layer-ikev2.h \
@@ -1858,9 +1843,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/Makefile
+	  $(AUTOMAKE) --gnu src/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -2008,10 +1993,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alert-debuglog.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alert-fastlog.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alert-prelude.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alert-syslog.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-dcerpc-udp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-dcerpc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-detect-proto.Po@am__quote@ # am--include-marker
@@ -2021,7 +2002,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-enip.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-events.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-expectation.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-ftp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-htp-body.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-htp-file.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/app-layer-htp-libhtp.Po@am__quote@ # am--include-marker
@@ -2735,11 +2715,7 @@ clean: clean-am
 clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/alert-debuglog.Po
-	-rm -f ./$(DEPDIR)/alert-fastlog.Po
-	-rm -f ./$(DEPDIR)/alert-prelude.Po
-	-rm -f ./$(DEPDIR)/alert-syslog.Po
-	-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
+		-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc.Po
 	-rm -f ./$(DEPDIR)/app-layer-detect-proto.Po
 	-rm -f ./$(DEPDIR)/app-layer-dnp3-objects.Po
@@ -2748,7 +2724,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/app-layer-enip.Po
 	-rm -f ./$(DEPDIR)/app-layer-events.Po
 	-rm -f ./$(DEPDIR)/app-layer-expectation.Po
-	-rm -f ./$(DEPDIR)/app-layer-ftp.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-body.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-file.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-libhtp.Po
@@ -3297,11 +3272,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/alert-debuglog.Po
-	-rm -f ./$(DEPDIR)/alert-fastlog.Po
-	-rm -f ./$(DEPDIR)/alert-prelude.Po
-	-rm -f ./$(DEPDIR)/alert-syslog.Po
-	-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
+		-rm -f ./$(DEPDIR)/app-layer-dcerpc-udp.Po
 	-rm -f ./$(DEPDIR)/app-layer-dcerpc.Po
 	-rm -f ./$(DEPDIR)/app-layer-detect-proto.Po
 	-rm -f ./$(DEPDIR)/app-layer-dnp3-objects.Po
@@ -3310,7 +3281,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/app-layer-enip.Po
 	-rm -f ./$(DEPDIR)/app-layer-events.Po
 	-rm -f ./$(DEPDIR)/app-layer-expectation.Po
-	-rm -f ./$(DEPDIR)/app-layer-ftp.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-body.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-file.Po
 	-rm -f ./$(DEPDIR)/app-layer-htp-libhtp.Po

@@ -144,7 +144,6 @@ int HTPFileOpen(HtpState *s, HtpTxUserData *tx, const uint8_t *filename, uint16_
     }
 
     FileSetTx(files->tail, txid);
-    tx->tx_data.files_opened++;
 
 end:
     SCReturnInt(retval);

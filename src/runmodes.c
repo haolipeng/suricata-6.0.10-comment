@@ -40,11 +40,10 @@
 #include "util-misc.h"
 #include "util-plugin.h"
 
-#include "output.h"
+
 
 #include "alert-fastlog.h"
 #include "alert-prelude.h"
-#include "alert-debuglog.h"
 
 #include "log-httplog.h"
 

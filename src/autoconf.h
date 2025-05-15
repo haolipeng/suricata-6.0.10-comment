@@ -23,10 +23,10 @@
 #define CLS 64
 
 /* Our CONFIG_DIR */
-#define CONFIG_DIR "/etc/suricata/"
+#define CONFIG_DIR "/usr/local/etc/suricata/"
 
 /* Our DATA_DIR */
-#define DATA_DIR "/var/lib/suricata/data"
+#define DATA_DIR "/usr/local/var/lib/suricata/data"
 
 /* Enable debug output */
 #define DEBUG 1
@@ -153,13 +153,13 @@
 #define HAVE_HTP_CONFIG_SET_RESPONSE_DECOMPRESSION_LAYER_LIMIT 1
 
 /* Assuming htp_decode_query_inplace function in bundled libhtp */
-/* #undef HAVE_HTP_DECODE_QUERY_INPLACE */
+#define HAVE_HTP_DECODE_QUERY_INPLACE 1
 
 /* Found usable htp_config_set_path_decode_u_encoding function in libhtp */
 /* #undef HAVE_HTP_SET_PATH_DECODE_U_ENCODING */
 
 /* Assuming htp_tx_get_response_headers_raw function in bundled libhtp */
-/* #undef HAVE_HTP_TX_GET_RESPONSE_HEADERS_RAW */
+#define HAVE_HTP_TX_GET_RESPONSE_HEADERS_RAW 1
 
 /* Assuming htp_config_register_request_uri_normalize function in bundled
    libhtp */
@@ -202,7 +202,7 @@
 /* #undef HAVE_LIBHS */
 
 /* Define to 1 if you have the `htp' library (-lhtp). */
-#define HAVE_LIBHTP 1
+/* #undef HAVE_LIBHTP */
 
 /* Define to 1 if you have the `iconv' library (-liconv). */
 /* #undef HAVE_LIBICONV */
@@ -693,7 +693,7 @@
 /* #undef PROFILING */
 
 /* Git revision */
-#define REVISION 72cc1c880 2023-10-31
+#define REVISION dcaf0f635 2025-05-15
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

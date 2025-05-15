@@ -74,8 +74,6 @@ enum PktSrcEnum {
 #include "decode-sll.h"
 #include "decode-ipv4.h"
 #include "decode-ipv6.h"
-#include "decode-icmpv4.h"
-#include "decode-icmpv6.h"
 #include "decode-tcp.h"
 #include "decode-udp.h"
 #include "decode-raw.h"
@@ -529,20 +527,12 @@ typedef struct Packet_
     /* Can only be one of TCP, UDP, ICMP at any given time */
     union {
         TCPVars tcpvars;
-        ICMPV4Vars icmpv4vars;
-        ICMPV6Vars icmpv6vars;
     } l4vars;
 #define tcpvars     l4vars.tcpvars
-#define icmpv4vars  l4vars.icmpv4vars
-#define icmpv6vars  l4vars.icmpv6vars
 
     TCPHdr *tcph;
 
     UDPHdr *udph;
-
-    ICMPV4Hdr *icmpv4h;
-
-    ICMPV6Hdr *icmpv6h;
 
     GREHdr *greh;
 

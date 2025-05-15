@@ -1,5 +1,1 @@
-util-error.o: util-error.c /usr/include/stdc-predef.h util-error.h
-
-/usr/include/stdc-predef.h:
-
-util-error.h:
+# dummy

@@ -20,7 +20,7 @@
 #include "conf.h"
 #include "runmodes.h"
 #include "runmode-pcap-file.h"
-#include "output.h"
+
 
 #include "detect-engine.h"
 #include "source-pcap-file.h"

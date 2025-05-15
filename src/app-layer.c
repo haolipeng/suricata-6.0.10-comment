@@ -30,7 +30,6 @@
 #include "app-layer-parser.h"
 #include "app-layer-protos.h"
 #include "app-layer-expectation.h"
-#include "app-layer-ftp.h"
 #include "app-layer-detect-proto.h"
 #include "stream-tcp-reassemble.h"
 #include "stream-tcp-private.h"
@@ -942,8 +941,6 @@ void AppLayerRegisterGlobalCounters(void)
 {
     StatsRegisterGlobalCounter("http.memuse", HTPMemuseGlobalCounter);
     StatsRegisterGlobalCounter("http.memcap", HTPMemcapGlobalCounter);
-    StatsRegisterGlobalCounter("ftp.memuse", FTPMemuseGlobalCounter);
-    StatsRegisterGlobalCounter("ftp.memcap", FTPMemcapGlobalCounter);
     StatsRegisterGlobalCounter("app_layer.expectations", ExpectationGetCounter);
 }
 

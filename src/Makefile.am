@@ -13,10 +13,6 @@ if BUILD_FUZZTARGETS
 endif
 
 COMMON_SOURCES = \
-alert-debuglog.c alert-debuglog.h \
-alert-fastlog.c alert-fastlog.h \
-alert-prelude.c alert-prelude.h \
-alert-syslog.c alert-syslog.h \
 app-layer.c app-layer.h \
 app-layer-dcerpc.c app-layer-dcerpc.h \
 app-layer-dcerpc-udp.c app-layer-dcerpc-udp.h \
@@ -27,7 +23,6 @@ app-layer-enip.c app-layer-enip.h \
 app-layer-enip-common.c app-layer-enip-common.h \
 app-layer-events.c app-layer-events.h \
 app-layer-expectation.c app-layer-expectation.h \
-app-layer-ftp.c app-layer-ftp.h \
 app-layer-htp-body.c app-layer-htp-body.h \
 app-layer-htp.c app-layer-htp.h \
 app-layer-htp-file.c app-layer-htp-file.h \
@@ -38,12 +33,6 @@ app-layer-http2.c app-layer-http2.h \
 app-layer-modbus.c app-layer-modbus.h \
 app-layer-parser.c app-layer-parser.h \
 app-layer-protos.c app-layer-protos.h \
-app-layer-smb.c app-layer-smb.h \
-app-layer-smtp.c app-layer-smtp.h \
-app-layer-snmp.c app-layer-snmp.h \
-app-layer-nfs-tcp.c app-layer-nfs-tcp.h \
-app-layer-nfs-udp.c app-layer-nfs-udp.h \
-app-layer-ntp.c app-layer-ntp.h \
 app-layer-register.c app-layer-register.h \
 app-layer-tftp.c app-layer-tftp.h \
 app-layer-ikev2.c app-layer-ikev2.h \

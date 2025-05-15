@@ -103,12 +103,6 @@
 #include "app-layer.h"
 #include "app-layer-parser.h"
 #include "app-layer-htp.h"
-#include "app-layer-ssl.h"
-#include "app-layer-ssh.h"
-#include "app-layer-ftp.h"
-#include "app-layer-smtp.h"
-#include "app-layer-smb.h"
-#include "output-filestore.h"
 
 #include "util-ebpf.h"
 #include "util-radix-tree.h"
@@ -140,7 +134,7 @@
 #include "util-byte.h"
 #include "reputation.h"
 
-#include "output.h"
+
 
 #include "util-privs.h"
 
@@ -156,8 +150,6 @@
 #include "util-plugin.h"
 
 #include "util-exception-policy.h"
-
-#include "rust.h"
 
 /*
  * we put this here, because we only use it here in main.

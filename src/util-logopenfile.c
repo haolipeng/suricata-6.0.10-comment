@@ -26,7 +26,7 @@
 
 #include "suricata-common.h" /* errno.h, string.h, etc. */
 #include "conf.h"            /* ConfNode, etc. */
-#include "output.h"          /* DEFAULT_LOG_* */
+          /* DEFAULT_LOG_* */
 #include "util-byte.h"
 #include "util-logopenfile.h"
 

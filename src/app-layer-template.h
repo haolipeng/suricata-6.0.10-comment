@@ -28,8 +28,6 @@
 
 #include "queue.h"
 
-#include "rust.h"
-
 void RegisterTemplateParsers(void);
 void TemplateParserRegisterTests(void);
 

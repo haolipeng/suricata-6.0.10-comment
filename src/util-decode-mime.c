@@ -32,7 +32,6 @@
 #include "util-memcmp.h"
 #include "util-print.h"
 #include "util-validate.h"
-#include "rust.h"
 
 /* Character constants */
 #ifndef CR

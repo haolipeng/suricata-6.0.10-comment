@@ -43,7 +43,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "output.h"
+
 #include "output-json.h"
 
 // MSG_NOSIGNAL does not exists on OS X

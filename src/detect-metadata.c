@@ -33,7 +33,6 @@
 #include "detect-metadata.h"
 #include "util-hash-string.h"
 #include "util-unittest.h"
-#include "rust.h"
 #include "util-validate.h"
 
 static int DetectMetadataSetup (DetectEngineCtx *, Signature *, const char *);

@@ -34,7 +34,7 @@
 #include "detect.h"
 #include "packet-queue.h"
 #include "threadvars.h"
-#include "output.h"
+
 
 #include "tm-queuehandlers.h"
 #include "tm-queues.h"
@@ -42,7 +42,6 @@
 
 #include "util-unittest.h"
 #include "util-syslog.h"
-#include "rust.h"
 
 
 #include "conf.h"

@@ -39,10 +39,6 @@
 #include "unix-manager.h"
 #include "runmodes.h"
 
-#include "output.h"
-#include "output-stats.h"
-#include "output-json-stats.h"
-
 /* Time interval for syncing the local counters with the global ones */
 #define STATS_WUT_TTS 3
 

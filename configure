@@ -9789,6 +9789,10 @@ _lt_linker_boilerplate=`cat conftest.err`
 $RM -r conftest*
 
 
+## CAVEAT EMPTOR:
+## There is no encapsulation within the following macros, do not change
+## the running order or otherwise move them around unless you know exactly
+## what you are doing...
 if test -n "$compiler"; then
 
 lt_prog_compiler_no_builtin_flag=
@@ -30647,7 +30651,7 @@ fi
     CARGO=$CARGO
 
 
-    enable_rust="yes"
+    enable_rust="no"
     rust_compiler_version=$($RUSTC --version)
     rustc_version=$(echo "$rust_compiler_version" | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/')
     cargo_version_output=$($CARGO --version)
@@ -35294,7 +35298,7 @@ eval "CONFIGURE_DATAROOTDIR=$CONFIGURE_DATAROOTDIR"
 
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile rust/Makefile rust/Cargo.toml rust/.cargo/config"
+ac_config_files="$ac_config_files Makefile src/Makefile"
 
 ac_config_files="$ac_config_files qa/Makefile qa/coccinelle/Makefile"
 
@@ -36522,9 +36526,6 @@ do
     "suricata-update/Makefile") CONFIG_FILES="$CONFIG_FILES suricata-update/Makefile" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-    "rust/Makefile") CONFIG_FILES="$CONFIG_FILES rust/Makefile" ;;
-    "rust/Cargo.toml") CONFIG_FILES="$CONFIG_FILES rust/Cargo.toml" ;;
-    "rust/.cargo/config") CONFIG_FILES="$CONFIG_FILES rust/.cargo/config" ;;
     "qa/Makefile") CONFIG_FILES="$CONFIG_FILES qa/Makefile" ;;
     "qa/coccinelle/Makefile") CONFIG_FILES="$CONFIG_FILES qa/coccinelle/Makefile" ;;
     "rules/Makefile") CONFIG_FILES="$CONFIG_FILES rules/Makefile" ;;
@@ -38154,14 +38155,6 @@ SURICATA_BUILD_CONF="Suricata Configuration:
   Libnet support:                          ${enable_libnet}
   liblz4 support:                          ${enable_liblz4}
   HTTP2 decompression:                     ${enable_http2_decompression}
-
-  Rust support:                            ${enable_rust}
-  Rust strict mode:                        ${enable_rust_strict}
-  Rust compiler path:                      ${RUSTC}
-  Rust compiler version:                   ${rust_compiler_version}
-  Cargo path:                              ${CARGO}
-  Cargo version:                           ${cargo_version_output}
-  Cargo vendor:                            ${have_cargo_vendor}
 
   Python support:                          ${enable_python}
   Python path:                             ${python_path}

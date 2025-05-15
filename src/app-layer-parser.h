@@ -29,8 +29,8 @@
 #include "detect-engine-state.h"
 #include "util-file.h"
 #include "stream-tcp-private.h"
-#include "rust.h"
 #include "util-config.h"
+#include "rust-defs/app-layer-types.h"
 
 /* Flags for AppLayerParserState. */
 // flag available                               BIT_U8(0)
@@ -236,7 +236,6 @@ int AppLayerParserSetTxDetectState(const Flow *f, void *tx, DetectEngineState *s
 
 bool AppLayerParserSupportsTxDetectFlags(AppProto alproto);
 
-AppLayerTxData *AppLayerParserGetTxData(uint8_t ipproto, AppProto alproto, void *tx);
 void AppLayerParserApplyTxConfig(uint8_t ipproto, AppProto alproto,
         void *state, void *tx, enum ConfigAction mode, AppLayerTxConfig);
 

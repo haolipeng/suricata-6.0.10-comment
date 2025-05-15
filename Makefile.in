@@ -90,7 +90,9 @@ host_triplet = @host@
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libprelude.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
@@ -99,8 +101,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/autoconf.h
-CONFIG_CLEAN_FILES = rust/.cargo/config suricata.yaml \
-	python/suricata/config/defaults.py
+CONFIG_CLEAN_FILES = suricata.yaml python/suricata/config/defaults.py
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -156,10 +157,9 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/suricata.yaml.in \
-	$(top_srcdir)/python/suricata/config/defaults.py.in \
-	$(top_srcdir)/rust/.cargo/config.in COPYING ChangeLog \
-	README.md compile config.guess config.rpath config.sub depcomp \
-	install-sh ltmain.sh missing
+	$(top_srcdir)/python/suricata/config/defaults.py.in COPYING \
+	ChangeLog README.md compile config.guess config.rpath \
+	config.sub install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -426,7 +426,7 @@ EXTRA_DIST = ChangeLog COPYING LICENSE suricata.yaml.in \
 	     lua \
 	     acsite.m4
 
-SUBDIRS = $(HTP_DIR) rust src qa rules doc contrib etc python ebpf \
+SUBDIRS = $(HTP_DIR) src qa rules doc contrib etc python ebpf \
           $(SURICATA_UPDATE_DIR)
 
 CLEANFILES = stamp-h[0-9]*
@@ -466,8 +466,6 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
-rust/.cargo/config: $(top_builddir)/config.status $(top_srcdir)/rust/.cargo/config.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 suricata.yaml: $(top_builddir)/config.status $(srcdir)/suricata.yaml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 python/suricata/config/defaults.py: $(top_builddir)/config.status $(top_srcdir)/python/suricata/config/defaults.py.in

@@ -29,7 +29,7 @@
 #include "conf.h"
 #include "runmodes.h"
 #include "runmode-af-packet.h"
-#include "output.h"
+
 #include "log-httplog.h"
 
 #include "detect-engine.h"
@@ -37,7 +37,6 @@
 
 #include "alert-fastlog.h"
 #include "alert-prelude.h"
-#include "alert-debuglog.h"
 
 #include "util-debug.h"
 #include "util-time.h"

@@ -2480,7 +2480,7 @@ fi
     AM_CONDITIONAL([HAVE_RUST],true)
     AC_SUBST([CARGO], [$CARGO])
 
-    enable_rust="yes"
+    enable_rust="no"
     rust_compiler_version=$($RUSTC --version)
     rustc_version=$(echo "$rust_compiler_version" | sed 's/^.*[[^0-9]]\([[0-9]]*\.[[0-9]]*\.[[0-9]]*\).*$/\1/')
     cargo_version_output=$($CARGO --version)
@@ -2804,7 +2804,7 @@ AC_SUBST(PACKAGE_VERSION)
 AC_SUBST(RUST_FEATURES)
 AC_SUBST(RUST_SURICATA_LIBDIR)
 
-AC_CONFIG_FILES(Makefile src/Makefile rust/Makefile rust/Cargo.toml rust/.cargo/config)
+AC_CONFIG_FILES(Makefile src/Makefile)
 AC_CONFIG_FILES(qa/Makefile qa/coccinelle/Makefile)
 AC_CONFIG_FILES(rules/Makefile doc/Makefile doc/userguide/Makefile doc/devguide/Makefile)
 AC_CONFIG_FILES(contrib/Makefile contrib/file_processor/Makefile contrib/file_processor/Action/Makefile contrib/file_processor/Processor/Makefile)
@@ -2845,14 +2845,6 @@ SURICATA_BUILD_CONF="Suricata Configuration:
   Libnet support:                          ${enable_libnet}
   liblz4 support:                          ${enable_liblz4}
   HTTP2 decompression:                     ${enable_http2_decompression}
-
-  Rust support:                            ${enable_rust}
-  Rust strict mode:                        ${enable_rust_strict}
-  Rust compiler path:                      ${RUSTC}
-  Rust compiler version:                   ${rust_compiler_version}
-  Cargo path:                              ${CARGO}
-  Cargo version:                           ${cargo_version_output}
-  Cargo vendor:                            ${have_cargo_vendor}
 
   Python support:                          ${enable_python}
   Python path:                             ${python_path}

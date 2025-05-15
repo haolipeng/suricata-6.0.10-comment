@@ -90,7 +90,9 @@ host_triplet = x86_64-pc-linux-gnu
 subdir = qa
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libprelude.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -192,21 +194,21 @@ CARGO_HOME = /root/.cargo
 CBINDGEN = /root/.cargo/bin/cbindgen
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O0 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist
+CFLAGS = -g -O2 -std=c11 -march=native -I${srcdir}/../rust/gen -I${srcdir}/../rust/dist
 CLANG = /usr/lib/llvm-15/bin/clang
 CLANG_CFLAGS = 
-CONFIGURE_DATAROOTDIR = /usr/share
-CONFIGURE_LOCALSTATEDIR = /var
-CONFIGURE_PREFIX = /usr
-CONFIGURE_SYSCONDIR = /etc
+CONFIGURE_DATAROOTDIR = /usr/local/share
+CONFIGURE_LOCALSTATEDIR = /usr/local/var
+CONFIGURE_PREFIX = /usr/local
+CONFIGURE_SYSCONDIR = /usr/local/etc
 CPP = gcc -E
-CPPFLAGS = -I/usr/include   -I/usr/lib/x86_64-linux-gnu/htp/include -I/usr/include/nspr -I/usr/include/nss -I/usr/include/nspr
+CPPFLAGS = -I${srcdir}/../libhtp/   -I/usr/include/nspr -I/usr/include/nss -I/usr/include/nspr
 CSCOPE = cscope
 CTAGS = ctags
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O0
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -233,19 +235,19 @@ HAVE_PKG_CONFIG = /usr/bin/pkg-config
 HAVE_PYTHON = /usr/bin/python3
 HAVE_SPHINXBUILD = no
 HAVE_WGET = /usr/bin/wget
-HTP_DIR = 
-HTP_LDADD = 
+HTP_DIR = libhtp
+HTP_LDADD = ../libhtp/htp/libhtp.la
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
-LDFLAGS =  -rdynamic -L/usr/lib
+LDFLAGS =  -rdynamic
 LIBHTPDEVVERSION_CFLAGS = 
 LIBHTPDEVVERSION_LIBS = 
-LIBHTPMINVERSION_CFLAGS = -I/usr/lib/x86_64-linux-gnu/htp/include
-LIBHTPMINVERSION_LIBS = -lhtp
+LIBHTPMINVERSION_CFLAGS = 
+LIBHTPMINVERSION_LIBS = 
 LIBOBJS = 
 LIBPCREVERSION_CFLAGS = 
 LIBPCREVERSION_LIBS = 
@@ -256,7 +258,7 @@ LIBPRELUDE_LDFLAGS =
 LIBPRELUDE_LIBS = 
 LIBPRELUDE_PREFIX = 
 LIBPRELUDE_PTHREAD_CFLAGS = 
-LIBS = -llz4 -lmagic -lcap-ng -lhtp -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lhtp -lplds4 -lplc4 -lnspr4 -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
+LIBS = -llz4 -lmagic -lcap-ng -lpcap -lnet -ljansson -lpthread -lyaml -lpcre  -lz -lpcap -lplds4 -lplc4 -lnspr4 -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIB_FUZZING_ENGINE = 
 LIPO = 
@@ -291,7 +293,7 @@ PCAP_CFLAGS =  -I/usr/include
 PCAP_LIBS = -lpcap
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = /usr/lib/pkgconfig
+PKG_CONFIG_PATH = /home/work/dpdk-stable-24.11.1/dpdklib/lib/x86_64-linux-gnu/pkgconfig/:
 POW_LIB = 
 RANLIB = ranlib
 RUSTC = /usr/bin/rustc
@@ -332,18 +334,18 @@ datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
-e_datarulesdir = /usr/share/suricata/rules
-e_defaultruledir = /etc/suricata/rules
+e_datarulesdir = /usr/local/share/suricata/rules
+e_defaultruledir = /usr/local/etc/suricata/rules
 e_enable_evelog = yes
-e_localstatedir = /var/run/suricata
-e_logcertsdir = /var/log/suricata/certs
-e_logdir = /var/log/suricata/
-e_logfilesdir = /var/log/suricata/files
+e_localstatedir = /usr/local/var/run/suricata
+e_logcertsdir = /usr/local/var/log/suricata/certs
+e_logdir = /usr/local/var/log/suricata/
+e_logfilesdir = /usr/local/var/log/suricata/files
 e_magic_file = 
 e_magic_file_comment = #
-e_rundir = /var/run/
+e_rundir = /usr/local/var/run/
 e_rustdir = /home/work/suricata/rust
-e_sysconfdir = /etc/suricata/
+e_sysconfdir = /usr/local/etc/suricata/
 exec_prefix = ${prefix}
 have_cargo_vendor_bin = 
 have_rustup = no
@@ -360,8 +362,8 @@ libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 libhs_CFLAGS = 
 libhs_LIBS = 
-libhtp_CFLAGS = -I/usr/lib/x86_64-linux-gnu/htp/include
-libhtp_LIBS = -lhtp
+libhtp_CFLAGS = 
+libhtp_LIBS = 
 libnetfilter_queue_CFLAGS = 
 libnetfilter_queue_LIBS = 
 libnspr_CFLAGS = -I/usr/include/nspr
@@ -369,12 +371,12 @@ libnspr_LIBS = -lplds4 -lplc4 -lnspr4
 libnss_CFLAGS = -I/usr/include/nss -I/usr/include/nspr
 libnss_LIBS = -lnss3 -lnssutil3 -lsmime3 -lssl3 -lplds4 -lplc4 -lnspr4
 localedir = ${datarootdir}/locale
-localstatedir = /var
+localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -383,8 +385,8 @@ rustup_home =
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
-subdirs = 
-sysconfdir = /etc
+subdirs =  libhtp
+sysconfdir = ${prefix}/etc
 target_alias = 
 top_build_prefix = ../
 top_builddir = ..
@@ -403,9 +405,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign qa/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu qa/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign qa/Makefile
+	  $(AUTOMAKE) --gnu qa/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

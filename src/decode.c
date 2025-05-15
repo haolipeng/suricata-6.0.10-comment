@@ -63,7 +63,7 @@
 #include "pkt-var.h"
 #include "util-mpm-ac.h"
 #include "util-hash-string.h"
-#include "output.h"
+
 #include "output-flow.h"
 #include "flow-storage.h"
 #include "util-validate.h"

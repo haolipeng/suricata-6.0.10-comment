@@ -46,7 +46,7 @@
 #include "util-hash-lookup3.h"
 
 #include "conf.h"
-#include "output.h"
+
 #include "output-flow.h"
 #include "stream-tcp.h"
 #include "util-exception-policy.h"
@@ -145,27 +145,7 @@ static inline uint32_t FlowGetHash(const Packet *p)
 
             hash = hashword(fhk.u32, 5, flow_config.hash_rand);
 
-        } else if (ICMPV4_DEST_UNREACH_IS_VALID(p)) {
-            uint32_t psrc = IPV4_GET_RAW_IPSRC_U32(ICMPV4_GET_EMB_IPV4(p));
-            uint32_t pdst = IPV4_GET_RAW_IPDST_U32(ICMPV4_GET_EMB_IPV4(p));
-            FlowHashKey4 fhk;
-
-            const int ai = (psrc > pdst);
-            fhk.addrs[1-ai] = psrc;
-            fhk.addrs[ai] = pdst;
-
-            const int pi = (p->icmpv4vars.emb_sport > p->icmpv4vars.emb_dport);
-            fhk.ports[1-pi] = p->icmpv4vars.emb_sport;
-            fhk.ports[pi] = p->icmpv4vars.emb_dport;
-
-            fhk.proto = (uint16_t)ICMPV4_GET_EMB_PROTO(p);
-            fhk.recur = (uint16_t)p->recursion_level;
-            fhk.vlan_id[0] = p->vlan_id[0] & g_vlan_mask;
-            fhk.vlan_id[1] = p->vlan_id[1] & g_vlan_mask;
-
-            hash = hashword(fhk.u32, 5, flow_config.hash_rand);
-
-        } else {
+        }  else {
             FlowHashKey4 fhk;
             const int ai = (p->src.addr_data32[0] > p->dst.addr_data32[0]);
             fhk.addrs[1-ai] = p->src.addr_data32[0];

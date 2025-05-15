@@ -58,7 +58,7 @@ vars:
 # The default logging directory.  Any log or output file will be
 # placed here if it's not specified with a full path name. This can be
 # overridden with the -l command line parameter.
-default-log-dir: /var/log/suricata/
+default-log-dir: /usr/local/var/log/suricata/
 
 # Global stats configuration
 stats:
@@ -1021,7 +1021,7 @@ asn1-max-frames: 256
 # Default location of the pid file. The pid file is only used in
 # daemon mode (start Suricata with -D). If not running in daemon mode
 # the --pidfile command line option must be used to create a pid file.
-#pid-file: /var/run/suricata.pid
+#pid-file: /usr/local/var/run/suricata.pid
 
 # Daemon working directory
 # Suricata will change directory to this one if provided
@@ -1114,8 +1114,8 @@ legacy:
 #packet-alert-max: 15
 
 # IP Reputation
-#reputation-categories-file: /etc/suricata/iprep/categories.txt
-#default-reputation-path: /etc/suricata/iprep
+#reputation-categories-file: /usr/local/etc/suricata/iprep/categories.txt
+#default-reputation-path: /usr/local/etc/suricata/iprep
 #reputation-files:
 # - reputation.list
 
@@ -1916,7 +1916,7 @@ napatech:
 ## Configure Suricata to load Suricata-Update managed rules.
 ##
 
-default-rule-path: /etc/suricata/rules
+default-rule-path: /usr/local/etc/suricata/rules
 
 rule-files:
   - suricata.rules
@@ -1925,9 +1925,9 @@ rule-files:
 ## Auxiliary configuration files.
 ##
 
-classification-file: /etc/suricata/classification.config
-reference-config-file: /etc/suricata/reference.config
-# threshold-file: /etc/suricata/threshold.config
+classification-file: /usr/local/etc/suricata/classification.config
+reference-config-file: /usr/local/etc/suricata/reference.config
+# threshold-file: /usr/local/etc/suricata/threshold.config
 
 ##
 ## Include other configs

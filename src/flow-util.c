@@ -39,8 +39,6 @@
 #include "detect.h"
 #include "detect-engine-state.h"
 
-#include "decode-icmpv4.h"
-
 #include "util-validate.h"
 
 /** \brief allocate a flow

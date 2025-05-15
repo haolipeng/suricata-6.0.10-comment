@@ -39,7 +39,7 @@
 
 #include "util-debug.h"
 
-#include "output.h"
+
 #include "log-httplog.h"
 #include "app-layer-htp.h"
 #include "app-layer.h"

@@ -24,7 +24,6 @@
 #include "suricata-common.h"
 #include "debug.h"
 #include "decode.h"
-#include "rust.h"
 
 #include "detect.h"
 #include "detect-parse.h"

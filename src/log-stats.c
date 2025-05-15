@@ -37,7 +37,7 @@
 
 #include "util-debug.h"
 
-#include "output.h"
+
 #include "log-stats.h"
 #include "util-privs.h"
 #include "util-buffer.h"
