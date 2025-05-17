@@ -34,7 +34,6 @@
 #include "packet-queue.h"
 #include "decode.h"
 #include "decode-ipv6.h"
-#include "decode-icmpv6.h"
 #include "decode-events.h"
 #include "defrag.h"
 #include "pkt-var.h"

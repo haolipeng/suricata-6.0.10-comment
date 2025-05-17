@@ -40,7 +40,6 @@
 #include "detect-ipproto.h"
 #include "detect-flow.h"
 #include "detect-app-layer-protocol.h"
-#include "detect-lua.h"
 #include "detect-app-layer-event.h"
 #include "detect-http-method.h"
 
@@ -1218,11 +1217,6 @@ static int SigParse(DetectEngineCtx *de_ctx, Signature *s,
         const char *sigstr, uint8_t addrs_direction, SignatureParser *parser)
 {
     SCEnter();
-
-    if (!rs_check_utf8(sigstr)) {
-        SCLogError(SC_ERR_RULE_INVALID_UTF8, "rule is not valid UTF-8");
-        SCReturnInt(-1);
-    }
 
     s->sig_str = SCStrdup(sigstr);
     if (unlikely(s->sig_str == NULL)) {

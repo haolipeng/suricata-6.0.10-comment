@@ -177,7 +177,7 @@ source-af-packet.o: source-af-packet.c /usr/include/stdc-predef.h \
  counters.h decode-events.h flow-worker.h source-pcap.h \
  source-af-packet.h /usr/include/linux/if_packet.h action-globals.h \
  decode-ethernet.h decode-gre.h decode-sll.h decode-ipv4.h decode-ipv6.h \
- decode-icmpv4.h decode-tcp.h decode-udp.h decode-icmpv6.h decode-raw.h \
+ decode-tcp.h decode-udp.h decode-raw.h \
  decode-null.h decode-vlan.h decode-vxlan.h detect-reference.h \
  app-layer-protos.h detect.h flow.h util-exception-policy.h util-var.h \
  util-device.h unix-manager.h detect-tag.h suricata.h runmodes.h \
@@ -717,8 +717,6 @@ decode-sll.h:
 decode-ipv4.h:
 
 decode-ipv6.h:
-
-decode-icmpv4.h:
 
 decode-tcp.h:
 

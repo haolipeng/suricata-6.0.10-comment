@@ -2872,7 +2872,6 @@ static int SigTest34ICMPV4Keyword(void)
     PACKET_RESET_CHECKSUMS(p1);
     p1->ip4h = (IPV4Hdr *)(valid_raw_ipv4);
     p1->ip4h->ip_verhl = 69;
-    p1->icmpv4h = (ICMPV4Hdr *) (valid_raw_ipv4 + IPV4_GET_RAW_HLEN(p1->ip4h) * 4);
     p1->src.family = AF_INET;
     p1->dst.family = AF_INET;
     p1->payload = buf;
@@ -2882,7 +2881,6 @@ static int SigTest34ICMPV4Keyword(void)
     PACKET_RESET_CHECKSUMS(p2);
     p2->ip4h = (IPV4Hdr *)(invalid_raw_ipv4);
     p2->ip4h->ip_verhl = 69;
-    p2->icmpv4h = (ICMPV4Hdr *) (invalid_raw_ipv4 + IPV4_GET_RAW_HLEN(p2->ip4h) * 4);
     p2->src.family = AF_INET;
     p2->dst.family = AF_INET;
     p2->payload = buf;
@@ -2990,7 +2988,6 @@ static int SigTest35NegativeICMPV4Keyword(void)
     PACKET_RESET_CHECKSUMS(p1);
     p1->ip4h = (IPV4Hdr *)(valid_raw_ipv4);
     p1->ip4h->ip_verhl = 69;
-    p1->icmpv4h = (ICMPV4Hdr *) (valid_raw_ipv4 + IPV4_GET_RAW_HLEN(p1->ip4h) * 4);
     p1->src.family = AF_INET;
     p1->dst.family = AF_INET;
     p1->payload = buf;
@@ -3000,8 +2997,7 @@ static int SigTest35NegativeICMPV4Keyword(void)
     PACKET_RESET_CHECKSUMS(p2);
     p2->ip4h = (IPV4Hdr *)(invalid_raw_ipv4);
     p2->ip4h->ip_verhl = 69;
-    p2->icmpv4h = (ICMPV4Hdr *) (invalid_raw_ipv4 + IPV4_GET_RAW_HLEN(p2->ip4h) * 4);
-    p2->src.family = AF_INET;
+   p2->src.family = AF_INET;
     p2->dst.family = AF_INET;
     p2->payload = buf;
     p2->payload_len = buflen;

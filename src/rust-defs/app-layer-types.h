@@ -21,22 +21,40 @@ typedef struct AppLayerGetTxIterTuple {
     bool has_next;
 } AppLayerGetTxIterTuple;
 
-/* AppLayerTxData definition */
-typedef struct AppLayerTxData {
-    /** Flags shared with app-layer parser */
-    uint32_t flags;
-    /** Used by tx logging. */
-    DetectEngineState *de_state;
-    /** Detection engine flags */
-    uint64_t detect_flags;
-    /** Offset into the flow's payload_inspection_progress. Only set in case of
-     *  midstream pickups, where we may have a non-zero starting offset. */
-    uint64_t progress_first_offset;
-    /** Inspection recursion level */
-    uint32_t inspect_recursion_level;
-} AppLayerTxData;
+typedef struct AppLayerTxConfig {
+    /**
+     * config: log flags
+     */
+    uint8_t log_flags;
+} AppLayerTxConfig;
 
-/* AppLayerTxConfig definition */
-typedef uint64_t AppLayerTxConfig;
+/**
+ * LoggerFlags tracks which loggers have already been executed.
+ */
+typedef struct LoggerFlags {
+    uint32_t flags;
+} LoggerFlags;
+
+typedef struct AppLayerTxData {
+    /**
+     * config: log flags
+     */
+    struct AppLayerTxConfig config;
+    /**
+     * logger flags for tx logging api
+     */
+    struct LoggerFlags logged;
+    /**
+     * track file open/logs so we can know how long to keep the tx
+     */
+    uint32_t files_opened;
+    uint32_t files_logged;
+    uint32_t files_stored;
+    /**
+     * detection engine flags for use by detection engine
+     */
+    uint64_t detect_flags_ts;
+    uint64_t detect_flags_tc;
+} AppLayerTxData;
 
 #endif /* __APP_LAYER_TYPES_H__ */ 

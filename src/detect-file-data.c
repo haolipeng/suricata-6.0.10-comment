@@ -39,7 +39,6 @@
 
 #include "app-layer-parser.h"
 #include "app-layer-htp.h"
-#include "app-layer-smtp.h"
 
 #include "flow.h"
 #include "flow-var.h"
@@ -106,12 +105,6 @@ void DetectFiledataRegister(void)
     DetectAppLayerMpmRegister2("file_data", SIG_FLAG_TOCLIENT, 2,
             PrefilterMpmFiledataRegister, NULL,
             ALPROTO_SMB, 0);
-    DetectAppLayerMpmRegister2("file_data", SIG_FLAG_TOSERVER, 2,
-            PrefilterMpmFiledataRegister, NULL,
-            ALPROTO_HTTP2, HTTP2StateDataClient);
-    DetectAppLayerMpmRegister2("file_data", SIG_FLAG_TOCLIENT, 2,
-            PrefilterMpmFiledataRegister, NULL,
-            ALPROTO_HTTP2, HTTP2StateDataServer);
     DetectAppLayerInspectEngineRegister2("file_data", ALPROTO_HTTP, SIG_FLAG_TOCLIENT,
             HTP_RESPONSE_BODY, DetectEngineInspectBufferHttpBody, NULL);
     DetectAppLayerInspectEngineRegister2("file_data",
@@ -126,13 +119,6 @@ void DetectFiledataRegister(void)
     DetectAppLayerInspectEngineRegister2("file_data",
             ALPROTO_SMB, SIG_FLAG_TOCLIENT, 0,
             DetectEngineInspectFiledata, NULL);
-    DetectAppLayerInspectEngineRegister2("file_data",
-            ALPROTO_HTTP2, SIG_FLAG_TOSERVER, HTTP2StateDataClient,
-            DetectEngineInspectFiledata, NULL);
-    DetectAppLayerInspectEngineRegister2("file_data",
-            ALPROTO_HTTP2, SIG_FLAG_TOCLIENT, HTTP2StateDataServer,
-            DetectEngineInspectFiledata, NULL);
-
     DetectBufferTypeSetDescriptionByName("file_data",
             "http response body, smb files or smtp attachments data");
 
@@ -151,11 +137,6 @@ static void SetupDetectEngineConfig(DetectEngineCtx *de_ctx) {
     }
 
     /* add protocol specific settings here */
-
-    /* SMTP */
-    de_ctx->filedata_config[ALPROTO_SMTP].content_limit = smtp_config.content_limit;
-    de_ctx->filedata_config[ALPROTO_SMTP].content_inspect_min_size = smtp_config.content_inspect_min_size;
-    de_ctx->filedata_config[ALPROTO_SMTP].content_inspect_window = smtp_config.content_inspect_window;
 
     de_ctx->filedata_config_initialized = true;
 }

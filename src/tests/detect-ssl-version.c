@@ -16,13 +16,6 @@
  */
 
 /**
- * \file   detect-ssl-version.c
- *
- * \author Gurvinder Singh <gurvindersinghdahiya@gmail.com>
- *
- */
-
-/**
  * \test DetectSslVersionTestParse01 is a test to make sure that we parse the
  *      "ssl_version" option correctly when given valid ssl_version option
  */

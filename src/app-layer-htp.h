@@ -38,6 +38,7 @@
 #include "app-layer-htp-mem.h"
 #include "detect-engine-state.h"
 #include "util-streaming-buffer.h"
+#include "rust-defs/app-layer-types.h"
 
 #include <htp/htp.h>
 

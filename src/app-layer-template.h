@@ -25,6 +25,7 @@
 #define __APP_LAYER_TEMPLATE_H__
 
 #include "detect-engine-state.h"
+#include "rust-defs/app-layer-types.h"
 
 #include "queue.h"
 

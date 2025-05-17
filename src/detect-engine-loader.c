@@ -293,7 +293,6 @@ int SigLoadSignatures(DetectEngineCtx *de_ctx, char *sig_file, int sig_file_excl
 
     if (RunmodeGetCurrent() == RUNMODE_ENGINE_ANALYSIS) {
         fp_engine_analysis_set = SetupFPAnalyzer();
-        rule_engine_analysis_set = SetupRuleAnalyzer();
     }
 
     /* ok, let's load signature files from the general config */

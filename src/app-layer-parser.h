@@ -72,6 +72,7 @@
 #define APP_LAYER_INCOMPLETE(c,n) (AppLayerResult) { 1, (c), (n) }
 
 int AppLayerParserProtoIsRegistered(uint8_t ipproto, AppProto alproto);
+AppLayerTxData *AppLayerParserGetTxData(uint8_t ipproto, AppProto alproto, void *tx);
 
 /***** transaction handling *****/
 

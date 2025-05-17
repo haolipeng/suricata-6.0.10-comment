@@ -44,35 +44,16 @@
 #include "detect-engine-prefilter.h"
 
 #include "detect-engine-payload.h"
-#include "detect-dns-opcode.h"
 #include "detect-dns-query.h"
-#include "detect-tls-sni.h"
-#include "detect-tls-certs.h"
-#include "detect-tls-cert-fingerprint.h"
-#include "detect-tls-cert-issuer.h"
-#include "detect-tls-cert-subject.h"
-#include "detect-tls-cert-serial.h"
-#include "detect-tls-ja3-hash.h"
-#include "detect-tls-ja3-string.h"
-#include "detect-tls-ja3s-hash.h"
-#include "detect-tls-ja3s-string.h"
 #include "detect-engine-state.h"
 #include "detect-engine-analyzer.h"
 
-#include "detect-http-cookie.h"
 #include "detect-http-method.h"
-#include "detect-http-ua.h"
-#include "detect-http-host.h"
-
-#include "detect-nfs-procedure.h"
-#include "detect-nfs-version.h"
 
 #include "detect-engine-event.h"
 #include "decode.h"
 
 #include "detect-config.h"
-
-#include "detect-smb-share.h"
 
 #include "detect-base64-decode.h"
 #include "detect-base64-data.h"
@@ -110,11 +91,9 @@
 #include "detect-rev.h"
 #include "detect-flow.h"
 #include "detect-tcp-window.h"
-#include "detect-ftpbounce.h"
 #include "detect-isdataat.h"
 #include "detect-id.h"
 #include "detect-rpc.h"
-#include "detect-asn1.h"
 #include "detect-filename.h"
 #include "detect-fileext.h"
 #include "detect-filestore.h"
@@ -139,33 +118,15 @@
 #include "detect-ttl.h"
 #include "detect-fast-pattern.h"
 #include "detect-itype.h"
-#include "detect-icode.h"
-#include "detect-icmp-id.h"
-#include "detect-icmp-seq.h"
-#include "detect-icmpv4hdr.h"
 #include "detect-urilen.h"
 #include "detect-bsize.h"
 #include "detect-detection-filter.h"
-#include "detect-http-client-body.h"
-#include "detect-http-server-body.h"
-#include "detect-http-header.h"
-#include "detect-http-header-names.h"
-#include "detect-http-headers.h"
-#include "detect-http-raw-header.h"
-#include "detect-http-uri.h"
-#include "detect-http-protocol.h"
-#include "detect-http-start.h"
-#include "detect-http-stat-msg.h"
-#include "detect-http-request-line.h"
-#include "detect-http-response-line.h"
-#include "detect-http2.h"
 #include "detect-byte-extract.h"
 #include "detect-file-data.h"
 #include "detect-pkt-data.h"
 #include "detect-replace.h"
 #include "detect-tos.h"
 #include "detect-app-layer-event.h"
-#include "detect-lua.h"
 #include "detect-iprep.h"
 #include "detect-geoip.h"
 #include "detect-app-layer-protocol.h"
@@ -174,22 +135,12 @@
 #include "detect-tcphdr.h"
 #include "detect-tcpmss.h"
 #include "detect-udphdr.h"
-#include "detect-icmpv6hdr.h"
-#include "detect-icmpv6-mtu.h"
 #include "detect-ipv4hdr.h"
 #include "detect-ipv6hdr.h"
-#include "detect-rfb-secresult.h"
-#include "detect-rfb-sectype.h"
-#include "detect-rfb-name.h"
 #include "detect-target.h"
-#include "detect-template-rust-buffer.h"
-#include "detect-snmp-version.h"
-#include "detect-snmp-community.h"
-#include "detect-snmp-pdu_type.h"
 
 #include "detect-template-buffer.h"
 #include "detect-bypass.h"
-#include "detect-ftpdata.h"
 #include "detect-engine-content-inspection.h"
 
 #include "detect-transform-compress-whitespace.h"
@@ -206,22 +157,7 @@
 #include "app-layer.h"
 #include "app-layer-protos.h"
 #include "app-layer-htp.h"
-#include "app-layer-smtp.h"
 #include "app-layer-template.h"
-#include "detect-tls.h"
-#include "detect-tls-cert-validity.h"
-#include "detect-tls-version.h"
-#include "detect-ssh-proto.h"
-#include "detect-ssh-proto-version.h"
-#include "detect-ssh-software.h"
-#include "detect-ssh-software-version.h"
-#include "detect-ssh-hassh.h"
-#include "detect-ssh-hassh-server.h"
-#include "detect-ssh-hassh-string.h"
-#include "detect-ssh-hassh-server-string.h"
-#include "detect-http-stat-code.h"
-#include "detect-ssl-version.h"
-#include "detect-ssl-state.h"
 
 #include "action-globals.h"
 #include "tm-threads.h"
@@ -234,7 +170,6 @@
 #include "stream-tcp.h"
 #include "stream-tcp-inline.h"
 
-#include "util-lua.h"
 #include "util-var-name.h"
 #include "util-classification-config.h"
 #include "util-threshold-config.h"
@@ -413,19 +348,7 @@ void SigTableSetup(void)
      * engine registration order and ultimately the order
      * of inspect engines in the rule. Which in turn affects
      * state keeping */
-    DetectHttpUriRegister();
-    DetectHttpRequestLineRegister();
-    DetectHttpClientBodyRegister();
-    DetectHttpResponseLineRegister();
-    DetectHttpServerBodyRegister();
-    DetectHttpHeaderRegister();
-    DetectHttpHeaderNamesRegister();
-    DetectHttpHeadersRegister();
-    DetectHttpProtocolRegister();
-    DetectHttpStartRegister();
-    DetectHttpRawHeaderRegister();
     DetectHttpMethodRegister();
-    DetectHttpCookieRegister();
 
     DetectFilenameRegister();
     DetectFileextRegister();
@@ -436,27 +359,7 @@ void SigTableSetup(void)
     DetectFileSha256Register();
     DetectFilesizeRegister();
 
-    DetectHttpUARegister();
-    DetectHttpHHRegister();
-
-    DetectHttpStatMsgRegister();
-    DetectHttpStatCodeRegister();
-    DetectHttp2Register();
-
     DetectDnsQueryRegister();
-    DetectDnsOpcodeRegister();
-
-    DetectTlsSniRegister();
-    DetectTlsIssuerRegister();
-    DetectTlsSubjectRegister();
-    DetectTlsSerialRegister();
-    DetectTlsFingerprintRegister();
-    DetectTlsCertsRegister();
-
-    DetectTlsJa3HashRegister();
-    DetectTlsJa3StringRegister();
-    DetectTlsJa3SHashRegister();
-    DetectTlsJa3SStringRegister();
 
     DetectAppLayerEventRegister();
     /* end of order dependent regs */
@@ -478,9 +381,6 @@ void SigTableSetup(void)
     DetectReplaceRegister();
     DetectFlowRegister();
     DetectWindowRegister();
-    DetectRpcRegister();
-    DetectFtpbounceRegister();
-    DetectFtpdataRegister();
     DetectIsdataatRegister();
     DetectIdRegister();
     DetectDsizeRegister();
@@ -506,35 +406,12 @@ void SigTableSetup(void)
     DetectTosRegister();
     DetectFastPatternRegister();
     DetectITypeRegister();
-    DetectICodeRegister();
-    DetectIcmpIdRegister();
-    DetectIcmpSeqRegister();
-    DetectIcmpv4HdrRegister();
-    DetectSmbNamedPipeRegister();
-    DetectSmbShareRegister();
-    DetectTlsRegister();
-    DetectTlsValidityRegister();
-    DetectTlsVersionRegister();
-    DetectNfsProcedureRegister();
-    DetectNfsVersionRegister();
     DetectUrilenRegister();
     DetectBsizeRegister();
     DetectDetectionFilterRegister();
-    DetectAsn1Register();
-    DetectSshProtocolRegister();
-    DetectSshVersionRegister();
-    DetectSshSoftwareRegister();
-    DetectSshSoftwareVersionRegister();
-    DetectSshHasshRegister();
-    DetectSshHasshServerRegister();
-    DetectSshHasshStringRegister();
-    DetectSshHasshServerStringRegister();
-    DetectSslStateRegister();
-    DetectSslVersionRegister();
     DetectByteExtractRegister();
     DetectFiledataRegister();
     DetectPktDataRegister();
-    DetectLuaRegister();
     DetectIPRepRegister();
     DetectAppLayerProtocolRegister();
     DetectBase64DecodeRegister();
@@ -544,19 +421,9 @@ void SigTableSetup(void)
     DetectTcphdrRegister();
     DetectUdphdrRegister();
     DetectTcpmssRegister();
-    DetectICMPv6hdrRegister();
-    DetectICMPv6mtuRegister();
     DetectIpv4hdrRegister();
     DetectIpv6hdrRegister();
-    DetectRfbSecresultRegister();
-    DetectRfbSectypeRegister();
-    DetectRfbNameRegister();
     DetectTargetRegister();
-    DetectTemplateRustBufferRegister();
-    DetectSNMPVersionRegister();
-    DetectSNMPCommunityRegister();
-    DetectSNMPPduTypeRegister();
-
     DetectTemplateBufferRegister();
     DetectBypassRegister();
     DetectConfigRegister();

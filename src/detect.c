@@ -504,6 +504,7 @@ static inline void DetectRunGetRuleGroup(
 
             /* HACK: prevent the wrong sgh (or NULL) from being stored in the
              * flow's sgh pointers */
+            #if 0 
             if (PKT_IS_ICMPV4(p) && ICMPV4_DEST_UNREACH_IS_VALID(p)) {
                 ; /* no-op */
             } else {
@@ -511,7 +512,9 @@ static inline void DetectRunGetRuleGroup(
                  * from looking it up again for the next packet.
                  * Also run other tasks */
                 DetectRunPostGetFirstRuleGroup(p, pflow, sgh);
-            }
+            } 
+            #endif
+            DetectRunPostGetFirstRuleGroup(p, pflow, sgh);
         }
     } else { /* p->flags & PKT_HAS_FLOW */
         /* no flow */

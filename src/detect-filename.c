@@ -129,14 +129,6 @@ void DetectFilenameRegister(void)
             ALPROTO_SMB, SIG_FLAG_TOCLIENT, 0,
             DetectFileInspectGeneric);
 
-    //this is used by filestore
-    DetectAppLayerInspectEngineRegister("files",
-            ALPROTO_HTTP2, SIG_FLAG_TOSERVER, HTTP2StateDataClient,
-            DetectFileInspectGeneric);
-    DetectAppLayerInspectEngineRegister("files",
-            ALPROTO_HTTP2, SIG_FLAG_TOCLIENT, HTTP2StateDataServer,
-            DetectFileInspectGeneric);
-
     g_file_match_list_id = DetectBufferTypeGetByName("files");
 
     AppProto protos_ts[] = { ALPROTO_HTTP, ALPROTO_SMTP, ALPROTO_FTP, ALPROTO_FTPDATA, ALPROTO_SMB,

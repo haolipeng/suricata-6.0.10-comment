@@ -14,13 +14,7 @@ endif
 
 COMMON_SOURCES = \
 app-layer.c app-layer.h \
-app-layer-dcerpc.c app-layer-dcerpc.h \
-app-layer-dcerpc-udp.c app-layer-dcerpc-udp.h \
 app-layer-detect-proto.c app-layer-detect-proto.h \
-app-layer-dnp3.c app-layer-dnp3.h \
-app-layer-dnp3-objects.c app-layer-dnp3-objects.h \
-app-layer-enip.c app-layer-enip.h \
-app-layer-enip-common.c app-layer-enip-common.h \
 app-layer-events.c app-layer-events.h \
 app-layer-expectation.c app-layer-expectation.h \
 app-layer-htp-body.c app-layer-htp-body.h \
@@ -29,21 +23,10 @@ app-layer-htp-file.c app-layer-htp-file.h \
 app-layer-htp-libhtp.c app-layer-htp-libhtp.h \
 app-layer-htp-mem.c app-layer-htp-mem.h \
 app-layer-htp-xff.c app-layer-htp-xff.h \
-app-layer-http2.c app-layer-http2.h \
-app-layer-modbus.c app-layer-modbus.h \
 app-layer-parser.c app-layer-parser.h \
 app-layer-protos.c app-layer-protos.h \
 app-layer-register.c app-layer-register.h \
-app-layer-tftp.c app-layer-tftp.h \
-app-layer-ikev2.c app-layer-ikev2.h \
-app-layer-krb5.c app-layer-krb5.h \
-app-layer-rfb.c app-layer-rfb.h \
 app-layer-template.c app-layer-template.h \
-app-layer-template-rust.c app-layer-template-rust.h \
-app-layer-rdp.c app-layer-rdp.h \
-app-layer-ssh.c app-layer-ssh.h \
-app-layer-ssl.c app-layer-ssl.h \
-app-layer-sip.c app-layer-sip.h \
 conf.c conf.h \
 conf-yaml-loader.c conf-yaml-loader.h \
 counters.c counters.h \
@@ -55,8 +38,6 @@ decode.c decode.h \
 decode-ethernet.c decode-ethernet.h \
 decode-events.c decode-events.h \
 decode-gre.c decode-gre.h \
-decode-icmpv4.c decode-icmpv4.h \
-decode-icmpv6.c decode-icmpv6.h \
 decode-ipv4.c decode-ipv4.h \
 decode-ipv6.c decode-ipv6.h \
 decode-null.c decode-null.h \
@@ -66,7 +47,6 @@ decode-tcp.c decode-tcp.h \
 decode-udp.c decode-udp.h \
 decode-vlan.c decode-vlan.h \
 decode-vxlan.c decode-vxlan.h \
-decode-vntag.c decode-vntag.h \
 decode-template.c decode-template.h \
 defrag-config.c defrag-config.h \
 defrag.c defrag.h \
@@ -75,7 +55,6 @@ defrag-queue.c defrag-queue.h \
 defrag-timeout.c defrag-timeout.h \
 detect-app-layer-event.c detect-app-layer-event.h \
 detect-app-layer-protocol.c detect-app-layer-protocol.h \
-detect-asn1.c detect-asn1.h \
 detect-base64-data.c detect-base64-data.h \
 detect-base64-decode.c detect-base64-decode.h \
 detect-bsize.c detect-bsize.h \
@@ -95,19 +74,7 @@ detect-dataset.c detect-dataset.h \
 detect-depth.c detect-depth.h \
 detect-detection-filter.c detect-detection-filter.h \
 detect-distance.c detect-distance.h \
-detect-dnp3.c detect-dnp3.h \
-detect-dns-opcode.c detect-dns-opcode.h \
 detect-dns-query.c detect-dns-query.h \
-detect-tls-ja3-hash.c detect-tls-ja3-hash.h \
-detect-tls-ja3-string.c detect-tls-ja3-string.h \
-detect-tls-ja3s-hash.c detect-tls-ja3s-hash.h \
-detect-tls-ja3s-string.c detect-tls-ja3s-string.h \
-detect-tls-sni.c detect-tls-sni.h \
-detect-tls-cert-issuer.c detect-tls-cert-issuer.h \
-detect-tls-cert-subject.c detect-tls-cert-subject.h \
-detect-tls-cert-serial.c detect-tls-cert-serial.h \
-detect-tls-cert-fingerprint.c detect-tls-cert-fingerprint.h \
-detect-tls-certs.c detect-tls-certs.h \
 detect-dsize.c detect-dsize.h \
 detect-engine.c detect-engine.h \
 detect-engine-address.c detect-engine-address.h \
@@ -117,10 +84,7 @@ detect-engine-alert.c detect-engine-alert.h \
 detect-engine-analyzer.c detect-engine-analyzer.h \
 detect-engine-build.c detect-engine-build.h \
 detect-engine-content-inspection.c detect-engine-content-inspection.h \
-detect-engine-dcepayload.c detect-engine-dcepayload.h \
 detect-engine-dns.c detect-engine-dns.h \
-detect-engine-modbus.c detect-engine-modbus.h \
-detect-engine-enip.c detect-engine-enip.h \
 detect-engine-event.c detect-engine-event.h \
 detect-engine-file.c detect-engine-file.h \
 detect-engine-iponly.c detect-engine-iponly.h \
@@ -156,44 +120,9 @@ detect-flowint.c detect-flowint.h \
 detect-flowvar.c detect-flowvar.h \
 detect-fragbits.c detect-fragbits.h \
 detect-fragoffset.c detect-fragoffset.h \
-detect-ftpbounce.c detect-ftpbounce.h \
 detect-geoip.c detect-geoip.h \
 detect-gid.c detect-gid.h \
 detect-hostbits.c detect-hostbits.h \
-detect-http-accept.c detect-http-accept.h \
-detect-http-accept-enc.c detect-http-accept-enc.h \
-detect-http-accept-lang.c detect-http-accept-lang.h \
-detect-http-client-body.c detect-http-client-body.h \
-detect-http-connection.c detect-http-connection.h \
-detect-http-content-len.c detect-http-content-len.h \
-detect-http-content-type.c detect-http-content-type.h \
-detect-http-cookie.c detect-http-cookie.h \
-detect-http-header.c detect-http-header.h \
-detect-http-headers.c detect-http-headers.h detect-http-headers-stub.h \
-detect-http-header-common.c detect-http-header-common.h \
-detect-http-header-names.c detect-http-header-names.h \
-detect-http-host.c detect-http-host.h \
-detect-http-location.c detect-http-location.h \
-detect-http-method.c detect-http-method.h \
-detect-http-protocol.c detect-http-protocol.h \
-detect-http-raw-header.c detect-http-raw-header.h \
-detect-http-referer.c detect-http-referer.h \
-detect-http-request-line.c detect-http-request-line.h \
-detect-http-response-line.c detect-http-response-line.h \
-detect-http-server.c detect-http-server.h \
-detect-http-server-body.c detect-http-server-body.h \
-detect-http-start.c detect-http-start.h \
-detect-http-stat-code.c detect-http-stat-code.h \
-detect-http-stat-msg.c detect-http-stat-msg.h \
-detect-http-ua.c detect-http-ua.h \
-detect-http-uri.c detect-http-uri.h \
-detect-http2.c detect-http2.h \
-detect-icmp-id.c detect-icmp-id.h \
-detect-icmp-seq.c detect-icmp-seq.h \
-detect-icmpv4hdr.c detect-icmpv4hdr.h \
-detect-icmpv6hdr.c detect-icmpv6hdr.h \
-detect-icmpv6-mtu.c detect-icmpv6-mtu.h \
-detect-icode.c detect-icode.h \
 detect-id.c detect-id.h \
 detect-ipopts.c detect-ipopts.h \
 detect-ipproto.c detect-ipproto.h \
@@ -202,18 +131,10 @@ detect-ipv4hdr.c detect-ipv4hdr.h \
 detect-ipv6hdr.c detect-ipv6hdr.h \
 detect-isdataat.c detect-isdataat.h \
 detect-itype.c detect-itype.h \
-detect-krb5-cname.c detect-krb5-cname.h \
-detect-krb5-errcode.c detect-krb5-errcode.h \
-detect-krb5-msgtype.c detect-krb5-msgtype.h \
-detect-krb5-sname.c detect-krb5-sname.h \
 detect-l3proto.c detect-l3proto.h \
-detect-lua.c detect-lua.h \
-detect-lua-extensions.c detect-lua-extensions.h \
 detect-mark.c detect-mark.h \
 detect-metadata.c detect-metadata.h \
 detect-msg.c detect-msg.h \
-detect-nfs-procedure.c detect-nfs-procedure.h \
-detect-nfs-version.c detect-nfs-version.h \
 detect-noalert.c detect-noalert.h \
 detect-nocase.c detect-nocase.h \
 detect-offset.c detect-offset.h \
@@ -230,30 +151,6 @@ detect-rev.c detect-rev.h \
 detect-rpc.c detect-rpc.h \
 detect-sameip.c detect-sameip.h \
 detect-sid.c detect-sid.h \
-detect-snmp-community.c detect-snmp-community.h \
-detect-snmp-pdu_type.c detect-snmp-pdu_type.h \
-detect-snmp-version.c detect-snmp-version.h \
-detect-sip-method.c detect-sip-method.h \
-detect-sip-uri.c detect-sip-uri.h \
-detect-sip-protocol.c detect-sip-protocol.h \
-detect-sip-stat-code.c detect-sip-stat-code.h \
-detect-sip-stat-msg.c detect-sip-stat-msg.h \
-detect-sip-request-line.c detect-sip-request-line.h \
-detect-sip-response-line.c detect-sip-response-line.h \
-detect-rfb-secresult.c detect-rfb-secresult.h \
-detect-rfb-sectype.c detect-rfb-sectype.h \
-detect-rfb-name.c detect-rfb-name.h \
-detect-ssh-proto.c detect-ssh-proto.h \
-detect-ssh-proto-version.c detect-ssh-proto-version.h \
-detect-ssh-software.c detect-ssh-software.h \
-detect-ssh-software-version.c detect-ssh-software-version.h \
-detect-ssh-hassh.c detect-ssh-hassh.h \
-detect-ssh-hassh-server.c detect-ssh-hassh-server.h \
-detect-ssh-hassh-string.c detect-ssh-hassh-string.h \
-detect-ssh-hassh-server-string.c detect-ssh-hassh-server-string.h \
-detect-smb-share.c detect-smb-share.h \
-detect-ssl-state.c detect-ssl-state.h \
-detect-ssl-version.c detect-ssl-version.h \
 detect-stream_size.c detect-stream_size.h \
 detect-tag.c detect-tag.h \
 detect-target.c detect-target.h \
@@ -266,13 +163,8 @@ detect-udphdr.c detect-udphdr.h \
 detect-tcpmss.c detect-tcpmss.h \
 detect-template.c detect-template.h \
 detect-template2.c detect-template2.h \
-detect-ftpdata.c detect-ftpdata.h \
-detect-template-rust-buffer.c detect-template-rust-buffer.h \
 detect-template-buffer.c detect-template-buffer.h \
 detect-threshold.c detect-threshold.h \
-detect-tls.c detect-tls.h \
-detect-tls-cert-validity.c detect-tls-cert-validity.h \
-detect-tls-version.c detect-tls-version.h \
 detect-tos.c detect-tos.h \
 detect-transform-compress-whitespace.c detect-transform-compress-whitespace.h \
 detect-transform-strip-whitespace.c detect-transform-strip-whitespace.h \
@@ -286,9 +178,7 @@ detect-ttl.c detect-ttl.h \
 detect-uricontent.c detect-uricontent.h \
 detect-urilen.c detect-urilen.h \
 detect-within.c detect-within.h \
-detect-modbus.c detect-modbus.h \
 detect-xbits.c detect-xbits.h \
-detect-cipservice.c detect-cipservice.h \
 device-storage.c device-storage.h \
 feature.c feature.h \
 flow-bit.c flow-bit.h \
@@ -530,7 +420,6 @@ EXTRA_DIST = \
 	tests/detect-http2.c \
 	tests/detect-http-client-body.c \
 	tests/detect-http-cookie.c \
-	tests/detect-http-header.c \
 	tests/detect-http-host.c \
 	tests/detect-http-method.c \
 	tests/detect-http-raw-header.c \
@@ -545,23 +434,11 @@ EXTRA_DIST = \
 	tests/detect-ipv4hdr.c \
 	tests/detect-ipv6hdr.c \
 	tests/detect-parse.c \
-	tests/detect-snmp-community.c \
-	tests/detect-snmp-pdu_type.c \
-	tests/detect-snmp-version.c \
-	tests/detect-ssl-state.c \
-	tests/detect-ssl-version.c \
 	tests/detect-tcphdr.c \
 	tests/detect-tcpmss.c \
 	tests/detect-template2.c \
 	tests/detect-template-buffer.c \
 	tests/detect-template.c \
-	tests/detect-tls-cert-fingerprint.c \
-	tests/detect-tls-cert-issuer.c \
-	tests/detect-tls-certs.c \
-	tests/detect-tls-cert-serial.c \
-	tests/detect-tls-cert-subject.c \
-	tests/detect-tls-cert-validity.c \
-	tests/detect-tls-version.c \
 	tests/detect-transform-pcrexform.c \
 	tests/detect-ttl.c \
 	tests/detect-udphdr.c \

@@ -108,37 +108,6 @@ static inline int ITypeMatch(const uint8_t ptype, const uint8_t mode,
 }
 
 /**
- * \brief This function is used to match itype rule option set on a packet with those passed via itype:
- *
- * \param t pointer to thread vars
- * \param det_ctx pointer to the pattern matcher thread
- * \param p pointer to the current packet
- * \param m pointer to the sigmatch that we will cast into DetectITypeData
- *
- * \retval 0 no match
- * \retval 1 match
- */
-static int DetectITypeMatch (DetectEngineThreadCtx *det_ctx, Packet *p,
-        const Signature *s, const SigMatchCtx *ctx)
-{
-    if (PKT_IS_PSEUDOPKT(p))
-        return 0;
-
-    uint8_t pitype;
-    if (PKT_IS_ICMPV4(p)) {
-        pitype = ICMPV4_GET_TYPE(p);
-    } else if (PKT_IS_ICMPV6(p)) {
-        pitype = ICMPV6_GET_TYPE(p);
-    } else {
-        /* Packet not ICMPv4 nor ICMPv6 */
-        return 0;
-    }
-
-    const DetectITypeData *itd = (const DetectITypeData *)ctx;
-    return ITypeMatch(pitype, itd->mode, itd->type1, itd->type2);
-}
-
-/**
  * \brief This function is used to parse itype options passed via itype: keyword
  *
  * \param de_ctx Pointer to the detection engine context
@@ -304,36 +273,6 @@ void DetectITypeFree(DetectEngineCtx *de_ctx, void *ptr)
     SCFree(itd);
 }
 
-/* prefilter code
- *
- * Prefilter uses the U8Hash logic, where we setup a 256 entry array
- * for each ICMP type. Each array element has the list of signatures
- * that need to be inspected. */
-
-static void PrefilterPacketITypeMatch(DetectEngineThreadCtx *det_ctx,
-        Packet *p, const void *pectx)
-{
-    if (PKT_IS_PSEUDOPKT(p)) {
-        SCReturn;
-    }
-
-    uint8_t pitype;
-    if (PKT_IS_ICMPV4(p)) {
-        pitype = ICMPV4_GET_TYPE(p);
-    } else if (PKT_IS_ICMPV6(p)) {
-        pitype = ICMPV6_GET_TYPE(p);
-    } else {
-        /* Packet not ICMPv4 nor ICMPv6 */
-        return;
-    }
-
-    const PrefilterPacketU8HashCtx *h = pectx;
-    const SigsArray *sa = h->array[pitype];
-    if (sa) {
-        PrefilterAddSids(&det_ctx->pmq, sa->sigs, sa->cnt);
-    }
-}
-
 static void
 PrefilterPacketITypeSet(PrefilterPacketHeaderValue *v, void *smctx)
 {
@@ -359,7 +298,7 @@ static int PrefilterSetupIType(DetectEngineCtx *de_ctx, SigGroupHead *sgh)
     return PrefilterSetupPacketHeaderU8Hash(de_ctx, sgh, DETECT_ITYPE,
             PrefilterPacketITypeSet,
             PrefilterPacketITypeCompare,
-            PrefilterPacketITypeMatch);
+            NULL);
 }
 
 static bool PrefilterITypeIsPrefilterable(const Signature *s)
@@ -527,7 +466,6 @@ static int DetectITypeMatchTest01(void)
     memset(&th_v, 0, sizeof(th_v));
 
     p = UTHBuildPacket(NULL, 0, IPPROTO_ICMP);
-    p->icmpv4h->type = 10;
 
     DetectEngineCtx *de_ctx = DetectEngineCtxInit();
     if (de_ctx == NULL) {

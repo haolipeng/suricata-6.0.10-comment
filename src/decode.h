@@ -243,8 +243,6 @@ typedef uint16_t Port;
 #define PKT_IS_IPV6(p)      (((p)->ip6h != NULL))
 #define PKT_IS_TCP(p)       (((p)->tcph != NULL))
 #define PKT_IS_UDP(p)       (((p)->udph != NULL))
-#define PKT_IS_ICMPV4(p)    (((p)->icmpv4h != NULL))
-#define PKT_IS_ICMPV6(p)    (((p)->icmpv6h != NULL))
 #define PKT_IS_TOSERVER(p)  (((p)->flowflags & FLOW_PKT_TOSERVER))
 #define PKT_IS_TOCLIENT(p)  (((p)->flowflags & FLOW_PKT_TOCLIENT))
 
@@ -791,12 +789,6 @@ void CaptureStatsSetup(ThreadVars *tv, CaptureStats *s);
         }                                                                                          \
         if ((p)->udph != NULL) {                                                                   \
             CLEAR_UDP_PACKET((p));                                                                 \
-        }                                                                                          \
-        if ((p)->icmpv4h != NULL) {                                                                \
-            CLEAR_ICMPV4_PACKET((p));                                                              \
-        }                                                                                          \
-        if ((p)->icmpv6h != NULL) {                                                                \
-            CLEAR_ICMPV6_PACKET((p));                                                              \
         }                                                                                          \
         (p)->greh = NULL;                                                                          \
         (p)->payload = NULL;                                                                       \

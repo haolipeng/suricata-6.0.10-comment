@@ -43,7 +43,6 @@
 #include "detect-uricontent.h"
 #include "detect-urilen.h"
 #include "detect-bsize.h"
-#include "detect-lua.h"
 #include "detect-base64-decode.h"
 #include "detect-base64-data.h"
 #include "detect-dataset.h"

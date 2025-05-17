@@ -1163,8 +1163,6 @@ static int SigGroupHeadTest10(void)
     memset(&th_v, 0, sizeof(ThreadVars));
 
     p = UTHBuildPacketSrcDst(NULL, 0, IPPROTO_ICMP, "192.168.1.1", "1.2.3.4");
-    p->icmpv4h->type = 5;
-    p->icmpv4h->code = 1;
 
     /* originally ip's were
     p.src.addr_data32[0] = 0xe08102d3;

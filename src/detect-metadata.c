@@ -109,72 +109,6 @@ static int SortHelper(const void *a, const void *b)
     return strcasecmp(ma->key, mb->key);
 }
 
-static char *CraftPreformattedJSON(const DetectMetadata *head)
-{
-    int cnt = 0;
-    for (const DetectMetadata *m = head; m != NULL; m = m->next) {
-        cnt++;
-    }
-    if (cnt == 0)
-        return NULL;
-
-    const DetectMetadata *array[cnt];
-    int i = 0;
-    for (const DetectMetadata *m = head; m != NULL; m = m->next) {
-        array[i++] = m;
-    }
-    BUG_ON(i != cnt);
-    qsort(array, cnt, sizeof(DetectMetadata *), SortHelper);
-
-    JsonBuilder *js = jb_new_object();
-    if (js == NULL)
-        return NULL;
-
-    /* array is sorted by key, so we can create a jsonbuilder object
-     * with each key appearing just once with one or more values */
-    bool array_open = false;
-    for (int j = 0; j < cnt; j++) {
-        const DetectMetadata *m = array[j];
-        const DetectMetadata *nm = j + 1 < cnt ? array[j + 1] : NULL;
-        DEBUG_VALIDATE_BUG_ON(m == NULL); // for scan-build
-
-        if (nm && strcasecmp(m->key, nm->key) == 0) {
-            if (!array_open) {
-                jb_open_array(js, m->key);
-                array_open = true;
-            }
-            jb_append_string(js, m->value);
-        } else {
-            if (!array_open) {
-                jb_open_array(js, m->key);
-            }
-            jb_append_string(js, m->value);
-            jb_close(js);
-            array_open = false;
-        }
-    }
-    jb_close(js);
-    /* we have a complete json builder. Now store it as a C string */
-    const size_t len = jb_len(js);
-#define MD_STR "\"metadata\":"
-#define MD_STR_LEN (sizeof(MD_STR) - 1)
-    char *str = SCMalloc(len + MD_STR_LEN + 1);
-    if (str == NULL) {
-        jb_free(js);
-        return NULL;
-    }
-    char *ptr = str;
-    memcpy(ptr, MD_STR, MD_STR_LEN);
-    ptr += MD_STR_LEN;
-    memcpy(ptr, jb_ptr(js), len);
-    ptr += len;
-    *ptr = '\0';
-#undef MD_STR
-#undef MD_STR_LEN
-    jb_free(js);
-    return str;
-}
-
 static int DetectMetadataParse(DetectEngineCtx *de_ctx, Signature *s, const char *metadatastr)
 {
     DetectMetadata *head = s->metadata ? s->metadata->list : NULL;
@@ -242,7 +176,7 @@ static int DetectMetadataParse(DetectEngineCtx *de_ctx, Signature *s, const char
         }
         s->metadata->list = head;
         SCFree(s->metadata->json_str);
-        s->metadata->json_str = CraftPreformattedJSON(head);
+        //s->metadata->json_str = CraftPreformattedJSON(head);
     }
     return 0;
 }

@@ -60,6 +60,7 @@
 
 #include "runmodes.h"
 
+AppLayerTxData *AppLayerParserGetTxData(uint8_t ipproto, AppProto alproto, void *tx);
 struct AppLayerParserThreadCtx_ {
     void *alproto_local_storage[FLOW_PROTO_MAX][ALPROTO_MAX];
 };
@@ -687,6 +688,16 @@ uint64_t AppLayerParserGetTransactionInspectId(AppLayerParserState *pstate, uint
         SCReturnCT(0ULL, "uint64_t");
 
     SCReturnCT(pstate->inspect_id[direction & STREAM_TOSERVER ? 0 : 1], "uint64_t");
+}
+
+AppLayerTxData *AppLayerParserGetTxData(uint8_t ipproto, AppProto alproto, void *tx)
+{
+    SCEnter();
+    if (alp_ctx.ctxs[FlowGetProtoMapping(ipproto)][alproto].GetTxData) {
+        AppLayerTxData *d = alp_ctx.ctxs[FlowGetProtoMapping(ipproto)][alproto].GetTxData(tx);
+        SCReturnPtr(d, "AppLayerTxData");
+    }
+    SCReturnPtr(NULL, "AppLayerTxData");
 }
 
 void AppLayerParserSetTransactionInspectId(const Flow *f, AppLayerParserState *pstate,
