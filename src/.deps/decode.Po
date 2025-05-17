@@ -224,8 +224,7 @@ decode.o: decode.c /usr/include/stdc-predef.h suricata-common.h \
  util-conf.h app-layer-detect-proto.h app-layer.h stream-tcp-private.h \
  util-pool.h util-pool-thread.h stream-tcp-reassemble.h util-profiling.h \
  tm-threads.h tmqh-packetpool.h tm-modules.h util-print.h pkt-var.h \
- util-mpm-ac.h util-hash-string.h output-flow.h flow-storage.h \
- util-validate.h
+ util-mpm-ac.h util-hash-string.h flow-storage.h util-validate.h
 /usr/include/stdc-predef.h:
 suricata-common.h:
 autoconf.h:
@@ -589,6 +588,5 @@ util-print.h:
 pkt-var.h:
 util-mpm-ac.h:
 util-hash-string.h:
-output-flow.h:
 flow-storage.h:
 util-validate.h:

@@ -173,11 +173,11 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-engine-alert.$(OBJEXT) detect-engine-analyzer.$(OBJEXT) \
 	detect-engine-build.$(OBJEXT) \
 	detect-engine-content-inspection.$(OBJEXT) \
-	detect-engine-dns.$(OBJEXT) \
-	detect-engine-event.$(OBJEXT) detect-engine-file.$(OBJEXT) \
-	detect-engine-iponly.$(OBJEXT) detect-engine-loader.$(OBJEXT) \
-	detect-engine-mpm.$(OBJEXT) detect-engine-payload.$(OBJEXT) \
-	detect-engine-port.$(OBJEXT) detect-engine-prefilter.$(OBJEXT) \
+	detect-engine-dns.$(OBJEXT) detect-engine-event.$(OBJEXT) \
+	detect-engine-file.$(OBJEXT) detect-engine-iponly.$(OBJEXT) \
+	detect-engine-loader.$(OBJEXT) detect-engine-mpm.$(OBJEXT) \
+	detect-engine-payload.$(OBJEXT) detect-engine-port.$(OBJEXT) \
+	detect-engine-prefilter.$(OBJEXT) \
 	detect-engine-prefilter-common.$(OBJEXT) \
 	detect-engine-proto.$(OBJEXT) detect-engine-profile.$(OBJEXT) \
 	detect-engine-register.$(OBJEXT) \
@@ -208,16 +208,14 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-rawbytes.$(OBJEXT) detect-reference.$(OBJEXT) \
 	detect-replace.$(OBJEXT) detect-rev.$(OBJEXT) \
 	detect-rpc.$(OBJEXT) detect-sameip.$(OBJEXT) \
-	detect-sid.$(OBJEXT) \
-	detect-stream_size.$(OBJEXT) \
+	detect-sid.$(OBJEXT) detect-stream_size.$(OBJEXT) \
 	detect-tag.$(OBJEXT) detect-target.$(OBJEXT) \
 	detect-tcp-ack.$(OBJEXT) detect-tcp-flags.$(OBJEXT) \
 	detect-tcp-seq.$(OBJEXT) detect-tcp-window.$(OBJEXT) \
 	detect-tcphdr.$(OBJEXT) detect-udphdr.$(OBJEXT) \
 	detect-tcpmss.$(OBJEXT) detect-template.$(OBJEXT) \
-	detect-template2.$(OBJEXT) \
-	detect-template-buffer.$(OBJEXT) detect-threshold.$(OBJEXT) \
-	detect-tos.$(OBJEXT) \
+	detect-template2.$(OBJEXT) detect-template-buffer.$(OBJEXT) \
+	detect-threshold.$(OBJEXT) detect-tos.$(OBJEXT) \
 	detect-transform-compress-whitespace.$(OBJEXT) \
 	detect-transform-strip-whitespace.$(OBJEXT) \
 	detect-transform-md5.$(OBJEXT) detect-transform-sha1.$(OBJEXT) \
@@ -226,8 +224,7 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-transform-pcrexform.$(OBJEXT) \
 	detect-transform-urldecode.$(OBJEXT) detect-ttl.$(OBJEXT) \
 	detect-uricontent.$(OBJEXT) detect-urilen.$(OBJEXT) \
-	detect-within.$(OBJEXT) \
-	detect-xbits.$(OBJEXT)  \
+	detect-within.$(OBJEXT) detect-xbits.$(OBJEXT) \
 	device-storage.$(OBJEXT) feature.$(OBJEXT) flow-bit.$(OBJEXT) \
 	flow.$(OBJEXT) flow-bypass.$(OBJEXT) flow-hash.$(OBJEXT) \
 	flow-manager.$(OBJEXT) flow-queue.$(OBJEXT) \
@@ -238,37 +235,16 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	host-timeout.$(OBJEXT) ippair.$(OBJEXT) ippair-bit.$(OBJEXT) \
 	ippair-queue.$(OBJEXT) ippair-storage.$(OBJEXT) \
 	ippair-timeout.$(OBJEXT) log-cf-common.$(OBJEXT) \
-	log-httplog.$(OBJEXT) log-pcap.$(OBJEXT) log-stats.$(OBJEXT) \
-	log-tcp-data.$(OBJEXT) log-tlslog.$(OBJEXT) \
-	log-tlsstore.$(OBJEXT) output.$(OBJEXT) output-file.$(OBJEXT) \
-	output-filedata.$(OBJEXT) output-filestore.$(OBJEXT) \
-	output-flow.$(OBJEXT) output-json-alert.$(OBJEXT) \
-	output-json-anomaly.$(OBJEXT) output-json-dns.$(OBJEXT) \
-	output-json-dnp3.$(OBJEXT) output-json-dnp3-objects.$(OBJEXT) \
-	output-json-drop.$(OBJEXT) output-json-email-common.$(OBJEXT) \
-	output-json-file.$(OBJEXT) output-json-flow.$(OBJEXT) \
-	output-json-ftp.$(OBJEXT) output-json-netflow.$(OBJEXT) \
-	output-json-http.$(OBJEXT) output-json-http2.$(OBJEXT) \
-	output-json-sip.$(OBJEXT) output-json-smtp.$(OBJEXT) \
-	output-json-ssh.$(OBJEXT) output-json-stats.$(OBJEXT) \
-	output-json-tls.$(OBJEXT) output-json-nfs.$(OBJEXT) \
-	output-json-tftp.$(OBJEXT) output-json-smb.$(OBJEXT) \
-	output-json-ikev2.$(OBJEXT) output-json-krb5.$(OBJEXT) \
-	output-json-dhcp.$(OBJEXT) output-json-snmp.$(OBJEXT) \
-	output-json-rfb.$(OBJEXT) output-json-template.$(OBJEXT) \
-	output-json-template-rust.$(OBJEXT) output-json-rdp.$(OBJEXT) \
-	output-json-dcerpc.$(OBJEXT) output-json-metadata.$(OBJEXT) \
-	output-lua.$(OBJEXT) output-packet.$(OBJEXT) \
-	output-stats.$(OBJEXT) output-streaming.$(OBJEXT) \
+	log-pcap.$(OBJEXT) log-stats.$(OBJEXT) log-tcp-data.$(OBJEXT) \
+	output.$(OBJEXT) output-json-stats.$(OBJEXT) \
+	output-packet.$(OBJEXT) output-stats.$(OBJEXT) \
 	output-tx.$(OBJEXT) output-json.$(OBJEXT) \
-	output-json-common.$(OBJEXT) packet-queue.$(OBJEXT) \
-	pkt-var.$(OBJEXT) reputation.$(OBJEXT) \
+	packet-queue.$(OBJEXT) pkt-var.$(OBJEXT) reputation.$(OBJEXT) \
 	respond-reject.$(OBJEXT) respond-reject-libnet11.$(OBJEXT) \
 	runmode-af-packet.$(OBJEXT) runmode-pcap.$(OBJEXT) \
 	runmode-pcap-file.$(OBJEXT) runmode-unittests.$(OBJEXT) \
 	runmode-unix-socket.$(OBJEXT) runmodes.$(OBJEXT) \
-	rust-context.$(OBJEXT) source-pcap.$(OBJEXT) \
-	source-pcap-file.$(OBJEXT) \
+	source-pcap.$(OBJEXT) source-pcap-file.$(OBJEXT) \
 	source-pcap-file-directory-helper.$(OBJEXT) \
 	source-pcap-file-helper.$(OBJEXT) stream.$(OBJEXT) \
 	stream-tcp.$(OBJEXT) stream-tcp-inline.$(OBJEXT) \
@@ -287,26 +263,19 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	util-coredump-config.$(OBJEXT) util-cpu.$(OBJEXT) \
 	util-crypt.$(OBJEXT) util-daemon.$(OBJEXT) \
 	util-debug.$(OBJEXT) util-debug-filters.$(OBJEXT) \
-	util-decode-mime.$(OBJEXT) util-detect.$(OBJEXT) \
-	util-device.$(OBJEXT) util-ebpf.$(OBJEXT) util-enum.$(OBJEXT) \
-	util-error.$(OBJEXT) util-exception-policy.$(OBJEXT) \
-	util-file.$(OBJEXT) util-file-decompression.$(OBJEXT) \
+	util-detect.$(OBJEXT) util-device.$(OBJEXT) \
+	util-ebpf.$(OBJEXT) util-enum.$(OBJEXT) util-error.$(OBJEXT) \
+	util-exception-policy.$(OBJEXT) util-file.$(OBJEXT) \
+	util-file-decompression.$(OBJEXT) \
 	util-file-swf-decompression.$(OBJEXT) \
 	util-fix_checksum.$(OBJEXT) util-fmemopen.$(OBJEXT) \
 	util-hash.$(OBJEXT) util-hashlist.$(OBJEXT) \
 	util-hash-lookup3.$(OBJEXT) util-hash-string.$(OBJEXT) \
 	util-host-os-info.$(OBJEXT) util-host-info.$(OBJEXT) \
 	util-hyperscan.$(OBJEXT) util-ioctl.$(OBJEXT) \
-	util-ip.$(OBJEXT) util-ja3.$(OBJEXT) \
-	util-logopenfile.$(OBJEXT) util-log-redis.$(OBJEXT) \
-	util-lua.$(OBJEXT) util-luajit.$(OBJEXT) \
-	util-lua-common.$(OBJEXT) util-lua-dnp3.$(OBJEXT) \
-	util-lua-dnp3-objects.$(OBJEXT) util-lua-dns.$(OBJEXT) \
-	util-lua-http.$(OBJEXT) util-lua-ja3.$(OBJEXT) \
-	util-lua-tls.$(OBJEXT) util-lua-ssh.$(OBJEXT) \
-	util-lua-hassh.$(OBJEXT) util-lua-smtp.$(OBJEXT) \
-	util-macset.$(OBJEXT) util-magic.$(OBJEXT) \
-	util-memcmp.$(OBJEXT) util-mem.$(OBJEXT) \
+	util-ip.$(OBJEXT) util-logopenfile.$(OBJEXT) \
+	util-log-redis.$(OBJEXT) util-macset.$(OBJEXT) \
+	util-magic.$(OBJEXT) util-memcmp.$(OBJEXT) util-mem.$(OBJEXT) \
 	util-memrchr.$(OBJEXT) util-misc.$(OBJEXT) \
 	util-mpm-ac-bs.$(OBJEXT) util-mpm-ac.$(OBJEXT) \
 	util-mpm-ac-ks.$(OBJEXT) util-mpm-ac-ks-small.$(OBJEXT) \
@@ -333,9 +302,7 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	util-thash.$(OBJEXT) util-threshold-config.$(OBJEXT) \
 	util-time.$(OBJEXT) util-unittest.$(OBJEXT) \
 	util-unittest-helper.$(OBJEXT) util-affinity.$(OBJEXT) \
-	util-var.$(OBJEXT) util-var-name.$(OBJEXT) \
-	win32-syscall.$(OBJEXT) win32-misc.$(OBJEXT) \
-	win32-service.$(OBJEXT)
+	util-var.$(OBJEXT) util-var-name.$(OBJEXT)
 @BUILD_FUZZTARGETS_TRUE@@HAS_FUZZLDFLAGS_FALSE@am__objects_2 = tests/fuzz/onefile.$(OBJEXT)
 @BUILD_FUZZTARGETS_TRUE@nodist_fuzz_applayerparserparse_OBJECTS = tests/fuzz/fuzz_applayerparserparse.$(OBJEXT) \
 @BUILD_FUZZTARGETS_TRUE@	$(am__objects_1) $(am__objects_2)
@@ -475,11 +442,10 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-bsize.Po ./$(DEPDIR)/detect-bypass.Po \
 	./$(DEPDIR)/detect-byte-extract.Po ./$(DEPDIR)/detect-byte.Po \
 	./$(DEPDIR)/detect-bytejump.Po ./$(DEPDIR)/detect-bytemath.Po \
-	./$(DEPDIR)/detect-bytetest.Po \
-	./$(DEPDIR)/detect-classtype.Po ./$(DEPDIR)/detect-config.Po \
-	./$(DEPDIR)/detect-content.Po ./$(DEPDIR)/detect-csum.Po \
-	./$(DEPDIR)/detect-datarep.Po ./$(DEPDIR)/detect-dataset.Po \
-	./$(DEPDIR)/detect-depth.Po \
+	./$(DEPDIR)/detect-bytetest.Po ./$(DEPDIR)/detect-classtype.Po \
+	./$(DEPDIR)/detect-config.Po ./$(DEPDIR)/detect-content.Po \
+	./$(DEPDIR)/detect-csum.Po ./$(DEPDIR)/detect-datarep.Po \
+	./$(DEPDIR)/detect-dataset.Po ./$(DEPDIR)/detect-depth.Po \
 	./$(DEPDIR)/detect-detection-filter.Po \
 	./$(DEPDIR)/detect-distance.Po ./$(DEPDIR)/detect-dns-query.Po \
 	./$(DEPDIR)/detect-dsize.Po \
@@ -520,22 +486,21 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-flow.Po ./$(DEPDIR)/detect-flowbits.Po \
 	./$(DEPDIR)/detect-flowint.Po ./$(DEPDIR)/detect-flowvar.Po \
 	./$(DEPDIR)/detect-fragbits.Po \
-	./$(DEPDIR)/detect-fragoffset.Po \
-	./$(DEPDIR)/detect-geoip.Po ./$(DEPDIR)/detect-gid.Po \
-	./$(DEPDIR)/detect-hostbits.Po ./$(DEPDIR)/detect-id.Po \
-	./$(DEPDIR)/detect-ipopts.Po ./$(DEPDIR)/detect-ipproto.Po \
-	./$(DEPDIR)/detect-iprep.Po ./$(DEPDIR)/detect-ipv4hdr.Po \
-	./$(DEPDIR)/detect-ipv6hdr.Po ./$(DEPDIR)/detect-isdataat.Po \
-	./$(DEPDIR)/detect-itype.Po ./$(DEPDIR)/detect-l3proto.Po \
-	./$(DEPDIR)/detect-mark.Po ./$(DEPDIR)/detect-metadata.Po \
-	./$(DEPDIR)/detect-msg.Po \
+	./$(DEPDIR)/detect-fragoffset.Po ./$(DEPDIR)/detect-geoip.Po \
+	./$(DEPDIR)/detect-gid.Po ./$(DEPDIR)/detect-hostbits.Po \
+	./$(DEPDIR)/detect-id.Po ./$(DEPDIR)/detect-ipopts.Po \
+	./$(DEPDIR)/detect-ipproto.Po ./$(DEPDIR)/detect-iprep.Po \
+	./$(DEPDIR)/detect-ipv4hdr.Po ./$(DEPDIR)/detect-ipv6hdr.Po \
+	./$(DEPDIR)/detect-isdataat.Po ./$(DEPDIR)/detect-itype.Po \
+	./$(DEPDIR)/detect-l3proto.Po ./$(DEPDIR)/detect-mark.Po \
+	./$(DEPDIR)/detect-metadata.Po ./$(DEPDIR)/detect-msg.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
 	./$(DEPDIR)/detect-offset.Po ./$(DEPDIR)/detect-parse.Po \
 	./$(DEPDIR)/detect-pcre.Po ./$(DEPDIR)/detect-pkt-data.Po \
 	./$(DEPDIR)/detect-pktvar.Po ./$(DEPDIR)/detect-prefilter.Po \
 	./$(DEPDIR)/detect-priority.Po ./$(DEPDIR)/detect-rawbytes.Po \
 	./$(DEPDIR)/detect-reference.Po ./$(DEPDIR)/detect-replace.Po \
-	./$(DEPDIR)/detect-rev.Po \
+	./$(DEPDIR)/detect-rev.Po ./$(DEPDIR)/detect-rpc.Po \
 	./$(DEPDIR)/detect-sameip.Po ./$(DEPDIR)/detect-sid.Po \
 	./$(DEPDIR)/detect-stream_size.Po ./$(DEPDIR)/detect-tag.Po \
 	./$(DEPDIR)/detect-target.Po ./$(DEPDIR)/detect-tcp-ack.Po \
@@ -544,8 +509,7 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-tcpmss.Po \
 	./$(DEPDIR)/detect-template-buffer.Po \
 	./$(DEPDIR)/detect-template.Po ./$(DEPDIR)/detect-template2.Po \
-	./$(DEPDIR)/detect-threshold.Po \
-	./$(DEPDIR)/detect-tos.Po \
+	./$(DEPDIR)/detect-threshold.Po ./$(DEPDIR)/detect-tos.Po \
 	./$(DEPDIR)/detect-transform-compress-whitespace.Po \
 	./$(DEPDIR)/detect-transform-dotprefix.Po \
 	./$(DEPDIR)/detect-transform-md5.Po \
@@ -570,40 +534,11 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/host.Po ./$(DEPDIR)/ippair-bit.Po \
 	./$(DEPDIR)/ippair-queue.Po ./$(DEPDIR)/ippair-storage.Po \
 	./$(DEPDIR)/ippair-timeout.Po ./$(DEPDIR)/ippair.Po \
-	./$(DEPDIR)/log-cf-common.Po ./$(DEPDIR)/log-httplog.Po \
-	./$(DEPDIR)/log-pcap.Po ./$(DEPDIR)/log-stats.Po \
-	./$(DEPDIR)/log-tcp-data.Po ./$(DEPDIR)/log-tlslog.Po \
-	./$(DEPDIR)/log-tlsstore.Po ./$(DEPDIR)/main.Po \
-	./$(DEPDIR)/output-file.Po ./$(DEPDIR)/output-filedata.Po \
-	./$(DEPDIR)/output-filestore.Po ./$(DEPDIR)/output-flow.Po \
-	./$(DEPDIR)/output-json-alert.Po \
-	./$(DEPDIR)/output-json-anomaly.Po \
-	./$(DEPDIR)/output-json-common.Po \
-	./$(DEPDIR)/output-json-dcerpc.Po \
-	./$(DEPDIR)/output-json-dhcp.Po \
-	./$(DEPDIR)/output-json-dnp3-objects.Po \
-	./$(DEPDIR)/output-json-dnp3.Po ./$(DEPDIR)/output-json-dns.Po \
-	./$(DEPDIR)/output-json-drop.Po \
-	./$(DEPDIR)/output-json-email-common.Po \
-	./$(DEPDIR)/output-json-file.Po \
-	./$(DEPDIR)/output-json-flow.Po ./$(DEPDIR)/output-json-ftp.Po \
-	./$(DEPDIR)/output-json-http.Po \
-	./$(DEPDIR)/output-json-http2.Po \
-	./$(DEPDIR)/output-json-ikev2.Po \
-	./$(DEPDIR)/output-json-krb5.Po \
-	./$(DEPDIR)/output-json-metadata.Po \
-	./$(DEPDIR)/output-json-netflow.Po \
-	./$(DEPDIR)/output-json-nfs.Po ./$(DEPDIR)/output-json-rdp.Po \
-	./$(DEPDIR)/output-json-rfb.Po ./$(DEPDIR)/output-json-sip.Po \
-	./$(DEPDIR)/output-json-smb.Po ./$(DEPDIR)/output-json-smtp.Po \
-	./$(DEPDIR)/output-json-snmp.Po ./$(DEPDIR)/output-json-ssh.Po \
-	./$(DEPDIR)/output-json-stats.Po \
-	./$(DEPDIR)/output-json-template-rust.Po \
-	./$(DEPDIR)/output-json-template.Po \
-	./$(DEPDIR)/output-json-tftp.Po ./$(DEPDIR)/output-json-tls.Po \
-	./$(DEPDIR)/output-json.Po ./$(DEPDIR)/output-lua.Po \
-	./$(DEPDIR)/output-packet.Po ./$(DEPDIR)/output-stats.Po \
-	./$(DEPDIR)/output-streaming.Po ./$(DEPDIR)/output-tx.Po \
+	./$(DEPDIR)/log-cf-common.Po ./$(DEPDIR)/log-pcap.Po \
+	./$(DEPDIR)/log-stats.Po ./$(DEPDIR)/log-tcp-data.Po \
+	./$(DEPDIR)/main.Po ./$(DEPDIR)/output-json-stats.Po \
+	./$(DEPDIR)/output-json.Po ./$(DEPDIR)/output-packet.Po \
+	./$(DEPDIR)/output-stats.Po ./$(DEPDIR)/output-tx.Po \
 	./$(DEPDIR)/output.Po ./$(DEPDIR)/packet-queue.Po \
 	./$(DEPDIR)/pkt-var.Po ./$(DEPDIR)/reputation.Po \
 	./$(DEPDIR)/respond-reject-libnet11.Po \
@@ -611,7 +546,6 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/runmode-pcap-file.Po ./$(DEPDIR)/runmode-pcap.Po \
 	./$(DEPDIR)/runmode-unittests.Po \
 	./$(DEPDIR)/runmode-unix-socket.Po ./$(DEPDIR)/runmodes.Po \
-	./$(DEPDIR)/rust-context.Po \
 	./$(DEPDIR)/source-pcap-file-directory-helper.Po \
 	./$(DEPDIR)/source-pcap-file-helper.Po \
 	./$(DEPDIR)/source-pcap-file.Po ./$(DEPDIR)/source-pcap.Po \
@@ -635,10 +569,10 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/util-conf.Po ./$(DEPDIR)/util-coredump-config.Po \
 	./$(DEPDIR)/util-cpu.Po ./$(DEPDIR)/util-crypt.Po \
 	./$(DEPDIR)/util-daemon.Po ./$(DEPDIR)/util-debug-filters.Po \
-	./$(DEPDIR)/util-debug.Po ./$(DEPDIR)/util-decode-mime.Po \
-	./$(DEPDIR)/util-detect.Po ./$(DEPDIR)/util-device.Po \
-	./$(DEPDIR)/util-ebpf.Po ./$(DEPDIR)/util-enum.Po \
-	./$(DEPDIR)/util-error.Po ./$(DEPDIR)/util-exception-policy.Po \
+	./$(DEPDIR)/util-debug.Po ./$(DEPDIR)/util-detect.Po \
+	./$(DEPDIR)/util-device.Po ./$(DEPDIR)/util-ebpf.Po \
+	./$(DEPDIR)/util-enum.Po ./$(DEPDIR)/util-error.Po \
+	./$(DEPDIR)/util-exception-policy.Po \
 	./$(DEPDIR)/util-file-decompression.Po \
 	./$(DEPDIR)/util-file-swf-decompression.Po \
 	./$(DEPDIR)/util-file.Po ./$(DEPDIR)/util-fix_checksum.Po \
@@ -647,14 +581,7 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/util-hashlist.Po ./$(DEPDIR)/util-host-info.Po \
 	./$(DEPDIR)/util-host-os-info.Po ./$(DEPDIR)/util-hyperscan.Po \
 	./$(DEPDIR)/util-ioctl.Po ./$(DEPDIR)/util-ip.Po \
-	./$(DEPDIR)/util-ja3.Po ./$(DEPDIR)/util-log-redis.Po \
-	./$(DEPDIR)/util-logopenfile.Po ./$(DEPDIR)/util-lua-common.Po \
-	./$(DEPDIR)/util-lua-dnp3-objects.Po \
-	./$(DEPDIR)/util-lua-dnp3.Po ./$(DEPDIR)/util-lua-dns.Po \
-	./$(DEPDIR)/util-lua-hassh.Po ./$(DEPDIR)/util-lua-http.Po \
-	./$(DEPDIR)/util-lua-ja3.Po ./$(DEPDIR)/util-lua-smtp.Po \
-	./$(DEPDIR)/util-lua-ssh.Po ./$(DEPDIR)/util-lua-tls.Po \
-	./$(DEPDIR)/util-lua.Po ./$(DEPDIR)/util-luajit.Po \
+	./$(DEPDIR)/util-log-redis.Po ./$(DEPDIR)/util-logopenfile.Po \
 	./$(DEPDIR)/util-macset.Po ./$(DEPDIR)/util-magic.Po \
 	./$(DEPDIR)/util-mem.Po ./$(DEPDIR)/util-memcmp.Po \
 	./$(DEPDIR)/util-memrchr.Po ./$(DEPDIR)/util-misc.Po \
@@ -687,8 +614,7 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/util-thash.Po ./$(DEPDIR)/util-threshold-config.Po \
 	./$(DEPDIR)/util-time.Po ./$(DEPDIR)/util-unittest-helper.Po \
 	./$(DEPDIR)/util-unittest.Po ./$(DEPDIR)/util-var-name.Po \
-	./$(DEPDIR)/util-var.Po ./$(DEPDIR)/win32-misc.Po \
-	./$(DEPDIR)/win32-service.Po ./$(DEPDIR)/win32-syscall.Po \
+	./$(DEPDIR)/util-var.Po \
 	tests/fuzz/$(DEPDIR)/fuzz_applayerparserparse.Po \
 	tests/fuzz/$(DEPDIR)/fuzz_applayerprotodetectgetproto.Po \
 	tests/fuzz/$(DEPDIR)/fuzz_confyamlloadstring.Po \
@@ -1213,55 +1139,15 @@ ippair-queue.c ippair-queue.h \
 ippair-storage.c ippair-storage.h \
 ippair-timeout.c ippair-timeout.h \
 log-cf-common.c log-cf-common.h \
-log-httplog.c log-httplog.h \
 log-pcap.c log-pcap.h \
 log-stats.c log-stats.h \
 log-tcp-data.c log-tcp-data.h \
-log-tlslog.c log-tlslog.h \
-log-tlsstore.c log-tlsstore.h \
 output.c output.h \
-output-file.c output-file.h \
-output-filedata.c output-filedata.h \
-output-filestore.c output-filestore.h \
-output-flow.c output-flow.h \
-output-json-alert.c output-json-alert.h \
-output-json-anomaly.c output-json-anomaly.h \
-output-json-dns.c output-json-dns.h \
-output-json-dnp3.c output-json-dnp3.h \
-output-json-dnp3-objects.c output-json-dnp3-objects.h \
-output-json-drop.c output-json-drop.h \
-output-json-email-common.c output-json-email-common.h \
-output-json-file.c output-json-file.h \
-output-json-flow.c output-json-flow.h \
-output-json-ftp.c output-json-ftp.h \
-output-json-netflow.c output-json-netflow.h \
-output-json-http.c output-json-http.h \
-output-json-http2.c output-json-http2.h \
-output-json-sip.c output-json-sip.h \
-output-json-smtp.c output-json-smtp.h \
-output-json-ssh.c output-json-ssh.h \
 output-json-stats.c output-json-stats.h \
-output-json-tls.c output-json-tls.h \
-output-json-nfs.c output-json-nfs.h \
-output-json-tftp.c output-json-tftp.h \
-output-json-smb.c output-json-smb.h \
-output-json-ikev2.c output-json-ikev2.h \
-output-json-krb5.c output-json-krb5.h \
-output-json-dhcp.c output-json-dhcp.h \
-output-json-snmp.c output-json-snmp.h \
-output-json-rfb.c output-json-rfb.h \
-output-json-template.c output-json-template.h \
-output-json-template-rust.c output-json-template-rust.h \
-output-json-rdp.c output-json-rdp.h \
-output-json-dcerpc.c output-json-dcerpc.h \
-output-json-metadata.c output-json-metadata.h \
-output-lua.c output-lua.h \
 output-packet.c output-packet.h \
 output-stats.c output-stats.h \
-output-streaming.c output-streaming.h \
 output-tx.c output-tx.h \
 output-json.c output-json.h \
-output-json-common.c \
 packet-queue.c packet-queue.h \
 pkt-var.c pkt-var.h \
 reputation.c reputation.h \
@@ -1274,7 +1160,6 @@ runmode-unittests.c runmode-unittests.h \
 runmode-unix-socket.c runmode-unix-socket.h \
 runmodes.c runmodes.h \
 rust.h \
-rust-context.c rust-context.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
@@ -1316,7 +1201,6 @@ util-crypt.c util-crypt.h \
 util-daemon.c util-daemon.h \
 util-debug.c util-debug.h \
 util-debug-filters.c util-debug-filters.h \
-util-decode-mime.c util-decode-mime.h \
 util-detect.c util-detect.h \
 util-device.c util-device.h \
 util-ebpf.c util-ebpf.h \
@@ -1337,21 +1221,8 @@ util-host-info.c util-host-info.h \
 util-hyperscan.c util-hyperscan.h \
 util-ioctl.h util-ioctl.c \
 util-ip.h util-ip.c \
-util-ja3.h util-ja3.c \
 util-logopenfile.h util-logopenfile.c \
 util-log-redis.h util-log-redis.c \
-util-lua.c util-lua.h \
-util-luajit.c util-luajit.h \
-util-lua-common.c util-lua-common.h \
-util-lua-dnp3.c util-lua-dnp3.h \
-util-lua-dnp3-objects.c util-lua-dnp3-objects.h \
-util-lua-dns.c util-lua-dns.h \
-util-lua-http.c util-lua-http.h \
-util-lua-ja3.c util-lua-ja3.h \
-util-lua-tls.c util-lua-tls.h \
-util-lua-ssh.c util-lua-ssh.h \
-util-lua-hassh.c util-lua-hassh.h \
-util-lua-smtp.c util-lua-smtp.h \
 util-macset.c util-macset.h \
 util-magic.c util-magic.h \
 util-memcmp.c util-memcmp.h \
@@ -1410,11 +1281,7 @@ util-unittest-helper.c util-unittest-helper.h \
 util-validate.h util-affinity.h util-affinity.c \
 util-var.c util-var.h \
 util-var-name.c util-var-name.h \
-util-vector.h \
-win32-syscall.c win32-syscall.h \
-win32-misc.c win32-misc.h \
-win32-service.c win32-service.h \
-win32-syslog.h
+util-vector.h 
 
 include_HEADERS = \
 suricata-plugin.h
@@ -1903,54 +1770,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ippair-timeout.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ippair.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-cf-common.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-httplog.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-pcap.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-stats.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-tcp-data.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-tlslog.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log-tlsstore.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-file.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-filedata.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-filestore.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-flow.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-alert.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-anomaly.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-common.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-dcerpc.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-dhcp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-dnp3-objects.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-dnp3.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-dns.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-drop.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-email-common.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-file.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-flow.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-ftp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-http.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-http2.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-ikev2.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-krb5.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-metadata.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-netflow.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-nfs.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-rdp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-rfb.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-sip.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-smb.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-smtp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-snmp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-ssh.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-stats.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-template-rust.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-template.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-tftp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json-tls.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-json.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-lua.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-packet.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-stats.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-streaming.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output-tx.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/packet-queue.Po@am__quote@ # am--include-marker
@@ -1964,7 +1791,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmode-unittests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmode-unix-socket.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmodes.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rust-context.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file-directory-helper.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file-helper.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file.Po@am__quote@ # am--include-marker
@@ -2005,7 +1831,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-daemon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-debug-filters.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-debug.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-decode-mime.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-detect.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-device.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-ebpf.Po@am__quote@ # am--include-marker
@@ -2026,21 +1851,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-hyperscan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-ioctl.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-ip.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-ja3.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-log-redis.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-logopenfile.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-common.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-dnp3-objects.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-dnp3.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-dns.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-hassh.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-http.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-ja3.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-smtp.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-ssh.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua-tls.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-lua.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-luajit.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-macset.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-magic.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-mem.Po@am__quote@ # am--include-marker
@@ -2096,9 +1908,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-unittest.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-var-name.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-var.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/win32-misc.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/win32-service.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/win32-syscall.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/fuzz/$(DEPDIR)/fuzz_applayerparserparse.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/fuzz/$(DEPDIR)/fuzz_applayerprotodetectgetproto.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/fuzz/$(DEPDIR)/fuzz_confyamlloadstring.Po@am__quote@ # am--include-marker
@@ -2509,54 +2318,14 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/ippair-timeout.Po
 	-rm -f ./$(DEPDIR)/ippair.Po
 	-rm -f ./$(DEPDIR)/log-cf-common.Po
-	-rm -f ./$(DEPDIR)/log-httplog.Po
 	-rm -f ./$(DEPDIR)/log-pcap.Po
 	-rm -f ./$(DEPDIR)/log-stats.Po
 	-rm -f ./$(DEPDIR)/log-tcp-data.Po
-	-rm -f ./$(DEPDIR)/log-tlslog.Po
-	-rm -f ./$(DEPDIR)/log-tlsstore.Po
 	-rm -f ./$(DEPDIR)/main.Po
-	-rm -f ./$(DEPDIR)/output-file.Po
-	-rm -f ./$(DEPDIR)/output-filedata.Po
-	-rm -f ./$(DEPDIR)/output-filestore.Po
-	-rm -f ./$(DEPDIR)/output-flow.Po
-	-rm -f ./$(DEPDIR)/output-json-alert.Po
-	-rm -f ./$(DEPDIR)/output-json-anomaly.Po
-	-rm -f ./$(DEPDIR)/output-json-common.Po
-	-rm -f ./$(DEPDIR)/output-json-dcerpc.Po
-	-rm -f ./$(DEPDIR)/output-json-dhcp.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3.Po
-	-rm -f ./$(DEPDIR)/output-json-dns.Po
-	-rm -f ./$(DEPDIR)/output-json-drop.Po
-	-rm -f ./$(DEPDIR)/output-json-email-common.Po
-	-rm -f ./$(DEPDIR)/output-json-file.Po
-	-rm -f ./$(DEPDIR)/output-json-flow.Po
-	-rm -f ./$(DEPDIR)/output-json-ftp.Po
-	-rm -f ./$(DEPDIR)/output-json-http.Po
-	-rm -f ./$(DEPDIR)/output-json-http2.Po
-	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
-	-rm -f ./$(DEPDIR)/output-json-krb5.Po
-	-rm -f ./$(DEPDIR)/output-json-metadata.Po
-	-rm -f ./$(DEPDIR)/output-json-netflow.Po
-	-rm -f ./$(DEPDIR)/output-json-nfs.Po
-	-rm -f ./$(DEPDIR)/output-json-rdp.Po
-	-rm -f ./$(DEPDIR)/output-json-rfb.Po
-	-rm -f ./$(DEPDIR)/output-json-sip.Po
-	-rm -f ./$(DEPDIR)/output-json-smb.Po
-	-rm -f ./$(DEPDIR)/output-json-smtp.Po
-	-rm -f ./$(DEPDIR)/output-json-snmp.Po
-	-rm -f ./$(DEPDIR)/output-json-ssh.Po
 	-rm -f ./$(DEPDIR)/output-json-stats.Po
-	-rm -f ./$(DEPDIR)/output-json-template-rust.Po
-	-rm -f ./$(DEPDIR)/output-json-template.Po
-	-rm -f ./$(DEPDIR)/output-json-tftp.Po
-	-rm -f ./$(DEPDIR)/output-json-tls.Po
 	-rm -f ./$(DEPDIR)/output-json.Po
-	-rm -f ./$(DEPDIR)/output-lua.Po
 	-rm -f ./$(DEPDIR)/output-packet.Po
 	-rm -f ./$(DEPDIR)/output-stats.Po
-	-rm -f ./$(DEPDIR)/output-streaming.Po
 	-rm -f ./$(DEPDIR)/output-tx.Po
 	-rm -f ./$(DEPDIR)/output.Po
 	-rm -f ./$(DEPDIR)/packet-queue.Po
@@ -2570,7 +2339,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
-	-rm -f ./$(DEPDIR)/rust-context.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
@@ -2611,7 +2379,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/util-daemon.Po
 	-rm -f ./$(DEPDIR)/util-debug-filters.Po
 	-rm -f ./$(DEPDIR)/util-debug.Po
-	-rm -f ./$(DEPDIR)/util-decode-mime.Po
 	-rm -f ./$(DEPDIR)/util-detect.Po
 	-rm -f ./$(DEPDIR)/util-device.Po
 	-rm -f ./$(DEPDIR)/util-ebpf.Po
@@ -2632,21 +2399,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/util-hyperscan.Po
 	-rm -f ./$(DEPDIR)/util-ioctl.Po
 	-rm -f ./$(DEPDIR)/util-ip.Po
-	-rm -f ./$(DEPDIR)/util-ja3.Po
 	-rm -f ./$(DEPDIR)/util-log-redis.Po
 	-rm -f ./$(DEPDIR)/util-logopenfile.Po
-	-rm -f ./$(DEPDIR)/util-lua-common.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3.Po
-	-rm -f ./$(DEPDIR)/util-lua-dns.Po
-	-rm -f ./$(DEPDIR)/util-lua-hassh.Po
-	-rm -f ./$(DEPDIR)/util-lua-http.Po
-	-rm -f ./$(DEPDIR)/util-lua-ja3.Po
-	-rm -f ./$(DEPDIR)/util-lua-smtp.Po
-	-rm -f ./$(DEPDIR)/util-lua-ssh.Po
-	-rm -f ./$(DEPDIR)/util-lua-tls.Po
-	-rm -f ./$(DEPDIR)/util-lua.Po
-	-rm -f ./$(DEPDIR)/util-luajit.Po
 	-rm -f ./$(DEPDIR)/util-macset.Po
 	-rm -f ./$(DEPDIR)/util-magic.Po
 	-rm -f ./$(DEPDIR)/util-mem.Po
@@ -2702,9 +2456,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/util-unittest.Po
 	-rm -f ./$(DEPDIR)/util-var-name.Po
 	-rm -f ./$(DEPDIR)/util-var.Po
-	-rm -f ./$(DEPDIR)/win32-misc.Po
-	-rm -f ./$(DEPDIR)/win32-service.Po
-	-rm -f ./$(DEPDIR)/win32-syscall.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_applayerparserparse.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_applayerprotodetectgetproto.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_confyamlloadstring.Po
@@ -2950,54 +2701,14 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/ippair-timeout.Po
 	-rm -f ./$(DEPDIR)/ippair.Po
 	-rm -f ./$(DEPDIR)/log-cf-common.Po
-	-rm -f ./$(DEPDIR)/log-httplog.Po
 	-rm -f ./$(DEPDIR)/log-pcap.Po
 	-rm -f ./$(DEPDIR)/log-stats.Po
 	-rm -f ./$(DEPDIR)/log-tcp-data.Po
-	-rm -f ./$(DEPDIR)/log-tlslog.Po
-	-rm -f ./$(DEPDIR)/log-tlsstore.Po
 	-rm -f ./$(DEPDIR)/main.Po
-	-rm -f ./$(DEPDIR)/output-file.Po
-	-rm -f ./$(DEPDIR)/output-filedata.Po
-	-rm -f ./$(DEPDIR)/output-filestore.Po
-	-rm -f ./$(DEPDIR)/output-flow.Po
-	-rm -f ./$(DEPDIR)/output-json-alert.Po
-	-rm -f ./$(DEPDIR)/output-json-anomaly.Po
-	-rm -f ./$(DEPDIR)/output-json-common.Po
-	-rm -f ./$(DEPDIR)/output-json-dcerpc.Po
-	-rm -f ./$(DEPDIR)/output-json-dhcp.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/output-json-dnp3.Po
-	-rm -f ./$(DEPDIR)/output-json-dns.Po
-	-rm -f ./$(DEPDIR)/output-json-drop.Po
-	-rm -f ./$(DEPDIR)/output-json-email-common.Po
-	-rm -f ./$(DEPDIR)/output-json-file.Po
-	-rm -f ./$(DEPDIR)/output-json-flow.Po
-	-rm -f ./$(DEPDIR)/output-json-ftp.Po
-	-rm -f ./$(DEPDIR)/output-json-http.Po
-	-rm -f ./$(DEPDIR)/output-json-http2.Po
-	-rm -f ./$(DEPDIR)/output-json-ikev2.Po
-	-rm -f ./$(DEPDIR)/output-json-krb5.Po
-	-rm -f ./$(DEPDIR)/output-json-metadata.Po
-	-rm -f ./$(DEPDIR)/output-json-netflow.Po
-	-rm -f ./$(DEPDIR)/output-json-nfs.Po
-	-rm -f ./$(DEPDIR)/output-json-rdp.Po
-	-rm -f ./$(DEPDIR)/output-json-rfb.Po
-	-rm -f ./$(DEPDIR)/output-json-sip.Po
-	-rm -f ./$(DEPDIR)/output-json-smb.Po
-	-rm -f ./$(DEPDIR)/output-json-smtp.Po
-	-rm -f ./$(DEPDIR)/output-json-snmp.Po
-	-rm -f ./$(DEPDIR)/output-json-ssh.Po
 	-rm -f ./$(DEPDIR)/output-json-stats.Po
-	-rm -f ./$(DEPDIR)/output-json-template-rust.Po
-	-rm -f ./$(DEPDIR)/output-json-template.Po
-	-rm -f ./$(DEPDIR)/output-json-tftp.Po
-	-rm -f ./$(DEPDIR)/output-json-tls.Po
 	-rm -f ./$(DEPDIR)/output-json.Po
-	-rm -f ./$(DEPDIR)/output-lua.Po
 	-rm -f ./$(DEPDIR)/output-packet.Po
 	-rm -f ./$(DEPDIR)/output-stats.Po
-	-rm -f ./$(DEPDIR)/output-streaming.Po
 	-rm -f ./$(DEPDIR)/output-tx.Po
 	-rm -f ./$(DEPDIR)/output.Po
 	-rm -f ./$(DEPDIR)/packet-queue.Po
@@ -3011,7 +2722,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
-	-rm -f ./$(DEPDIR)/rust-context.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
@@ -3052,7 +2762,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/util-daemon.Po
 	-rm -f ./$(DEPDIR)/util-debug-filters.Po
 	-rm -f ./$(DEPDIR)/util-debug.Po
-	-rm -f ./$(DEPDIR)/util-decode-mime.Po
 	-rm -f ./$(DEPDIR)/util-detect.Po
 	-rm -f ./$(DEPDIR)/util-device.Po
 	-rm -f ./$(DEPDIR)/util-ebpf.Po
@@ -3073,21 +2782,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/util-hyperscan.Po
 	-rm -f ./$(DEPDIR)/util-ioctl.Po
 	-rm -f ./$(DEPDIR)/util-ip.Po
-	-rm -f ./$(DEPDIR)/util-ja3.Po
 	-rm -f ./$(DEPDIR)/util-log-redis.Po
 	-rm -f ./$(DEPDIR)/util-logopenfile.Po
-	-rm -f ./$(DEPDIR)/util-lua-common.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3-objects.Po
-	-rm -f ./$(DEPDIR)/util-lua-dnp3.Po
-	-rm -f ./$(DEPDIR)/util-lua-dns.Po
-	-rm -f ./$(DEPDIR)/util-lua-hassh.Po
-	-rm -f ./$(DEPDIR)/util-lua-http.Po
-	-rm -f ./$(DEPDIR)/util-lua-ja3.Po
-	-rm -f ./$(DEPDIR)/util-lua-smtp.Po
-	-rm -f ./$(DEPDIR)/util-lua-ssh.Po
-	-rm -f ./$(DEPDIR)/util-lua-tls.Po
-	-rm -f ./$(DEPDIR)/util-lua.Po
-	-rm -f ./$(DEPDIR)/util-luajit.Po
 	-rm -f ./$(DEPDIR)/util-macset.Po
 	-rm -f ./$(DEPDIR)/util-magic.Po
 	-rm -f ./$(DEPDIR)/util-mem.Po
@@ -3143,9 +2839,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/util-unittest.Po
 	-rm -f ./$(DEPDIR)/util-var-name.Po
 	-rm -f ./$(DEPDIR)/util-var.Po
-	-rm -f ./$(DEPDIR)/win32-misc.Po
-	-rm -f ./$(DEPDIR)/win32-service.Po
-	-rm -f ./$(DEPDIR)/win32-syscall.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_applayerparserparse.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_applayerprotodetectgetproto.Po
 	-rm -f tests/fuzz/$(DEPDIR)/fuzz_confyamlloadstring.Po

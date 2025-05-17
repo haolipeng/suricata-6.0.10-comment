@@ -339,13 +339,12 @@ cleanup:
     ClearCtx(c);
     return 0;
 }
-
+/* 
 int RejectSendLibnet11IPv4ICMP(ThreadVars *tv, Packet *p, void *data, enum RejectDirection dir)
 {
     Libnet11Packet lpacket;
     int result;
 
-    /* fill in struct defaults */
     lpacket.ttl = 0;
     lpacket.id = 0;
     lpacket.flow = 0;
@@ -374,18 +373,16 @@ int RejectSendLibnet11IPv4ICMP(ThreadVars *tv, Packet *p, void *data, enum Rejec
             break;
     }
 
-    /* TODO come up with ttl calc function */
     lpacket.ttl = 64;
 
-    /* build the package */
     if ((libnet_build_icmpv4_unreach(
-                    ICMP_DEST_UNREACH,        /* type */
-                    ICMP_HOST_ANO,            /* code */
-                    0,                        /* checksum */
-                    (uint8_t *)p->ip4h,       /* payload */
-                    lpacket.dsize,            /* payload length */
-                    c,                        /* libnet context */
-                    0)) < 0)                  /* libnet ptag */
+                    ICMP_DEST_UNREACH,        
+                    ICMP_HOST_ANO,            
+                    0,                       
+                    (uint8_t *)p->ip4h,      
+                    lpacket.dsize,           
+                    c,                        
+                    0)) < 0)                  
     {
         SCLogError(SC_ERR_LIBNET_BUILD_FAILED,"libnet_build_icmpv4_unreach %s", libnet_geterror(c));
         goto cleanup;
@@ -415,7 +412,7 @@ int RejectSendLibnet11IPv4ICMP(ThreadVars *tv, Packet *p, void *data, enum Rejec
 cleanup:
     ClearCtx(c);
     return 0;
-}
+} */
 
 int RejectSendLibnet11IPv6TCP(ThreadVars *tv, Packet *p, void *data, enum RejectDirection dir)
 {

@@ -54,11 +54,6 @@
 
 
 #include "output-json.h"
-#include "output-json-alert.h"
-#include "output-json-dns.h"
-#include "output-json-http.h"
-#include "output-json-tls.h"
-#include "output-json-flow.h"
 
 #include "util-byte.h"
 #include "util-privs.h"

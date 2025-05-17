@@ -300,11 +300,11 @@ Packet *UTHBuildPacketReal(uint8_t *payload, uint16_t payload_len,
             hdr_offset += sizeof(TCPHdr);
             break;
         case IPPROTO_ICMP:
-            p->icmpv4h = (ICMPV4Hdr *)(GET_PKT_DATA(p) + sizeof(IPV4Hdr));
+            /* p->icmpv4h = (ICMPV4Hdr *)(GET_PKT_DATA(p) + sizeof(IPV4Hdr));
             if (p->icmpv4h == NULL)
-                goto error;
+                goto error; */
 
-            hdr_offset += sizeof(ICMPV4Hdr);
+            //hdr_offset += sizeof(ICMPV4Hdr);
             break;
         default:
             break;

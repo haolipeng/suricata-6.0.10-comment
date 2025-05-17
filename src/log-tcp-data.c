@@ -26,6 +26,7 @@
 #include "detect.h"
 #include "pkt-var.h"
 #include "conf.h"
+#include "output.h"
 
 #include "threads.h"
 #include "threadvars.h"
@@ -60,17 +61,11 @@ static void LogTcpDataLogDeInitCtx(OutputCtx *);
 int LogTcpDataLogger(ThreadVars *tv, void *thread_data, const Flow *f, const uint8_t *data, uint32_t data_len, uint64_t tx_id, uint8_t flags);
 
 void LogTcpDataLogRegister (void) {
-    OutputRegisterStreamingModule(LOGGER_TCP_DATA, MODULE_NAME, "tcp-data",
-        LogTcpDataLogInitCtx, LogTcpDataLogger, STREAMING_TCP_DATA,
-        LogTcpDataLogThreadInit, LogTcpDataLogThreadDeinit, NULL);
-    OutputRegisterStreamingModule(LOGGER_TCP_DATA, MODULE_NAME, "http-body-data",
-        LogTcpDataLogInitCtx, LogTcpDataLogger, STREAMING_HTTP_BODIES,
-        LogTcpDataLogThreadInit, LogTcpDataLogThreadDeinit, NULL);
+   
 }
 
 typedef struct LogTcpDataFileCtx_ {
     LogFileCtx *file_ctx;
-    enum OutputStreamingType type;
     const char *log_dir;
     int file;
     int dir;
@@ -90,9 +85,6 @@ static int LogTcpDataLoggerDir(ThreadVars *tv, void *thread_data, const Flow *f,
     LogTcpDataFileCtx *td = aft->tcpdatalog_ctx;
     const char *mode = "a";
 
-    if (flags & OUTPUT_STREAMING_FLAG_OPEN)
-        mode = "w";
-
     if (data && data_len) {
         char srcip[46] = "", dstip[46] = "";
         if (FLOW_IS_IPV4(f)) {
@@ -106,15 +98,15 @@ static int LogTcpDataLoggerDir(ThreadVars *tv, void *thread_data, const Flow *f,
         char name[PATH_MAX];
 
         char tx[64] = { 0 };
-        if (flags & OUTPUT_STREAMING_FLAG_TRANSACTION) {
+        /* if (flags & OUTPUT_STREAMING_FLAG_TRANSACTION) {
             snprintf(tx, sizeof(tx), "%"PRIu64, tx_id);
-        }
+        } */
 
         snprintf(name, sizeof(name), "%s/%s/%s_%u-%s_%u-%s-%s.data",
                 td->log_dir,
-                td->type == STREAMING_HTTP_BODIES ? "http" : "tcp",
+                "tcp",
                 srcip, f->sp, dstip, f->dp, tx,
-                flags & OUTPUT_STREAMING_FLAG_TOSERVER ? "ts" : "tc");
+                "ts");
 
         FILE *fp = fopen(name, mode);
         BUG_ON(fp == NULL);
@@ -148,8 +140,7 @@ static int LogTcpDataLoggerFile(ThreadVars *tv, void *thread_data, const Flow *f
 
         char name[PATH_MAX];
         snprintf(name, sizeof(name), "%s_%u-%s_%u-%s:",
-                srcip, f->sp, dstip, f->dp,
-                flags & OUTPUT_STREAMING_FLAG_TOSERVER ? "ts" : "tc");
+                srcip, f->sp, dstip, f->dp,"ts");
 
         PrintRawUriBuf((char *)aft->buffer->buffer, &aft->buffer->offset,
                 aft->buffer->size, (uint8_t *)name,strlen(name));
@@ -250,11 +241,11 @@ OutputInitResult LogTcpDataLogInitCtx(ConfNode *conf)
     if (conf) {
         if (conf->name) {
             if (strcmp(conf->name, "tcp-data") == 0) {
-                tcpdatalog_ctx->type = STREAMING_TCP_DATA;
+                //tcpdatalog_ctx->type = STREAMING_TCP_DATA;
                 snprintf(filename, sizeof(filename), "%s.log", conf->name);
                 strlcpy(dirname, "tcp", sizeof(dirname));
             } else if (strcmp(conf->name, "http-body-data") == 0) {
-                tcpdatalog_ctx->type = STREAMING_HTTP_BODIES;
+                //tcpdatalog_ctx->type = STREAMING_HTTP_BODIES;
                 snprintf(filename, sizeof(filename), "%s.log", conf->name);
                 strlcpy(dirname, "http", sizeof(dirname));
             }

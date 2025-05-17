@@ -40,17 +40,11 @@
 #include "util-misc.h"
 #include "util-plugin.h"
 
-
-
-#include "alert-fastlog.h"
-#include "alert-prelude.h"
-
-#include "log-httplog.h"
-
 #include "tmqh-flow.h"
 #include "flow-manager.h"
 #include "flow-bypass.h"
 #include "counters.h"
+#include "output.h"
 
 #include "suricata-plugin.h"
 
@@ -505,11 +499,7 @@ void RunModeShutDown(void)
 
     OutputPacketShutdown();
     OutputTxShutdown();
-    OutputFileShutdown();
-    OutputFiledataShutdown();
-    OutputStreamingShutdown();
     OutputStatsShutdown();
-    OutputFlowShutdown();
 
     OutputClearActiveLoggers();
 
@@ -534,13 +524,6 @@ static void AddOutputToFreeList(OutputModule *module, OutputCtx *output_ctx)
 /** \brief Turn output into thread module */
 static void SetupOutput(const char *name, OutputModule *module, OutputCtx *output_ctx)
 {
-    /* flow logger doesn't run in the packet path */
-    if (module->FlowLogFunc) {
-        OutputRegisterFlowLogger(module->name, module->FlowLogFunc,
-            output_ctx, module->ThreadInit, module->ThreadDeinit,
-            module->ThreadExitPrintStats);
-        return;
-    }
     /* stats logger doesn't run in the packet path */
     if (module->StatsLogFunc) {
         OutputRegisterStatsLogger(module->name, module->StatsLogFunc,
@@ -570,24 +553,6 @@ static void SetupOutput(const char *name, OutputModule *module, OutputCtx *outpu
         if (module->alproto != ALPROTO_UNKNOWN) {
             logger_bits[module->alproto] |= (1<<module->logger_id);
         }
-    } else if (module->FiledataLogFunc) {
-        SCLogDebug("%s is a filedata logger", module->name);
-        OutputRegisterFiledataLogger(module->logger_id, module->name,
-            module->FiledataLogFunc, output_ctx, module->ThreadInit,
-            module->ThreadDeinit, module->ThreadExitPrintStats);
-        filedata_logger_count++;
-    } else if (module->FileLogFunc) {
-        SCLogDebug("%s is a file logger", module->name);
-        OutputRegisterFileLogger(module->logger_id, module->name,
-            module->FileLogFunc, output_ctx, module->ThreadInit,
-            module->ThreadDeinit, module->ThreadExitPrintStats);
-        file_logger_count++;
-    } else if (module->StreamingLogFunc) {
-        SCLogDebug("%s is a streaming logger", module->name);
-        OutputRegisterStreamingLogger(module->logger_id, module->name,
-            module->StreamingLogFunc, output_ctx, module->stream_type,
-            module->ThreadInit, module->ThreadDeinit,
-            module->ThreadExitPrintStats);
     } else {
         SCLogError(SC_ERR_INVALID_ARGUMENT, "Unknown logger type: name=%s",
             module->name);

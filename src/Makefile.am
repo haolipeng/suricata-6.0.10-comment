@@ -204,55 +204,15 @@ ippair-queue.c ippair-queue.h \
 ippair-storage.c ippair-storage.h \
 ippair-timeout.c ippair-timeout.h \
 log-cf-common.c log-cf-common.h \
-log-httplog.c log-httplog.h \
 log-pcap.c log-pcap.h \
 log-stats.c log-stats.h \
 log-tcp-data.c log-tcp-data.h \
-log-tlslog.c log-tlslog.h \
-log-tlsstore.c log-tlsstore.h \
 output.c output.h \
-output-file.c output-file.h \
-output-filedata.c output-filedata.h \
-output-filestore.c output-filestore.h \
-output-flow.c output-flow.h \
-output-json-alert.c output-json-alert.h \
-output-json-anomaly.c output-json-anomaly.h \
-output-json-dns.c output-json-dns.h \
-output-json-dnp3.c output-json-dnp3.h \
-output-json-dnp3-objects.c output-json-dnp3-objects.h \
-output-json-drop.c output-json-drop.h \
-output-json-email-common.c output-json-email-common.h \
-output-json-file.c output-json-file.h \
-output-json-flow.c output-json-flow.h \
-output-json-ftp.c output-json-ftp.h \
-output-json-netflow.c output-json-netflow.h \
-output-json-http.c output-json-http.h \
-output-json-http2.c output-json-http2.h \
-output-json-sip.c output-json-sip.h \
-output-json-smtp.c output-json-smtp.h \
-output-json-ssh.c output-json-ssh.h \
 output-json-stats.c output-json-stats.h \
-output-json-tls.c output-json-tls.h \
-output-json-nfs.c output-json-nfs.h \
-output-json-tftp.c output-json-tftp.h \
-output-json-smb.c output-json-smb.h \
-output-json-ikev2.c output-json-ikev2.h \
-output-json-krb5.c output-json-krb5.h \
-output-json-dhcp.c output-json-dhcp.h \
-output-json-snmp.c output-json-snmp.h \
-output-json-rfb.c output-json-rfb.h \
-output-json-template.c output-json-template.h \
-output-json-template-rust.c output-json-template-rust.h \
-output-json-rdp.c output-json-rdp.h \
-output-json-dcerpc.c output-json-dcerpc.h \
-output-json-metadata.c output-json-metadata.h \
-output-lua.c output-lua.h \
 output-packet.c output-packet.h \
 output-stats.c output-stats.h \
-output-streaming.c output-streaming.h \
 output-tx.c output-tx.h \
 output-json.c output-json.h \
-output-json-common.c \
 packet-queue.c packet-queue.h \
 pkt-var.c pkt-var.h \
 reputation.c reputation.h \
@@ -265,7 +225,6 @@ runmode-unittests.c runmode-unittests.h \
 runmode-unix-socket.c runmode-unix-socket.h \
 runmodes.c runmodes.h \
 rust.h \
-rust-context.c rust-context.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
@@ -307,7 +266,6 @@ util-crypt.c util-crypt.h \
 util-daemon.c util-daemon.h \
 util-debug.c util-debug.h \
 util-debug-filters.c util-debug-filters.h \
-util-decode-mime.c util-decode-mime.h \
 util-detect.c util-detect.h \
 util-device.c util-device.h \
 util-ebpf.c util-ebpf.h \
@@ -328,21 +286,8 @@ util-host-info.c util-host-info.h \
 util-hyperscan.c util-hyperscan.h \
 util-ioctl.h util-ioctl.c \
 util-ip.h util-ip.c \
-util-ja3.h util-ja3.c \
 util-logopenfile.h util-logopenfile.c \
 util-log-redis.h util-log-redis.c \
-util-lua.c util-lua.h \
-util-luajit.c util-luajit.h \
-util-lua-common.c util-lua-common.h \
-util-lua-dnp3.c util-lua-dnp3.h \
-util-lua-dnp3-objects.c util-lua-dnp3-objects.h \
-util-lua-dns.c util-lua-dns.h \
-util-lua-http.c util-lua-http.h \
-util-lua-ja3.c util-lua-ja3.h \
-util-lua-tls.c util-lua-tls.h \
-util-lua-ssh.c util-lua-ssh.h \
-util-lua-hassh.c util-lua-hassh.h \
-util-lua-smtp.c util-lua-smtp.h \
 util-macset.c util-macset.h \
 util-magic.c util-magic.h \
 util-memcmp.c util-memcmp.h \
@@ -401,11 +346,7 @@ util-unittest-helper.c util-unittest-helper.h \
 util-validate.h util-affinity.h util-affinity.c \
 util-var.c util-var.h \
 util-var-name.c util-var-name.h \
-util-vector.h \
-win32-syscall.c win32-syscall.h \
-win32-misc.c win32-misc.h \
-win32-service.c win32-service.h \
-win32-syslog.h
+util-vector.h 
 
 include_HEADERS = \
 suricata-plugin.h

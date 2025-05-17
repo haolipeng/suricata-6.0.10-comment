@@ -67,7 +67,6 @@
 #include "defrag-timeout.h"
 #include "ippair-timeout.h"
 
-#include "output-flow.h"
 #include "util-validate.h"
 
 /* Run mode selected at suricata.c */
@@ -618,7 +617,7 @@ static void Recycler(ThreadVars *tv, void *output_thread_data, Flow *f)
 {
     FLOWLOCK_WRLOCK(f);
 
-    (void)OutputFlowLog(tv, output_thread_data, f);
+    //(void)OutputFlowLog(tv, output_thread_data, f);
 
     FlowClearMemory (f, f->protomap);
     FLOWLOCK_UNLOCK(f);
@@ -1042,11 +1041,11 @@ static TmEcode FlowRecyclerThreadInit(ThreadVars *t, const void *initdata, void 
     FlowRecyclerThreadData *ftd = SCCalloc(1, sizeof(FlowRecyclerThreadData));
     if (ftd == NULL)
         return TM_ECODE_FAILED;
-    if (OutputFlowLogThreadInit(t, NULL, &ftd->output_thread_data) != TM_ECODE_OK) {
+    /* if (OutputFlowLogThreadInit(t, NULL, &ftd->output_thread_data) != TM_ECODE_OK) {
         SCLogError(SC_ERR_THREAD_INIT, "initializing flow log API for thread failed");
         SCFree(ftd);
         return TM_ECODE_FAILED;
-    }
+    } */
     SCLogDebug("output_thread_data %p", ftd->output_thread_data);
 
     *data = ftd;
@@ -1056,8 +1055,8 @@ static TmEcode FlowRecyclerThreadInit(ThreadVars *t, const void *initdata, void 
 static TmEcode FlowRecyclerThreadDeinit(ThreadVars *t, void *data)
 {
     FlowRecyclerThreadData *ftd = (FlowRecyclerThreadData *)data;
-    if (ftd->output_thread_data != NULL)
-        OutputFlowLogThreadDeinit(t, ftd->output_thread_data);
+    /* if (ftd->output_thread_data != NULL)
+        OutputFlowLogThreadDeinit(t, ftd->output_thread_data); */
 
     SCFree(data);
     return TM_ECODE_OK;

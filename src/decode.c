@@ -64,7 +64,6 @@
 #include "util-mpm-ac.h"
 #include "util-hash-string.h"
 
-#include "output-flow.h"
 #include "flow-storage.h"
 #include "util-validate.h"
 
@@ -682,11 +681,11 @@ DecodeThreadVars *DecodeThreadVarsAlloc(ThreadVars *tv)
 
     dtv->app_tctx = AppLayerGetCtxThread(tv);
 
-    if (OutputFlowLogThreadInit(tv, NULL, &dtv->output_flow_thread_data) != TM_ECODE_OK) {
+    /* if (OutputFlowLogThreadInit(tv, NULL, &dtv->output_flow_thread_data) != TM_ECODE_OK) {
         SCLogError(SC_ERR_THREAD_INIT, "initializing flow log API for thread failed");
         DecodeThreadVarsFree(tv, dtv);
         return NULL;
-    }
+    } */
 
     return dtv;
 }
@@ -697,8 +696,8 @@ void DecodeThreadVarsFree(ThreadVars *tv, DecodeThreadVars *dtv)
         if (dtv->app_tctx != NULL)
             AppLayerDestroyCtxThread(dtv->app_tctx);
 
-        if (dtv->output_flow_thread_data != NULL)
-            OutputFlowLogThreadDeinit(tv, dtv->output_flow_thread_data);
+        /* if (dtv->output_flow_thread_data != NULL)
+            OutputFlowLogThreadDeinit(tv, dtv->output_flow_thread_data); */
 
         SCFree(dtv);
     }

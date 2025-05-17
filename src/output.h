@@ -32,7 +32,6 @@
 
 #include "output-packet.h"
 #include "output-tx.h"
-#include "output-flow.h"
 #include "output-stats.h"
 
 #include "util-config.h"
@@ -63,7 +62,6 @@ typedef struct OutputModule_ {
     PacketLogCondition PacketConditionFunc;
     TxLogger TxLogFunc;
     TxLoggerCondition TxLogCondition;
-    FlowLogger FlowLogFunc;
     StatsLogger StatsLogFunc;
     AppProto alproto;
     int tc_log_progress;
@@ -119,12 +117,6 @@ void OutputRegisterTxSubModuleWithProgress(LoggerId id, const char *parent_name,
     const char *name, const char *conf_name,
     OutputInitSubFunc InitFunc, AppProto alproto, TxLogger TxLogFunc,
     int tc_log_progress, int ts_log_progress, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats);
-
-void OutputRegisterFlowSubModule(LoggerId id, const char *parent_name,
-    const char *name, const char *conf_name, OutputInitSubFunc InitFunc,
-    FlowLogger FlowLogFunc, ThreadInitFunc ThreadInit,
     ThreadDeinitFunc ThreadDeinit,
     ThreadExitPrintStatsFunc ThreadExitPrintStats);
 

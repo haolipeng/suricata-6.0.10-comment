@@ -224,7 +224,7 @@ detect-engine-profile.o: detect-engine-profile.c \
  app-layer-events.h detect-threshold.h detect-engine-build.h util-path.h \
  util-conf.h detect-parse.h detect-content.h output-json.h util-buffer.h \
  util-logopenfile.h output.h tm-threads.h tmqh-packetpool.h tm-modules.h \
- output-packet.h output-tx.h output-flow.h output-stats.h util-config.h \
+ output-packet.h output-tx.h output-stats.h util-config.h \
  app-layer-htp-xff.h util-print.h detect-engine-profile.h
 /usr/include/stdc-predef.h:
 suricata-common.h:
@@ -586,7 +586,6 @@ tmqh-packetpool.h:
 tm-modules.h:
 output-packet.h:
 output-tx.h:
-output-flow.h:
 output-stats.h:
 util-config.h:
 app-layer-htp-xff.h:

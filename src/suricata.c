@@ -121,8 +121,6 @@
 
 #include "util-coredump-config.h"
 
-#include "util-decode-mime.h"
-
 #include "defrag.h"
 
 #include "runmodes.h"
@@ -133,7 +131,8 @@
 #include "util-daemon.h"
 #include "util-byte.h"
 #include "reputation.h"
-
+#include "output-stats.h"
+#include "output.h"
 
 
 #include "util-privs.h"
@@ -144,8 +143,6 @@
 #include "util-mpm-hs.h"
 #include "util-storage.h"
 #include "host-storage.h"
-
-#include "util-lua.h"
 
 #include "util-plugin.h"
 
@@ -369,7 +366,6 @@ static void GlobalsDestroy(SCInstance *suri)
     TagDestroyCtx();
 
     LiveDeviceListClean();
-    OutputDeregisterAll();
     FeatureTrackingRelease();
     SCProtoNameRelease();
     TimeDeinit();
@@ -1827,7 +1823,6 @@ void PreRunInit(const int runmode)
     StreamTcpInitConfig(STREAM_VERBOSE);
     AppLayerParserPostStreamSetup();
     AppLayerRegisterGlobalCounters();
-    OutputFilestoreRegisterGlobalCounters();
 }
 
 /* tasks we need to run before packets start flowing,
@@ -2483,7 +2478,7 @@ static void SuricataMainLoop(SCInstance *suri)
  */
 
 int InitGlobal(void) {
-    suricata_context.SCLogMessage = SCLogMessage;
+    /* suricata_context.SCLogMessage = SCLogMessage;
     suricata_context.DetectEngineStateFree = DetectEngineStateFree;
     suricata_context.AppLayerDecoderEventsSetEventRaw = AppLayerDecoderEventsSetEventRaw;
     suricata_context.AppLayerDecoderEventsFreeEvents = AppLayerDecoderEventsFreeEvents;
@@ -2496,9 +2491,9 @@ int InitGlobal(void) {
     suricata_context.FileAppendGAPById = FileAppendGAPById;
     suricata_context.FileContainerRecycle = FileContainerRecycle;
     suricata_context.FilePrune = FilePrune;
-    suricata_context.FileSetTx = FileContainerSetTx;
+    suricata_context.FileSetTx = FileContainerSetTx; */
 
-    rs_init(&suricata_context);
+    //rs_init(&suricata_context);
 
     SC_ATOMIC_INIT(engine_stage);
 

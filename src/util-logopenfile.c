@@ -29,6 +29,7 @@
           /* DEFAULT_LOG_* */
 #include "util-byte.h"
 #include "util-logopenfile.h"
+#include "output.h"
 
 #if defined(HAVE_SYS_UN_H) && defined(HAVE_SYS_SOCKET_H) && defined(HAVE_SYS_TYPES_H)
 #define BUILD_WITH_UNIXSOCKET
@@ -488,8 +489,6 @@ SCConfLogOpenGeneric(ConfNode *conf,
     }
 
     filetype = ConfNodeLookupChildValue(conf, "filetype");
-    if (filetype == NULL)
-        filetype = DEFAULT_LOG_FILETYPE;
 
     const char *filemode = ConfNodeLookupChildValue(conf, "filemode");
     uint32_t mode = 0;

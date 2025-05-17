@@ -45,6 +45,8 @@
 #include "util-logopenfile.h"
 #include "util-time.h"
 
+#include "output.h"
+
 #define DEFAULT_LOG_FILENAME "stats.log"
 #define MODULE_NAME "LogStatsLog"
 #define OUTPUT_BUFFER_SIZE 16384

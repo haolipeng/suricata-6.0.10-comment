@@ -121,24 +121,6 @@ uint8_t FlowGetReverseProtoMapping(uint8_t rproto)
     }
 }
 
-static inline void FlowSetICMPv4CounterPart(Flow *f)
-{
-    int ctype = ICMPv4GetCounterpart(f->icmp_s.type);
-    if (ctype == -1)
-        return;
-
-    f->icmp_d.type = (uint8_t)ctype;
-}
-
-static inline void FlowSetICMPv6CounterPart(Flow *f)
-{
-    int ctype = ICMPv6GetCounterpart(f->icmp_s.type);
-    if (ctype == -1)
-        return;
-
-    f->icmp_d.type = (uint8_t)ctype;
-}
-
 /* initialize the flow from the first packet
  * we see from it. */
 void FlowInit(Flow *f, const Packet *p)
@@ -174,15 +156,7 @@ void FlowInit(Flow *f, const Packet *p)
     } else if (p->udph != NULL) { /* XXX MACRO */
         SET_UDP_SRC_PORT(p,&f->sp);
         SET_UDP_DST_PORT(p,&f->dp);
-    } else if (p->icmpv4h != NULL) {
-        f->icmp_s.type = p->icmp_s.type;
-        f->icmp_s.code = p->icmp_s.code;
-        FlowSetICMPv4CounterPart(f);
-    } else if (p->icmpv6h != NULL) {
-        f->icmp_s.type = p->icmp_s.type;
-        f->icmp_s.code = p->icmp_s.code;
-        FlowSetICMPv6CounterPart(f);
-    }else {
+    } else {
         /* nothing to do for this IP proto. */
         SCLogDebug("no special setup for IP proto %u", p->proto);
     }

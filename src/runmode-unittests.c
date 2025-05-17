@@ -85,6 +85,7 @@
 #include "util-proto-name.h"
 #include "util-macset.h"
 #include "util-memrchr.h"
+#include "util-base64.h"
 
 #include "util-mpm-ac.h"
 #include "util-mpm-hs.h"
@@ -96,7 +97,6 @@
 #include "detect-engine-siggroup.h"
 
 #include "util-streaming-buffer.h"
-#include "util-lua.h"
 
 #ifdef OS_WIN32
 #include "win32-syscall.h"
@@ -139,8 +139,6 @@ static void RegisterUnittests(void)
     DecodeVLANRegisterTests();
     DecodeVXLANRegisterTests();
     DecodeRawRegisterTests();
-    DecodeICMPV4RegisterTests();
-    DecodeICMPV6RegisterTests();
     DecodeIPV4RegisterTests();
     DecodeIPV6RegisterTests();
     DecodeTCPRegisterTests();
@@ -184,7 +182,6 @@ static void RegisterUnittests(void)
     SCAtomicRegisterTests();
     MemrchrRegisterTests();
     AppLayerUnittestsRegister();
-    MimeDecRegisterTests();
     StreamingBufferRegisterTests();
     MacSetRegisterTests();
 #ifdef OS_WIN32

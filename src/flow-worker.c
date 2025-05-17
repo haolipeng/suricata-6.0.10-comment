@@ -194,8 +194,8 @@ static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
         /* no one is referring to this flow, use_cnt 0, removed from hash
          * so we can unlock it and pass it to the flow recycler */
 
-        if (fw->output_thread_flow != NULL)
-            (void)OutputFlowLog(tv, fw->output_thread_flow, f);
+        /* if (fw->output_thread_flow != NULL)
+            (void)OutputFlowLog(tv, fw->output_thread_flow, f); */
 
         //清理流内存
         FlowClearMemory (f, f->protomap);
@@ -292,15 +292,15 @@ static TmEcode FlowWorkerThreadInit(ThreadVars *tv, const void *initdata, void *
     }
 
     //初始化日志输出线程
-    if (OutputLoggerThreadInit(tv, initdata, &fw->output_thread) != TM_ECODE_OK) {
+    /* if (OutputLoggerThreadInit(tv, initdata, &fw->output_thread) != TM_ECODE_OK) {
         FlowWorkerThreadDeinit(tv, fw);
         return TM_ECODE_FAILED;
-    }
-    if (OutputFlowLogThreadInit(tv, NULL, &fw->output_thread_flow) != TM_ECODE_OK) {
+    } */
+    /* if (OutputFlowLogThreadInit(tv, NULL, &fw->output_thread_flow) != TM_ECODE_OK) {
         SCLogError(SC_ERR_THREAD_INIT, "initializing flow log API for thread failed");
         FlowWorkerThreadDeinit(tv, fw);
         return TM_ECODE_FAILED;
-    }
+    } */
 
     DecodeRegisterPerfCounters(fw->dtv, tv);
     AppLayerRegisterThreadCounters(tv);
@@ -329,8 +329,8 @@ static TmEcode FlowWorkerThreadDeinit(ThreadVars *tv, void *data)
     }
 
     //释放日志输出线程资源
-    OutputLoggerThreadDeinit(tv, fw->output_thread);
-    OutputFlowLogThreadDeinit(tv, fw->output_thread_flow);
+    /* OutputLoggerThreadDeinit(tv, fw->output_thread);
+    OutputFlowLogThreadDeinit(tv, fw->output_thread_flow); */
 
     /* free pq */
     BUG_ON(fw->pq.len);
@@ -405,7 +405,7 @@ static inline void FlowWorkerStreamTCPUpdate(ThreadVars *tv, FlowWorkerThreadDat
             FLOWWORKER_PROFILING_END(x, PROFILE_FLOWWORKER_DETECT);
         }
 
-        OutputLoggerLog(tv, x, fw->output_thread);
+        /* OutputLoggerLog(tv, x, fw->output_thread); */
 
         if (timeout) {
             PacketPoolReturnPacket(x);
@@ -440,7 +440,7 @@ static void FlowWorkerFlowTimeout(ThreadVars *tv, Packet *p, FlowWorkerThreadDat
     }
 
     // Outputs.
-    OutputLoggerLog(tv, p, fw->output_thread);
+    //OutputLoggerLog(tv, p, fw->output_thread);
 
     /* Prune any stored files. */
     FlowPruneFiles(p);
@@ -570,7 +570,7 @@ static TmEcode FlowWorker(ThreadVars *tv, Packet *p, void *data)
     }
 
     // Outputs.
-    OutputLoggerLog(tv, p, fw->output_thread);
+    //OutputLoggerLog(tv, p, fw->output_thread);
 
     /* Prune any stored files. */
     FlowPruneFiles(p);
@@ -650,7 +650,7 @@ const char *ProfileFlowWorkerIdToString(enum ProfileFlowWorkerId fwi)
 static void FlowWorkerExitPrintStats(ThreadVars *tv, void *data)
 {
     FlowWorkerThreadData *fw = data;
-    OutputLoggerExitPrintStats(tv, fw->output_thread);
+    //OutputLoggerExitPrintStats(tv, fw->output_thread);
 }
 
 void TmModuleFlowWorkerRegister (void)

@@ -21,8 +21,6 @@
 #include "runmodes.h"
 #include "runmode-pcap.h"
 
-#include "log-httplog.h"
-
 #include "util-debug.h"
 #include "util-time.h"
 #include "util-cpu.h"

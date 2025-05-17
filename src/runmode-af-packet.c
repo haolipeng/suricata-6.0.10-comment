@@ -36,11 +36,7 @@
 #include "runmodes.h"
 #include "runmode-af-packet.h"
 
-#include "log-httplog.h"
 #include "detect-engine-mpm.h"
-
-#include "alert-fastlog.h"
-#include "alert-prelude.h"
 
 #include "flow-bypass.h"
 

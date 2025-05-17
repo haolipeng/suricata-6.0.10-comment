@@ -47,7 +47,6 @@
 
 #include "conf.h"
 
-#include "output-flow.h"
 #include "stream-tcp.h"
 #include "util-exception-policy.h"
 
@@ -337,48 +336,6 @@ static inline bool CmpFlowICMPPacket(const Flow *f, const Packet *p)
             CmpVlanIds(f->vlan_id, p->vlan_id);
 }
 
-/**
- *  \brief See if a ICMP packet belongs to a flow by comparing the embedded
- *         packet in the ICMP error packet to the flow.
- *
- *  \param f flow
- *  \param p ICMP packet
- *
- *  \retval 1 match
- *  \retval 0 no match
- */
-static inline int FlowCompareICMPv4(Flow *f, const Packet *p)
-{
-    if (ICMPV4_DEST_UNREACH_IS_VALID(p)) {
-        /* first check the direction of the flow, in other words, the client ->
-         * server direction as it's most likely the ICMP error will be a
-         * response to the clients traffic */
-        if ((f->src.addr_data32[0] == IPV4_GET_RAW_IPSRC_U32(ICMPV4_GET_EMB_IPV4(p))) &&
-                (f->dst.addr_data32[0] == IPV4_GET_RAW_IPDST_U32(ICMPV4_GET_EMB_IPV4(p))) &&
-                f->sp == p->icmpv4vars.emb_sport && f->dp == p->icmpv4vars.emb_dport &&
-                f->proto == ICMPV4_GET_EMB_PROTO(p) && f->recursion_level == p->recursion_level &&
-                CmpVlanIds(f->vlan_id, p->vlan_id)) {
-            return 1;
-
-        /* check the less likely case where the ICMP error was a response to
-         * a packet from the server. */
-        } else if ((f->dst.addr_data32[0] == IPV4_GET_RAW_IPSRC_U32(ICMPV4_GET_EMB_IPV4(p))) &&
-                   (f->src.addr_data32[0] == IPV4_GET_RAW_IPDST_U32(ICMPV4_GET_EMB_IPV4(p))) &&
-                   f->dp == p->icmpv4vars.emb_sport && f->sp == p->icmpv4vars.emb_dport &&
-                   f->proto == ICMPV4_GET_EMB_PROTO(p) &&
-                   f->recursion_level == p->recursion_level && CmpVlanIds(f->vlan_id, p->vlan_id)) {
-            return 1;
-        }
-
-        /* no match, fall through */
-    } else {
-        /* just treat ICMP as a normal proto for now */
-        return CmpFlowICMPPacket(f, p);
-    }
-
-    return 0;
-}
-
 void FlowSetupPacket(Packet *p)
 {
     p->flags |= PKT_WANTS_FLOW;
@@ -388,7 +345,8 @@ void FlowSetupPacket(Packet *p)
 static inline int FlowCompare(Flow *f, const Packet *p)
 {
     if (p->proto == IPPROTO_ICMP) {
-        return FlowCompareICMPv4(f, p);
+        //return FlowCompareICMPv4(f, p);
+        return 0;
     } else {
         return CmpFlowPacket(f, p);
     }

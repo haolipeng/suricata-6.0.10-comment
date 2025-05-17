@@ -772,7 +772,7 @@ static inline SCLogOPIfaceCtx *SCLogInitFileOPIface(const char *file, uint32_t u
     }
 
     SCMutexInit(&iface_ctx->fp_mutex, NULL);
-    OutputRegisterFileRotationFlag(&iface_ctx->rotation_flag);
+    //OutputRegisterFileRotationFlag(&iface_ctx->rotation_flag);
 
     iface_ctx->log_level = log_level;
 
@@ -1336,7 +1336,7 @@ void SCLogInitLogModule(SCLogInitData *sc_lid)
 
     //SCOutputPrint(sc_did->startup_message);
 
-    rs_log_set_level(sc_log_global_log_level);
+    //rs_log_set_level(sc_log_global_log_level);
     return;
 }
 

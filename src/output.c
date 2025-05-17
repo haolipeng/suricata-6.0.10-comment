@@ -40,51 +40,13 @@
 #include "util-debug.h"
 #include "output.h"
 
-#include "alert-fastlog.h"
-#include "alert-debuglog.h"
-#include "alert-prelude.h"
-#include "alert-syslog.h"
 #include "output-json.h"
-#include "output-json-alert.h"
-#include "output-json-anomaly.h"
-#include "output-json-flow.h"
-#include "output-json-netflow.h"
 #include "log-cf-common.h"
-#include "output-json-drop.h"
-#include "log-httplog.h"
-#include "output-json-http.h"
-#include "output-json-dns.h"
-#include "log-tlslog.h"
-#include "log-tlsstore.h"
-#include "output-json-tls.h"
-#include "output-json-ssh.h"
 #include "log-pcap.h"
-#include "output-json-file.h"
-#include "output-json-smtp.h"
 #include "output-json-stats.h"
 #include "log-tcp-data.h"
 #include "log-stats.h"
 #include "output-json.h"
-#include "output-json-nfs.h"
-#include "output-json-ftp.h"
-#include "output-json-tftp.h"
-#include "output-json-smb.h"
-#include "output-json-ikev2.h"
-#include "output-json-krb5.h"
-#include "output-json-dhcp.h"
-#include "output-json-snmp.h"
-#include "output-json-sip.h"
-#include "output-json-rfb.h"
-#include "output-json-mqtt.h"
-#include "output-json-template.h"
-#include "output-json-template-rust.h"
-#include "output-json-rdp.h"
-#include "output-json-http2.h"
-#include "output-lua.h"
-#include "output-json-dnp3.h"
-#include "output-json-metadata.h"
-#include "output-json-dcerpc.h"
-#include "output-filestore.h"
 
 typedef struct RootLogger_ {
     OutputLogFunc LogFunc;
@@ -418,285 +380,6 @@ void OutputRegisterTxSubModule(LoggerId id, const char *parent_name,
 }
 
 /**
- * \brief Register a file output module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterFileModule(LoggerId id, const char *name,
-    const char *conf_name, OutputInitFunc InitFunc, FileLogger FileLogFunc,
-    ThreadInitFunc ThreadInit, ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(FileLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->InitFunc = InitFunc;
-    module->FileLogFunc = FileLogFunc;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("File logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a file output sub-module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterFileSubModule(LoggerId id, const char *parent_name,
-    const char *name, const char *conf_name, OutputInitSubFunc InitFunc,
-    FileLogger FileLogFunc, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(FileLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->parent_name = parent_name;
-    module->InitSubFunc = InitFunc;
-    module->FileLogFunc = FileLogFunc;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("File logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a file data output module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterFiledataModule(LoggerId id, const char *name,
-    const char *conf_name, OutputInitFunc InitFunc,
-    FiledataLogger FiledataLogFunc, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(FiledataLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->InitFunc = InitFunc;
-    module->FiledataLogFunc = FiledataLogFunc;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("Filedata logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a file data output sub-module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterFiledataSubModule(LoggerId id, const char *parent_name,
-    const char *name, const char *conf_name, OutputInitSubFunc InitFunc,
-    FiledataLogger FiledataLogFunc, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(FiledataLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->parent_name = parent_name;
-    module->InitSubFunc = InitFunc;
-    module->FiledataLogFunc = FiledataLogFunc;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("Filedata logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a flow output sub-module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterFlowSubModule(LoggerId id, const char *parent_name,
-    const char *name, const char *conf_name, OutputInitSubFunc InitFunc,
-    FlowLogger FlowLogFunc, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(FlowLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->parent_name = parent_name;
-    module->InitSubFunc = InitFunc;
-    module->FlowLogFunc = FlowLogFunc;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("Flow logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a streaming data output module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterStreamingModule(LoggerId id, const char *name,
-    const char *conf_name, OutputInitFunc InitFunc,
-    StreamingLogger StreamingLogFunc,
-    enum OutputStreamingType stream_type, ThreadInitFunc ThreadInit,
-    ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(StreamingLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->InitFunc = InitFunc;
-    module->StreamingLogFunc = StreamingLogFunc;
-    module->stream_type = stream_type;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("Streaming logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
- * \brief Register a streaming data output sub-module.
- *
- * This function will register an output module so it can be
- * configured with the configuration file.
- *
- * \retval Returns 0 on success, -1 on failure.
- */
-void OutputRegisterStreamingSubModule(LoggerId id, const char *parent_name,
-    const char *name, const char *conf_name, OutputInitSubFunc InitFunc,
-    StreamingLogger StreamingLogFunc, enum OutputStreamingType stream_type,
-    ThreadInitFunc ThreadInit, ThreadDeinitFunc ThreadDeinit,
-    ThreadExitPrintStatsFunc ThreadExitPrintStats)
-{
-    if (unlikely(StreamingLogFunc == NULL)) {
-        goto error;
-    }
-
-    OutputModule *module = SCCalloc(1, sizeof(*module));
-    if (unlikely(module == NULL)) {
-        goto error;
-    }
-
-    module->logger_id = id;
-    module->name = name;
-    module->conf_name = conf_name;
-    module->parent_name = parent_name;
-    module->InitSubFunc = InitFunc;
-    module->StreamingLogFunc = StreamingLogFunc;
-    module->stream_type = stream_type;
-    module->ThreadInit = ThreadInit;
-    module->ThreadDeinit = ThreadDeinit;
-    module->ThreadExitPrintStats = ThreadExitPrintStats;
-    TAILQ_INSERT_TAIL(&output_modules, module, entries);
-
-    SCLogDebug("Streaming logger \"%s\" registered.", name);
-    return;
-error:
-    FatalError(SC_ERR_FATAL, "Fatal error encountered. Exiting...");
-}
-
-/**
  * \brief Register a stats data output module.
  *
  * This function will register an output module so it can be
@@ -1027,9 +710,6 @@ void OutputRegisterRootLoggers(void)
 {
     OutputPacketLoggerRegister();
     OutputTxLoggerRegister();
-    OutputFiledataLoggerRegister();
-    OutputFileLoggerRegister();
-    OutputStreamingLoggerRegister();
 }
 
 /**
@@ -1040,82 +720,17 @@ void OutputRegisterLoggers(void)
     /* custom format log*/
     LogCustomFormatRegister();
 
-    LuaLogRegister();
-    /* fast log */
-    AlertFastLogRegister();
-    /* debug log */
-    AlertDebugLogRegister();
-    /* prelue log */
-    AlertPreludeRegister();
-    /* syslog log */
-    AlertSyslogRegister();
-    JsonDropLogRegister();
     /* json log */
     OutputJsonRegister();
-    /* email logs */
-    JsonSmtpLogRegister();
-    /* http log */
-    LogHttpLogRegister();
-    JsonHttpLogRegister();
-    JsonHttp2LogRegister();
-    /* tls log */
-    LogTlsLogRegister();
-    JsonTlsLogRegister();
-    LogTlsStoreRegister();
-    /* ssh */
-    JsonSshLogRegister();
+
     /* pcap log */
     PcapLogRegister();
-    /* file log */
-    JsonFileLogRegister();
-    OutputFilestoreRegister();
-    /* dns */
-    JsonDnsLogRegister();
+
     /* tcp streaming data */
     LogTcpDataLogRegister();
     /* log stats */
     LogStatsLogRegister();
 
-    JsonAlertLogRegister();
-    JsonAnomalyLogRegister();
-    /* flow/netflow */
-    JsonFlowLogRegister();
-    JsonNetFlowLogRegister();
     /* json stats */
     JsonStatsLogRegister();
-
-    /* DNP3. */
-    JsonDNP3LogRegister();
-    JsonMetadataLogRegister();
-
-    /* NFS JSON logger. */
-    JsonNFSLogRegister();
-    /* TFTP JSON logger. */
-    JsonTFTPLogRegister();
-    /* FTP JSON logger. */
-    JsonFTPLogRegister();
-    /* SMB JSON logger. */
-    JsonSMBLogRegister();
-    /* IKEv2 JSON logger. */
-    JsonIKEv2LogRegister();
-    /* KRB5 JSON logger. */
-    JsonKRB5LogRegister();
-    /* DHCP JSON logger. */
-    JsonDHCPLogRegister();
-    /* SNMP JSON logger. */
-    JsonSNMPLogRegister();
-    /* SIP JSON logger. */
-    JsonSIPLogRegister();
-    /* RFB JSON logger. */
-    JsonRFBLogRegister();
-    /* MQTT JSON logger. */
-    JsonMQTTLogRegister();
-    /* Template JSON logger. */
-    JsonTemplateLogRegister();
-    /* Template Rust JSON logger. */
-    JsonTemplateRustLogRegister();
-    /* RDP JSON logger. */
-    JsonRdpLogRegister();
-    /* DCERPC JSON logger. */
-    JsonDCERPCLogRegister();
 }
