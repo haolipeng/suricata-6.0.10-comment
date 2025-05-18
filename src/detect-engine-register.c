@@ -117,7 +117,6 @@
 #include "detect-engine-sigorder.h"
 #include "detect-ttl.h"
 #include "detect-fast-pattern.h"
-#include "detect-itype.h"
 #include "detect-urilen.h"
 #include "detect-bsize.h"
 #include "detect-detection-filter.h"
@@ -405,7 +404,6 @@ void SigTableSetup(void)
     DetectTtlRegister();
     DetectTosRegister();
     DetectFastPatternRegister();
-    DetectITypeRegister();
     DetectUrilenRegister();
     DetectBsizeRegister();
     DetectDetectionFilterRegister();

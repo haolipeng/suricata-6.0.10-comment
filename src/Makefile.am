@@ -1,5 +1,5 @@
 noinst_HEADERS = action-globals.h \
-    app-layer-nbss.h app-layer-dcerpc-common.h \
+    app-layer-nbss.h \
     debug.h \
 	flow-private.h queue.h \
 	suricata-common.h threadvars.h tree.h \
@@ -123,6 +123,7 @@ detect-fragoffset.c detect-fragoffset.h \
 detect-geoip.c detect-geoip.h \
 detect-gid.c detect-gid.h \
 detect-hostbits.c detect-hostbits.h \
+detect-http-method.c detect-http-method.h \
 detect-id.c detect-id.h \
 detect-ipopts.c detect-ipopts.h \
 detect-ipproto.c detect-ipproto.h \
@@ -130,7 +131,6 @@ detect-iprep.c detect-iprep.h \
 detect-ipv4hdr.c detect-ipv4hdr.h \
 detect-ipv6hdr.c detect-ipv6hdr.h \
 detect-isdataat.c detect-isdataat.h \
-detect-itype.c detect-itype.h \
 detect-l3proto.c detect-l3proto.h \
 detect-mark.c detect-mark.h \
 detect-metadata.c detect-metadata.h \
@@ -225,6 +225,7 @@ runmode-unittests.c runmode-unittests.h \
 runmode-unix-socket.c runmode-unix-socket.h \
 runmodes.c runmodes.h \
 rust.h \
+source-af-packet.c source-af-packet.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
@@ -408,7 +409,7 @@ suricata_SOURCES = main.c $(COMMON_SOURCES)
 # the library search path.
 suricata_LDFLAGS = $(all_libraries) ${SECLDFLAGS}
 suricata_LDADD = $(HTP_LDADD) $(RUST_LDADD)
-suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
+# suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
 
 if BUILD_FUZZTARGETS
 nodist_fuzz_applayerprotodetectgetproto_SOURCES = tests/fuzz/fuzz_applayerprotodetectgetproto.c $(COMMON_SOURCES)

@@ -194,11 +194,11 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-flowint.$(OBJEXT) detect-flowvar.$(OBJEXT) \
 	detect-fragbits.$(OBJEXT) detect-fragoffset.$(OBJEXT) \
 	detect-geoip.$(OBJEXT) detect-gid.$(OBJEXT) \
-	detect-hostbits.$(OBJEXT) detect-id.$(OBJEXT) \
-	detect-ipopts.$(OBJEXT) detect-ipproto.$(OBJEXT) \
-	detect-iprep.$(OBJEXT) detect-ipv4hdr.$(OBJEXT) \
-	detect-ipv6hdr.$(OBJEXT) detect-isdataat.$(OBJEXT) \
-	detect-itype.$(OBJEXT) detect-l3proto.$(OBJEXT) \
+	detect-hostbits.$(OBJEXT) detect-http-method.$(OBJEXT) \
+	detect-id.$(OBJEXT) detect-ipopts.$(OBJEXT) \
+	detect-ipproto.$(OBJEXT) detect-iprep.$(OBJEXT) \
+	detect-ipv4hdr.$(OBJEXT) detect-ipv6hdr.$(OBJEXT) \
+	detect-isdataat.$(OBJEXT) detect-l3proto.$(OBJEXT) \
 	detect-mark.$(OBJEXT) detect-metadata.$(OBJEXT) \
 	detect-msg.$(OBJEXT) detect-noalert.$(OBJEXT) \
 	detect-nocase.$(OBJEXT) detect-offset.$(OBJEXT) \
@@ -244,7 +244,8 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	runmode-af-packet.$(OBJEXT) runmode-pcap.$(OBJEXT) \
 	runmode-pcap-file.$(OBJEXT) runmode-unittests.$(OBJEXT) \
 	runmode-unix-socket.$(OBJEXT) runmodes.$(OBJEXT) \
-	source-pcap.$(OBJEXT) source-pcap-file.$(OBJEXT) \
+	source-af-packet.$(OBJEXT) source-pcap.$(OBJEXT) \
+	source-pcap-file.$(OBJEXT) \
 	source-pcap-file-directory-helper.$(OBJEXT) \
 	source-pcap-file-helper.$(OBJEXT) stream.$(OBJEXT) \
 	stream-tcp.$(OBJEXT) stream-tcp-inline.$(OBJEXT) \
@@ -392,6 +393,7 @@ fuzz_sigpcap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(CXXFLAGS) $(fuzz_sigpcap_LDFLAGS) $(LDFLAGS) -o $@
 am_suricata_OBJECTS = main.$(OBJEXT) $(am__objects_1)
 suricata_OBJECTS = $(am_suricata_OBJECTS)
+suricata_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 suricata_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(suricata_LDFLAGS) $(LDFLAGS) -o $@
@@ -488,10 +490,10 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-fragbits.Po \
 	./$(DEPDIR)/detect-fragoffset.Po ./$(DEPDIR)/detect-geoip.Po \
 	./$(DEPDIR)/detect-gid.Po ./$(DEPDIR)/detect-hostbits.Po \
-	./$(DEPDIR)/detect-id.Po ./$(DEPDIR)/detect-ipopts.Po \
-	./$(DEPDIR)/detect-ipproto.Po ./$(DEPDIR)/detect-iprep.Po \
-	./$(DEPDIR)/detect-ipv4hdr.Po ./$(DEPDIR)/detect-ipv6hdr.Po \
-	./$(DEPDIR)/detect-isdataat.Po ./$(DEPDIR)/detect-itype.Po \
+	./$(DEPDIR)/detect-http-method.Po ./$(DEPDIR)/detect-id.Po \
+	./$(DEPDIR)/detect-ipopts.Po ./$(DEPDIR)/detect-ipproto.Po \
+	./$(DEPDIR)/detect-iprep.Po ./$(DEPDIR)/detect-ipv4hdr.Po \
+	./$(DEPDIR)/detect-ipv6hdr.Po ./$(DEPDIR)/detect-isdataat.Po \
 	./$(DEPDIR)/detect-l3proto.Po ./$(DEPDIR)/detect-mark.Po \
 	./$(DEPDIR)/detect-metadata.Po ./$(DEPDIR)/detect-msg.Po \
 	./$(DEPDIR)/detect-noalert.Po ./$(DEPDIR)/detect-nocase.Po \
@@ -546,6 +548,7 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/runmode-pcap-file.Po ./$(DEPDIR)/runmode-pcap.Po \
 	./$(DEPDIR)/runmode-unittests.Po \
 	./$(DEPDIR)/runmode-unix-socket.Po ./$(DEPDIR)/runmodes.Po \
+	./$(DEPDIR)/source-af-packet.Po \
 	./$(DEPDIR)/source-pcap-file-directory-helper.Po \
 	./$(DEPDIR)/source-pcap-file-helper.Po \
 	./$(DEPDIR)/source-pcap-file.Po ./$(DEPDIR)/source-pcap.Po \
@@ -941,7 +944,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_HEADERS = action-globals.h \
-    app-layer-nbss.h app-layer-dcerpc-common.h \
+    app-layer-nbss.h \
     debug.h \
 	flow-private.h queue.h \
 	suricata-common.h threadvars.h tree.h \
@@ -1058,6 +1061,7 @@ detect-fragoffset.c detect-fragoffset.h \
 detect-geoip.c detect-geoip.h \
 detect-gid.c detect-gid.h \
 detect-hostbits.c detect-hostbits.h \
+detect-http-method.c detect-http-method.h \
 detect-id.c detect-id.h \
 detect-ipopts.c detect-ipopts.h \
 detect-ipproto.c detect-ipproto.h \
@@ -1065,7 +1069,6 @@ detect-iprep.c detect-iprep.h \
 detect-ipv4hdr.c detect-ipv4hdr.h \
 detect-ipv6hdr.c detect-ipv6hdr.h \
 detect-isdataat.c detect-isdataat.h \
-detect-itype.c detect-itype.h \
 detect-l3proto.c detect-l3proto.h \
 detect-mark.c detect-mark.h \
 detect-metadata.c detect-metadata.h \
@@ -1160,6 +1163,7 @@ runmode-unittests.c runmode-unittests.h \
 runmode-unix-socket.c runmode-unix-socket.h \
 runmodes.c runmodes.h \
 rust.h \
+source-af-packet.c source-af-packet.h \
 source-pcap.c source-pcap.h \
 source-pcap-file.c source-pcap-file.h \
 source-pcap-file-directory-helper.c source-pcap-file-directory-helper.h \
@@ -1343,7 +1347,7 @@ suricata_SOURCES = main.c $(COMMON_SOURCES)
 # the library search path.
 suricata_LDFLAGS = $(all_libraries) ${SECLDFLAGS}
 suricata_LDADD = $(HTP_LDADD) $(RUST_LDADD)
-suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
+# suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
 @BUILD_FUZZTARGETS_TRUE@nodist_fuzz_applayerprotodetectgetproto_SOURCES = tests/fuzz/fuzz_applayerprotodetectgetproto.c \
 @BUILD_FUZZTARGETS_TRUE@	$(COMMON_SOURCES) $(am__append_3)
 @BUILD_FUZZTARGETS_TRUE@fuzz_applayerprotodetectgetproto_LDFLAGS =  \
@@ -1428,9 +1432,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/Makefile
+	  $(AUTOMAKE) --foreign src/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -1687,6 +1691,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-geoip.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-gid.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-hostbits.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-http-method.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-id.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-ipopts.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-ipproto.Po@am__quote@ # am--include-marker
@@ -1694,7 +1699,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-ipv4hdr.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-ipv6hdr.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-isdataat.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-itype.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-l3proto.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-mark.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-metadata.Po@am__quote@ # am--include-marker
@@ -1791,6 +1795,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmode-unittests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmode-unix-socket.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runmodes.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-af-packet.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file-directory-helper.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file-helper.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/source-pcap-file.Po@am__quote@ # am--include-marker
@@ -2235,6 +2240,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-geoip.Po
 	-rm -f ./$(DEPDIR)/detect-gid.Po
 	-rm -f ./$(DEPDIR)/detect-hostbits.Po
+	-rm -f ./$(DEPDIR)/detect-http-method.Po
 	-rm -f ./$(DEPDIR)/detect-id.Po
 	-rm -f ./$(DEPDIR)/detect-ipopts.Po
 	-rm -f ./$(DEPDIR)/detect-ipproto.Po
@@ -2242,7 +2248,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-ipv4hdr.Po
 	-rm -f ./$(DEPDIR)/detect-ipv6hdr.Po
 	-rm -f ./$(DEPDIR)/detect-isdataat.Po
-	-rm -f ./$(DEPDIR)/detect-itype.Po
 	-rm -f ./$(DEPDIR)/detect-l3proto.Po
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
@@ -2339,6 +2344,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
+	-rm -f ./$(DEPDIR)/source-af-packet.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po
@@ -2618,6 +2624,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-geoip.Po
 	-rm -f ./$(DEPDIR)/detect-gid.Po
 	-rm -f ./$(DEPDIR)/detect-hostbits.Po
+	-rm -f ./$(DEPDIR)/detect-http-method.Po
 	-rm -f ./$(DEPDIR)/detect-id.Po
 	-rm -f ./$(DEPDIR)/detect-ipopts.Po
 	-rm -f ./$(DEPDIR)/detect-ipproto.Po
@@ -2625,7 +2632,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-ipv4hdr.Po
 	-rm -f ./$(DEPDIR)/detect-ipv6hdr.Po
 	-rm -f ./$(DEPDIR)/detect-isdataat.Po
-	-rm -f ./$(DEPDIR)/detect-itype.Po
 	-rm -f ./$(DEPDIR)/detect-l3proto.Po
 	-rm -f ./$(DEPDIR)/detect-mark.Po
 	-rm -f ./$(DEPDIR)/detect-metadata.Po
@@ -2722,6 +2728,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/runmode-unittests.Po
 	-rm -f ./$(DEPDIR)/runmode-unix-socket.Po
 	-rm -f ./$(DEPDIR)/runmodes.Po
+	-rm -f ./$(DEPDIR)/source-af-packet.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-directory-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file-helper.Po
 	-rm -f ./$(DEPDIR)/source-pcap-file.Po

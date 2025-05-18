@@ -34,42 +34,4 @@
 
 #ifdef PROFILING
 SCMutex g_rule_dump_write_m = SCMUTEX_INITIALIZER;
-
-void RulesDumpMatchArray(const DetectEngineThreadCtx *det_ctx,
-        const SigGroupHead *sgh, const Packet *p)
-{
-    JsonBuilder *js = CreateEveHeader(p, LOG_DIR_PACKET, "inspectedrules", NULL);
-    if (js == NULL)
-        return;
-
-    jb_open_object(js, "inspectedrules");
-    jb_set_uint(js, "rule_group_id", sgh->id);
-    jb_set_uint(js, "rule_cnt", det_ctx->match_array_cnt);
-
-    jb_open_array(js, "rules");
-    for (uint32_t x = 0; x < det_ctx->match_array_cnt; x++) {
-        const Signature *s = det_ctx->match_array[x];
-        if (s == NULL)
-            continue;
-        jb_append_uint(js, s->id);
-
-    }
-    jb_close(js); // close array
-    jb_close(js); // close inspectedrules object
-    jb_close(js); // final close
-
-    const char *filename = "packet_inspected_rules.json";
-    const char *log_dir = ConfigGetLogDirectory();
-    char log_path[PATH_MAX] = "";
-    snprintf(log_path, sizeof(log_path), "%s/%s", log_dir, filename);
-
-    SCMutexLock(&g_rule_dump_write_m);
-    FILE *fp = fopen(log_path, "a");
-    if (fp != NULL) {
-        fwrite(jb_ptr(js), jb_len(js), 1, fp);
-        fclose(fp);
-    }
-    SCMutexUnlock(&g_rule_dump_write_m);
-    jb_free(js);
-}
 #endif /* PROFILING */

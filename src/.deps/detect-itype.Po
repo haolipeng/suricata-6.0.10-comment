@@ -223,9 +223,7 @@ detect-itype.o: detect-itype.c /usr/include/stdc-predef.h \
  app-layer-events.h detect-threshold.h detect-engine-build.h util-path.h \
  util-conf.h debug.h detect-parse.h detect-engine-prefilter-common.h \
  detect-itype.h util-byte.h /usr/include/byteswap.h util-unittest.h \
- util-unittest-helper.h detect-engine.h tm-threads.h tmqh-packetpool.h \
- tm-modules.h flow-private.h flow-hash.h detect-engine-mpm.h \
- detect-content.h detect-uricontent.h
+ util-unittest-helper.h
 /usr/include/stdc-predef.h:
 suricata-common.h:
 autoconf.h:
@@ -583,12 +581,3 @@ util-byte.h:
 /usr/include/byteswap.h:
 util-unittest.h:
 util-unittest-helper.h:
-detect-engine.h:
-tm-threads.h:
-tmqh-packetpool.h:
-tm-modules.h:
-flow-private.h:
-flow-hash.h:
-detect-engine-mpm.h:
-detect-content.h:
-detect-uricontent.h:

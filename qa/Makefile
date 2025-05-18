@@ -299,9 +299,9 @@ RANLIB = ranlib
 RUSTC = /usr/bin/rustc
 RUSTUP_HOME_PATH = no
 RUST_FEATURES =  function-macro
-RUST_LDADD = ../rust/target/debug/libsuricata.a -ldl -lrt -lm
-RUST_SURICATA_LIB = ../rust/target/debug/libsuricata.a
-RUST_SURICATA_LIBDIR = ../rust/target/debug
+RUST_LDADD =  -ldl -lrt -lm
+RUST_SURICATA_LIB = 
+RUST_SURICATA_LIBDIR = 
 SECCFLAGS = 
 SECLDFLAGS = 
 SED = /usr/bin/sed
@@ -405,9 +405,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu qa/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign qa/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu qa/Makefile
+	  $(AUTOMAKE) --foreign qa/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

@@ -76,7 +76,7 @@ static TmEcode RespondRejectFunc(ThreadVars *tv, Packet *p, void *data)
         if (PKT_IS_TCP(p)) {
             (void)RejectSendIPv4TCP(tv, p, data);
         } else {
-            (void)RejectSendIPv4ICMP(tv, p, data);
+            //(void)RejectSendIPv4ICMP(tv, p, data);
         }
     } else if (PKT_IS_IPV6(p)) {
         if (PKT_IS_TCP(p)) {
@@ -106,7 +106,7 @@ int RejectSendIPv4TCP(ThreadVars *tv, Packet *p, void *data)
     SCReturnInt(0);
 }
 
-int RejectSendIPv4ICMP(ThreadVars *tv, Packet *p, void *data)
+/* int RejectSendIPv4ICMP(ThreadVars *tv, Packet *p, void *data)
 {
     SCEnter();
     if (PACKET_TEST_ACTION(p, ACTION_REJECT)) {
@@ -121,7 +121,7 @@ int RejectSendIPv4ICMP(ThreadVars *tv, Packet *p, void *data)
         SCReturnInt(r);
     }
     SCReturnInt(0);
-}
+} */
 
 int RejectSendIPv6TCP(ThreadVars *tv, Packet *p, void *data)
 {

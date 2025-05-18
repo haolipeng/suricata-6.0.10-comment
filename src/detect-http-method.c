@@ -106,12 +106,6 @@ void DetectHttpMethodRegister(void)
             PrefilterGenericMpmRegister, GetData, ALPROTO_HTTP,
             HTP_REQUEST_LINE);
 
-    DetectAppLayerInspectEngineRegister2("http_method", ALPROTO_HTTP2, SIG_FLAG_TOSERVER,
-            HTTP2StateDataClient, DetectEngineInspectBufferGeneric, GetData2);
-
-    DetectAppLayerMpmRegister2("http_method", SIG_FLAG_TOSERVER, 4, PrefilterGenericMpmRegister,
-            GetData2, ALPROTO_HTTP2, HTTP2StateDataClient);
-
     DetectBufferTypeSetDescriptionByName("http_method",
             "http request method");
 
@@ -226,8 +220,8 @@ static InspectionBuffer *GetData2(DetectEngineThreadCtx *det_ctx,
         uint32_t b_len = 0;
         const uint8_t *b = NULL;
 
-        if (rs_http2_tx_get_method(txv, &b, &b_len) != 1)
-            return NULL;
+/*         if (rs_http2_tx_get_method(txv, &b, &b_len) != 1)
+            return NULL; */
         if (b == NULL || b_len == 0)
             return NULL;
 

@@ -246,7 +246,7 @@ detect-engine-register.o: detect-engine-register.c \
  detect-flowvar.h detect-flowint.h detect-pktvar.h detect-noalert.h \
  detect-flowbits.h detect-hostbits.h detect-xbits.h detect-csum.h \
  detect-stream_size.h detect-engine-sigorder.h detect-ttl.h \
- detect-fast-pattern.h detect-itype.h detect-urilen.h detect-bsize.h \
+ detect-fast-pattern.h detect-urilen.h detect-bsize.h \
  detect-detection-filter.h detect-byte-extract.h detect-file-data.h \
  detect-pkt-data.h detect-replace.h detect-tos.h detect-app-layer-event.h \
  detect-iprep.h detect-geoip.h detect-app-layer-protocol.h \
@@ -705,7 +705,6 @@ detect-stream_size.h:
 detect-engine-sigorder.h:
 detect-ttl.h:
 detect-fast-pattern.h:
-detect-itype.h:
 detect-urilen.h:
 detect-bsize.h:
 detect-detection-filter.h:

@@ -159,7 +159,7 @@ DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/suricata.yaml.in \
 	$(top_srcdir)/python/suricata/config/defaults.py.in COPYING \
 	ChangeLog README.md compile config.guess config.rpath \
-	config.sub install-sh ltmain.sh missing
+	config.sub depcomp install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -323,10 +323,9 @@ RANLIB = ranlib
 RUSTC = /usr/bin/rustc
 RUSTUP_HOME_PATH = no
 RUST_FEATURES =  function-macro
-RUST_LDADD = -ldl -lrt -lm
-#RUST_LDADD = ../rust/target/debug/libsuricata.a -ldl -lrt -lm
-#RUST_SURICATA_LIB = ../rust/target/debug/libsuricata.a
-RUST_SURICATA_LIBDIR = ../rust/target/debug
+RUST_LDADD =  -ldl -lrt -lm
+RUST_SURICATA_LIB = 
+RUST_SURICATA_LIBDIR = 
 SECCFLAGS = 
 SECLDFLAGS = 
 SED = /usr/bin/sed

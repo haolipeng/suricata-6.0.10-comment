@@ -183,8 +183,8 @@ DecodeIPV6ExtHdrs(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
                 SCReturn;
 
             case IPPROTO_ICMPV6:
-                IPV6_SET_L4PROTO(p,nh);
-                DecodeICMPV6(tv, dtv, p, pkt, plen);
+                //IPV6_SET_L4PROTO(p,nh);
+                //DecodeICMPV6(tv, dtv, p, pkt, plen);
                 SCReturn;
 
             case IPPROTO_ROUTING:
@@ -614,8 +614,8 @@ int DecodeIPV6(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p, const uint8_t *
             DecodeUDP(tv, dtv, p, pkt + IPV6_HEADER_LEN, IPV6_GET_PLEN(p));
             return TM_ECODE_OK;
         case IPPROTO_ICMPV6:
-            IPV6_SET_L4PROTO (p, IPPROTO_ICMPV6);
-            DecodeICMPV6(tv, dtv, p, pkt + IPV6_HEADER_LEN, IPV6_GET_PLEN(p));
+            //IPV6_SET_L4PROTO (p, IPPROTO_ICMPV6);
+            //DecodeICMPV6(tv, dtv, p, pkt + IPV6_HEADER_LEN, IPV6_GET_PLEN(p));
             return TM_ECODE_OK;
         case IPPROTO_IPIP:
             IPV6_SET_L4PROTO(p, IPPROTO_IPIP);

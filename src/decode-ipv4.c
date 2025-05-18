@@ -567,8 +567,8 @@ int DecodeIPV4(ThreadVars *tv, DecodeThreadVars *dtv, Packet *p,
                       IPV4_GET_IPLEN(p) - IPV4_GET_HLEN(p));
             break;
         case IPPROTO_ICMP:
-            DecodeICMPV4(tv, dtv, p, pkt + IPV4_GET_HLEN(p),
-                         IPV4_GET_IPLEN(p) - IPV4_GET_HLEN(p));
+            /* DecodeICMPV4(tv, dtv, p, pkt + IPV4_GET_HLEN(p),
+                         IPV4_GET_IPLEN(p) - IPV4_GET_HLEN(p)); */
             break;
         case IPPROTO_GRE:
             DecodeGRE(tv, dtv, p, pkt + IPV4_GET_HLEN(p),

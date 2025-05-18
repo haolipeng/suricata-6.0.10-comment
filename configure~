@@ -18526,7 +18526,7 @@ printf %s "checking host os... " >&6; }
     fi
     echo -n "installation for $host OS... "
 
-    RUST_SURICATA_LIBNAME="libsuricata.a"
+    RUST_SURICATA_LIBNAME=""
 
     e_magic_file=""
     e_magic_file_comment="#"

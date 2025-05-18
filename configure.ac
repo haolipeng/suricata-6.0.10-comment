@@ -237,7 +237,7 @@
     fi
     echo -n "installation for $host OS... "
 
-    RUST_SURICATA_LIBNAME="libsuricata.a"
+    RUST_SURICATA_LIBNAME=""
 
     e_magic_file=""
     e_magic_file_comment="#"
@@ -2521,11 +2521,11 @@ fi
     fi
 
     if test "x$enable_debug" = "xyes"; then
-      RUST_SURICATA_LIBDIR="../rust/target/${RUST_SURICATA_LIB_XC_DIR}debug"
+      RUST_SURICATA_LIBDIR=""
     else
-      RUST_SURICATA_LIBDIR="../rust/target/${RUST_SURICATA_LIB_XC_DIR}release"
+      RUST_SURICATA_LIBDIR=""
     fi
-    RUST_SURICATA_LIB="${RUST_SURICATA_LIBDIR}/${RUST_SURICATA_LIBNAME}"
+    RUST_SURICATA_LIB=""
 
     RUST_LDADD="${RUST_SURICATA_LIB} ${RUST_LDADD}"
     CFLAGS="${CFLAGS} -I\${srcdir}/../rust/gen -I\${srcdir}/../rust/dist"

@@ -1867,9 +1867,9 @@ static int SigMatchPrepare(DetectEngineCtx *de_ctx)
         /* set up the pkt inspection engines */
         DetectEnginePktInspectionSetup(s);
 
-        if (rule_engine_analysis_set) {
+        /* if (rule_engine_analysis_set) {
             EngineAnalysisRules2(de_ctx, s);
-        }
+        } */
         /* free lists. Ctx' are xferred to sm_arrays so won't get freed */
         uint32_t i;
         for (i = 0; i < s->init_data->smlists_array_size; i++) {
