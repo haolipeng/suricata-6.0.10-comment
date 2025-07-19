@@ -210,9 +210,7 @@ enum TcpState
 #define STREAMTCP_STREAM_FLAG_DEPTH_REACHED                 BIT_U16(3)
 /** Trigger reassembly next time we need 'raw' */
 #define STREAMTCP_STREAM_FLAG_TRIGGER_RAW                   BIT_U16(4)
-/** Stream supports TIMESTAMP -- used to set ssn STREAMTCP_FLAG_TIMESTAMP
- *  flag. */
-#define STREAMTCP_STREAM_FLAG_TIMESTAMP                     BIT_U16(5)
+
 /** Flag to indicate the zero value of timestamp */
 #define STREAMTCP_STREAM_FLAG_ZERO_TIMESTAMP                BIT_U16(6)
 /** App proto detection completed 应用层探测完成*/
