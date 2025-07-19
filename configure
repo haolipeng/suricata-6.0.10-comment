@@ -30968,16 +30968,6 @@ esac
     CBINDGEN=$CBINDGEN
 
 
-    # Require cbindgen if generated headers are not bundled.
-    if test "x$have_rust_headers" != "xyes"; then
-      if test "x$CBINDGEN" = "xno"; then
-        echo "  Warning: cbindgen too old or not found, it is required to "
-        echo "      generate header files."
-        echo "  To install: cargo install --force cbindgen"
-        as_fn_error $? "cbindgen required" "$LINENO" 5
-      fi
-    fi
-
      if test "x$have_rust_headers" = "xyes"; then
   HAVE_RUST_HEADERS_TRUE=
   HAVE_RUST_HEADERS_FALSE='#'

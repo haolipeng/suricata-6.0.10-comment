@@ -2623,16 +2623,6 @@ fi
 
     AC_SUBST([CBINDGEN], [$CBINDGEN])
 
-    # Require cbindgen if generated headers are not bundled.
-    if test "x$have_rust_headers" != "xyes"; then
-      if test "x$CBINDGEN" = "xno"; then
-        echo "  Warning: cbindgen too old or not found, it is required to "
-        echo "      generate header files."
-        echo "  To install: cargo install --force cbindgen"
-        AC_MSG_ERROR([cbindgen required])
-      fi
-    fi
-
     AM_CONDITIONAL([HAVE_RUST_HEADERS], [test "x$have_rust_headers" = "xyes"])
     AM_CONDITIONAL([HAVE_CBINDGEN], [test "x$CBINDGEN" != "xno"])
     AM_CONDITIONAL([HAVE_CARGO_VENDOR], [test "x$have_cargo_vendor" != "xno"])
