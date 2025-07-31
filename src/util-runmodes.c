@@ -106,6 +106,7 @@ int RunModeSetLiveCaptureAutoFp(ConfigIfaceParserFunc ConfigParser,
                    live_dev);
         }
 
+        // 线程数校验接口
         int threads_count = ModThreadsCount(aconf);
         SCLogInfo("Going to use %" PRId32 " %s receive thread(s)",
                   threads_count, recv_mod_name);

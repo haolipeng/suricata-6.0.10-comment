@@ -935,12 +935,12 @@ TmEcode TmThreadSetupOptions(ThreadVars *tv)
  * \brief Creates and returns the TV instance for a new thread.
  *
  * \param name       Name of this TV instance
- * \param inq_name   Incoming queue name
- * \param inqh_name  Incoming queue handler name as set by TmqhSetup()
- * \param outq_name  Outgoing queue name
- * \param outqh_name Outgoing queue handler as set by TmqhSetup()
- * \param slots      String representation for the slot function to be used
- * \param fn_p       Pointer to function when \"slots\" is of type \"custom\"
+ * \param inq_name   输入队列的名称
+ * \param inqh_name  由 TmqhSetup() 设置的输入队列处理程序名称
+ * \param outq_name  输出队列的名称
+ * \param outqh_name 由 TmqhSetup() 设置的输出队列处理程序名称
+ * \param slots      所使用的插槽函数的字符串表示
+ * \param fn_p       当slots类型为custom时的函数指针
  * \param mucond     Flag to indicate whether to initialize the condition
  *                   and the mutex variables for this newly created TV.
  *
@@ -971,10 +971,11 @@ ThreadVars *TmThreadCreate(const char *name, const char *inq_name, const char *i
     TmThreadsSetFlag(tv, THV_PAUSE);
     TmThreadsSetFlag(tv, THV_USE);
 
-    /* set the incoming queue */
+    /* 如果不是packetpool，则设置输入队列 */
     if (inq_name != NULL && strcmp(inq_name, "packetpool") != 0) {
         SCLogDebug("inq_name \"%s\"", inq_name);
 
+        //通过名称获取队列实例，如果获取不到，则创建队列
         tmq = TmqGetQueueByName(inq_name);
         if (tmq == NULL) {
             tmq = TmqCreateQueue(inq_name);
@@ -987,6 +988,7 @@ ThreadVars *TmThreadCreate(const char *name, const char *inq_name, const char *i
         tv->inq->reader_cnt++;
         SCLogDebug("tv->inq %p", tv->inq);
     }
+    //设置输入队列处理器
     if (inqh_name != NULL) {
         SCLogDebug("inqh_name \"%s\"", inqh_name);
 
@@ -994,6 +996,7 @@ ThreadVars *TmThreadCreate(const char *name, const char *inq_name, const char *i
         if (id <= 0) {
             goto error;
         }
+        //通过名称获取队列处理器实例，如果获取不到，则创建队列处理器
         tmqh = TmqhGetQueueHandlerByName(inqh_name);
         if (tmqh == NULL)
             goto error;
@@ -1003,7 +1006,7 @@ ThreadVars *TmThreadCreate(const char *name, const char *inq_name, const char *i
         SCLogDebug("tv->tmqh_in %p", tv->tmqh_in);
     }
 
-    /* set the outgoing queue */
+    /* 设置输出队列处理器 */
     if (outqh_name != NULL) {
         SCLogDebug("outqh_name \"%s\"", outqh_name);
 
@@ -1011,23 +1014,25 @@ ThreadVars *TmThreadCreate(const char *name, const char *inq_name, const char *i
         if (id <= 0) {
             goto error;
         }
-
+        //通过名称获取队列处理器实例，如果获取不到，则创建队列处理器
         tmqh = TmqhGetQueueHandlerByName(outqh_name);
         if (tmqh == NULL)
             goto error;
 
         tv->tmqh_out = tmqh->OutHandler;
         tv->outq_id = (uint8_t)id;
-
+        //设置输出队列  
         if (outq_name != NULL && strcmp(outq_name, "packetpool") != 0) {
             SCLogDebug("outq_name \"%s\"", outq_name);
 
+            //设置输出队列处理器上下文
             if (tmqh->OutHandlerCtxSetup != NULL) {
                 tv->outctx = tmqh->OutHandlerCtxSetup(outq_name);
                 if (tv->outctx == NULL)
                     goto error;
                 tv->outq = NULL;
             } else {
+                //使用标准队列
                 tmq = TmqGetQueueByName(outq_name);
                 if (tmq == NULL) {
                     tmq = TmqCreateQueue(outq_name);

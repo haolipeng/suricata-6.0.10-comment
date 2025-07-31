@@ -693,7 +693,7 @@
 /* #undef PROFILING */
 
 /* Git revision */
-#define REVISION ac9cb75f2 2025-07-19
+#define REVISION 246f4b3a6 2025-07-31
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -710,7 +710,7 @@
 /* #undef TM_IN_SYS_TIME */
 
 /* Enable built-in unittests */
-#define UNITTESTS 0
+#define UNITTESTS 1
 
 /* (NETMAP new support enabled) */
 /* #undef USE_NEW_NETMAP_API */

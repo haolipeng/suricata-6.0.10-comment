@@ -146,7 +146,6 @@ detect-prefilter.c detect-prefilter.h \
 detect-priority.c detect-priority.h \
 detect-rawbytes.c detect-rawbytes.h \
 detect-reference.c detect-reference.h \
-detect-replace.c detect-replace.h \
 detect-rev.c detect-rev.h \
 detect-rpc.c detect-rpc.h \
 detect-sameip.c detect-sameip.h \
@@ -302,7 +301,6 @@ util-mpm-ac-ks.c util-mpm-ac-ks.h \
 util-mpm-ac-ks-small.c \
 util-mpm-hs.c util-mpm-hs.h \
 util-mpm.c util-mpm.h \
-util-napatech.c util-napatech.h \
 util-optimize.h \
 util-pages.c util-pages.h \
 util-path.c util-path.h \

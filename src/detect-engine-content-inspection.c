@@ -38,7 +38,6 @@
 #include "detect-bytemath.h"
 #include "detect-bytejump.h"
 #include "detect-byte-extract.h"
-#include "detect-replace.h"
 #include "detect-engine-content-inspection.h"
 #include "detect-uricontent.h"
 #include "detect-urilen.h"
@@ -324,7 +323,7 @@ int DetectEngineContentInspection(DetectEngineCtx *de_ctx, DetectEngineThreadCtx
                         if (inspection_mode == DETECT_ENGINE_CONTENT_INSPECTION_MODE_PAYLOAD) {
                             /* we will need to replace content if match is confirmed
                              * cast to non-const as replace writes to it. */
-                            det_ctx->replist = DetectReplaceAddToList(det_ctx->replist, (uint8_t *)found, cd);
+                            //det_ctx->replist = DetectReplaceAddToList(det_ctx->replist, (uint8_t *)found, cd);
                         } else {
                             SCLogWarning(SC_ERR_INVALID_VALUE, "Can't modify payload without packet");
                         }

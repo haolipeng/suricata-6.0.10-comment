@@ -123,7 +123,6 @@
 #include "detect-byte-extract.h"
 #include "detect-file-data.h"
 #include "detect-pkt-data.h"
-#include "detect-replace.h"
 #include "detect-tos.h"
 #include "detect-app-layer-event.h"
 #include "detect-iprep.h"
@@ -377,7 +376,6 @@ void SigTableSetup(void)
     DetectWithinRegister();
     DetectDistanceRegister();
     DetectOffsetRegister();
-    DetectReplaceRegister();
     DetectFlowRegister();
     DetectWindowRegister();
     DetectIsdataatRegister();

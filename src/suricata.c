@@ -890,18 +890,6 @@ static TmEcode ParseInterfacesList(const int runmode, char *pcap_dev)
                 SCReturnInt(TM_ECODE_FAILED);
             }
         }
-    } else if (runmode == RUNMODE_PFRING) {
-        /* FIXME add backward compat support */
-        /* iface has been set on command line */
-        if (strlen(pcap_dev)) {
-            if (ConfSetFinal("pfring.live-interface", pcap_dev) != 1) {
-                SCLogError(SC_ERR_INITIALIZATION, "Failed to set pfring.live-interface");
-                SCReturnInt(TM_ECODE_FAILED);
-            }
-        } else {
-            /* not an error condition if we have a 1.0 config */
-            LiveBuildDeviceList("pfring");
-        }
 #ifdef HAVE_AF_PACKET
     } else if (runmode == RUNMODE_AFP_DEV) {
         /* iface has been set on command line */
@@ -916,30 +904,6 @@ static TmEcode ParseInterfacesList(const int runmode, char *pcap_dev)
                 SCLogError(SC_ERR_INITIALIZATION, "No interface found in config for af-packet");
                 SCReturnInt(TM_ECODE_FAILED);
             }
-        }
-#endif
-#ifdef HAVE_NETMAP
-    } else if (runmode == RUNMODE_NETMAP) {
-        /* iface has been set on command line */
-        if (strlen(pcap_dev)) {
-            if (ConfSetFinal("netmap.live-interface", pcap_dev) != 1) {
-                SCLogError(SC_ERR_INITIALIZATION, "Failed to set netmap.live-interface");
-                SCReturnInt(TM_ECODE_FAILED);
-            }
-        } else {
-            int ret = LiveBuildDeviceList("netmap");
-            if (ret == 0) {
-                SCLogError(SC_ERR_INITIALIZATION, "No interface found in config for netmap");
-                SCReturnInt(TM_ECODE_FAILED);
-            }
-        }
-#endif
-#ifdef HAVE_NFLOG
-    } else if (runmode == RUNMODE_NFLOG) {
-        int ret = LiveBuildDeviceListCustom("nflog", "group");
-        if (ret == 0) {
-            SCLogError(SC_ERR_INITIALIZATION, "No group found in config for nflog");
-            SCReturnInt(TM_ECODE_FAILED);
         }
 #endif
     }
@@ -1335,13 +1299,6 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
                 suri->group_name = optarg;
                 suri->do_setgid = TRUE;
 #endif /* HAVE_LIBCAP_NG */
-            }
-            else if (strcmp((long_opts[option_index]).name, "erf-in") == 0) {
-                suri->run_mode = RUNMODE_ERF_FILE;
-                if (ConfSetFinal("erf-file.file", optarg) != 1) {
-                    fprintf(stderr, "ERROR: Failed to set erf-file.file\n");
-                    return TM_ECODE_FAILED;
-                }
             }
             else if (strcmp((long_opts[option_index]).name, "pcap-buffer-size") == 0) {
 #ifdef HAVE_PCAP_SET_BUFF
@@ -1999,30 +1956,8 @@ static int ConfigGetCaptureValue(SCInstance *suri)
         int nlive;
         int strip_trailing_plus = 0;
         switch (suri->run_mode) {
-#ifdef WINDIVERT
-            case RUNMODE_WINDIVERT:
-                /* by default, WinDivert collects from all devices */
-                mtu = GetGlobalMTUWin32();
-
-                if (mtu > 0) {
-                    g_default_mtu = mtu;
-                    /* SLL_HEADER_LEN is the longest header + 8 for VLAN */
-                    default_packet_size = mtu + SLL_HEADER_LEN + 8;
-                    break;
-                }
-
-                g_default_mtu = DEFAULT_MTU;
-                default_packet_size = DEFAULT_PACKET_SIZE;
-                break;
-#endif /* WINDIVERT */
-            case RUNMODE_NETMAP:
-                /* in netmap igb0+ has a special meaning, however the
-                 * interface really is igb0 */
-                strip_trailing_plus = 1;
-                /* fall through */
             case RUNMODE_PCAP_DEV:
             case RUNMODE_AFP_DEV:
-            case RUNMODE_PFRING:
                 nlive = LiveGetDeviceNameCount();
                 for (lthread = 0; lthread < nlive; lthread++) {
                     const char *live_dev = LiveGetDeviceNameName(lthread);
@@ -2136,14 +2071,6 @@ static int PostDeviceFinalizedSetup(SCInstance *suri)
     if (suri->run_mode == RUNMODE_AFP_DEV) {
         if (AFPRunModeIsIPS()) {
             SCLogInfo("AF_PACKET: Setting IPS mode");
-            EngineModeSetIPS();
-        }
-    }
-#endif
-#ifdef HAVE_NETMAP
-    if (suri->run_mode == RUNMODE_NETMAP) {
-        if (NetmapRunModeIsIPS()) {
-            SCLogInfo("Netmap: Setting IPS mode");
             EngineModeSetIPS();
         }
     }

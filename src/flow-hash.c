@@ -441,6 +441,19 @@ static inline Flow *FlowSpareSync(ThreadVars *tv, FlowLookupStruct *fls,
         f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
         spare_sync = true;
     }
+
+    if (spare_sync) {
+        if (f != NULL) {
+            StatsAddUI64(tv, fls->dtv->counter_flow_spare_sync_avg, fls->spare_queue.len+1);
+            if (fls->spare_queue.len < 99) {
+                StatsIncr(tv, fls->dtv->counter_flow_spare_sync_incomplete);
+            }
+        } else if (fls->spare_queue.len == 0) {
+            StatsIncr(tv, fls->dtv->counter_flow_spare_sync_empty);
+        }
+        StatsIncr(tv, fls->dtv->counter_flow_spare_sync);
+    }
+
     return f;
 }
 

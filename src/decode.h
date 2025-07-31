@@ -34,11 +34,6 @@
 #include "decode-events.h"
 #include "flow-worker.h"
 
-#ifdef HAVE_NAPATECH
-#include "util-napatech.h"
-#endif /* HAVE_NAPATECH */
-
-
 typedef enum {
     CHECKSUM_VALIDATION_DISABLE,
     CHECKSUM_VALIDATION_ENABLE,

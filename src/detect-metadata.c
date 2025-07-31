@@ -102,13 +102,6 @@ static const char *DetectMedatataHashAdd(DetectEngineCtx *de_ctx, const char *st
     return NULL;
 }
 
-static int SortHelper(const void *a, const void *b)
-{
-    const DetectMetadata *ma = *(const DetectMetadata **)a;
-    const DetectMetadata *mb = *(const DetectMetadata **)b;
-    return strcasecmp(ma->key, mb->key);
-}
-
 static int DetectMetadataParse(DetectEngineCtx *de_ctx, Signature *s, const char *metadatastr)
 {
     DetectMetadata *head = s->metadata ? s->metadata->list : NULL;

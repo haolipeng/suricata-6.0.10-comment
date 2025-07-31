@@ -100,7 +100,6 @@ void StreamTcpInitConfig(char);
 int StreamTcpGetFlowState(void *);
 void StreamTcpSetOSPolicy(TcpStream*, Packet*);
 
-static int StreamTcpValidateTimestamp(TcpSession * , Packet *);
 static int StreamTcpValidateRst(TcpSession * , Packet *);
 static inline int StreamTcpValidateAck(TcpSession *ssn, TcpStream *, Packet *);
 static int StreamTcpStateDispatch(ThreadVars *tv, Packet *p,
@@ -438,8 +437,6 @@ void StreamTcpInitConfig(char quiet)
 
     const char *temp_stream_inline_str;
     if (ConfGetValue("stream.inline", &temp_stream_inline_str) == 1) {
-        int inl = 0;
-
         /* checking for "auto" and falling back to boolean to provide
          * backward compatibility */
         if (strcmp(temp_stream_inline_str, "auto") == 0) {
@@ -4683,151 +4680,6 @@ static int StreamTcpValidateRst(TcpSession *ssn, Packet *p)
     return 0;
 }
 
-/**
- *  \brief Function to check the validity of the received timestamp based on
- *         the target OS of the given stream.
- *
- *  It's passive except for:
- *  1. it sets the os policy on the stream if necessary
- *  2. it sets an event in the packet if necessary
- *
- *  \param ssn TCP session to which the given packet belongs
- *  \param p Packet which has to be checked for its validity
- *
- *  \retval 1 if the timestamp is valid
- *  \retval 0 if the timestamp is invalid
- */
-static int StreamTcpValidateTimestamp (TcpSession *ssn, Packet *p)
-{
-    SCEnter();
-
-    TcpStream *sender_stream;
-    TcpStream *receiver_stream;
-    uint8_t ret = 1;
-    uint8_t check_ts = 1;
-
-    if (PKT_IS_TOSERVER(p)) {
-        sender_stream = &ssn->client;
-        receiver_stream = &ssn->server;
-    } else {
-        sender_stream = &ssn->server;
-        receiver_stream = &ssn->client;
-    }
-
-    /* Set up the os_policy to be used in validating the timestamps based on
-       the target system */
-    if (receiver_stream->os_policy == 0) {
-        StreamTcpSetOSPolicy(receiver_stream, p);
-    }
-
-    if (TCP_HAS_TS(p)) {
-        uint32_t ts = TCP_GET_TSVAL(p);
-        uint32_t last_pkt_ts = sender_stream->last_pkt_ts;
-        uint32_t last_ts = sender_stream->last_ts;
-
-        if (sender_stream->flags & STREAMTCP_STREAM_FLAG_ZERO_TIMESTAMP) {
-            /* The 3whs used the timestamp with 0 value. */
-            switch (receiver_stream->os_policy) {
-                case OS_POLICY_LINUX:
-                case OS_POLICY_WINDOWS2K3:
-                    /* Linux and windows 2003 does not allow the use of 0 as
-                     * timestamp in the 3whs. */
-                    check_ts = 0;
-                    break;
-
-                case OS_POLICY_OLD_LINUX:
-                case OS_POLICY_WINDOWS:
-                case OS_POLICY_VISTA:
-                    if (SEQ_EQ(sender_stream->next_seq, TCP_GET_SEQ(p))) {
-                        last_ts = ts;
-                        check_ts = 0; /*next packet will be checked for validity
-                                        and stream TS has been updated with this
-                                        one.*/
-                    }
-                    break;
-            }
-        }
-
-        if (receiver_stream->os_policy == OS_POLICY_HPUX11) {
-            /* HPUX11 igoners the timestamp of out of order packets */
-            if (!SEQ_EQ(sender_stream->next_seq, TCP_GET_SEQ(p)))
-                check_ts = 0;
-        }
-
-        if (ts == 0) {
-            switch (receiver_stream->os_policy) {
-                case OS_POLICY_OLD_LINUX:
-                case OS_POLICY_WINDOWS:
-                case OS_POLICY_WINDOWS2K3:
-                case OS_POLICY_VISTA:
-                case OS_POLICY_SOLARIS:
-                    /* Old Linux and windows allowed packet with 0 timestamp. */
-                    break;
-                default:
-                    /* other OS simply drop the pakcet with 0 timestamp, when
-                     * 3whs has valid timestamp*/
-                    goto invalid;
-            }
-        }
-
-        if (check_ts) {
-            int32_t result = 0;
-
-            SCLogDebug("ts %"PRIu32", last_ts %"PRIu32"", ts, last_ts);
-
-            if (receiver_stream->os_policy == OS_POLICY_LINUX) {
-                /* Linux accepts TS which are off by one.*/
-                result = (int32_t) ((ts - last_ts) + 1);
-            } else {
-                result = (int32_t) (ts - last_ts);
-            }
-
-            SCLogDebug("result %"PRIi32", p->ts.tv_sec %"PRIuMAX"", result, (uintmax_t)p->ts.tv_sec);
-
-            if (last_pkt_ts == 0 &&
-                    (ssn->flags & STREAMTCP_FLAG_MIDSTREAM))
-            {
-                last_pkt_ts = p->ts.tv_sec;
-            }
-
-            if (result < 0) {
-                SCLogDebug("timestamp is not valid last_ts "
-                           "%" PRIu32 " p->tcpvars->ts %" PRIu32 " result "
-                           "%" PRId32 "", last_ts, ts, result);
-                /* candidate for rejection */
-                ret = 0;
-            } else if ((sender_stream->last_ts != 0) &&
-                        (((uint32_t) p->ts.tv_sec) >
-                            last_pkt_ts + PAWS_24DAYS))
-            {
-                SCLogDebug("packet is not valid last_pkt_ts "
-                           "%" PRIu32 " p->ts.tv_sec %" PRIu32 "",
-                            last_pkt_ts, (uint32_t) p->ts.tv_sec);
-                /* candidate for rejection */
-                ret = 0;
-            }
-
-            if (ret == 0) {
-                /* if the timestamp of packet is not valid then, check if the
-                 * current stream timestamp is not so old. if so then we need to
-                 * accept the packet and update the stream->last_ts (RFC 1323)*/
-                if ((SEQ_EQ(sender_stream->next_seq, TCP_GET_SEQ(p))) &&
-                        (((uint32_t) p->ts.tv_sec > (last_pkt_ts + PAWS_24DAYS))))
-                {
-                    SCLogDebug("timestamp considered valid anyway");
-                } else {
-                    goto invalid;
-                }
-            }
-        }
-    }
-
-    SCReturnInt(1);
-
-invalid:
-    StreamTcpSetEvent(p, STREAM_PKT_INVALID_TIMESTAMP);
-    SCReturnInt(0);
-}
 /**
  *  \brief  Function to test the received ACK values against the stream window
  *          and previous ack value. ACK values should be higher than previous

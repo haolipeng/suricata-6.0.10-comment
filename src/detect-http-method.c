@@ -70,9 +70,6 @@ static bool DetectHttpMethodValidateCallback(const Signature *s, const char **si
 static InspectionBuffer *GetData(DetectEngineThreadCtx *det_ctx,
         const DetectEngineTransforms *transforms, Flow *_f,
         const uint8_t _flow_flags, void *txv, const int list_id);
-static InspectionBuffer *GetData2(DetectEngineThreadCtx *det_ctx,
-        const DetectEngineTransforms *transforms, Flow *_f, const uint8_t _flow_flags, void *txv,
-        const int list_id);
 
 /**
  * \brief Registration function for keyword: http_method
@@ -205,27 +202,6 @@ static InspectionBuffer *GetData(DetectEngineThreadCtx *det_ctx,
         const uint8_t *data = bstr_ptr(tx->request_method);
 
         InspectionBufferSetup(det_ctx, list_id, buffer, data, data_len);
-        InspectionBufferApplyTransforms(buffer, transforms);
-    }
-
-    return buffer;
-}
-
-static InspectionBuffer *GetData2(DetectEngineThreadCtx *det_ctx,
-        const DetectEngineTransforms *transforms, Flow *_f, const uint8_t _flow_flags, void *txv,
-        const int list_id)
-{
-    InspectionBuffer *buffer = InspectionBufferGet(det_ctx, list_id);
-    if (buffer->inspect == NULL) {
-        uint32_t b_len = 0;
-        const uint8_t *b = NULL;
-
-/*         if (rs_http2_tx_get_method(txv, &b, &b_len) != 1)
-            return NULL; */
-        if (b == NULL || b_len == 0)
-            return NULL;
-
-        InspectionBufferSetup(det_ctx, list_id, buffer, b, b_len);
         InspectionBufferApplyTransforms(buffer, transforms);
     }
 

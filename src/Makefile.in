@@ -206,16 +206,16 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-pkt-data.$(OBJEXT) detect-pktvar.$(OBJEXT) \
 	detect-prefilter.$(OBJEXT) detect-priority.$(OBJEXT) \
 	detect-rawbytes.$(OBJEXT) detect-reference.$(OBJEXT) \
-	detect-replace.$(OBJEXT) detect-rev.$(OBJEXT) \
-	detect-rpc.$(OBJEXT) detect-sameip.$(OBJEXT) \
-	detect-sid.$(OBJEXT) detect-stream_size.$(OBJEXT) \
-	detect-tag.$(OBJEXT) detect-target.$(OBJEXT) \
-	detect-tcp-ack.$(OBJEXT) detect-tcp-flags.$(OBJEXT) \
-	detect-tcp-seq.$(OBJEXT) detect-tcp-window.$(OBJEXT) \
-	detect-tcphdr.$(OBJEXT) detect-udphdr.$(OBJEXT) \
-	detect-tcpmss.$(OBJEXT) detect-template.$(OBJEXT) \
-	detect-template2.$(OBJEXT) detect-template-buffer.$(OBJEXT) \
-	detect-threshold.$(OBJEXT) detect-tos.$(OBJEXT) \
+	detect-rev.$(OBJEXT) detect-rpc.$(OBJEXT) \
+	detect-sameip.$(OBJEXT) detect-sid.$(OBJEXT) \
+	detect-stream_size.$(OBJEXT) detect-tag.$(OBJEXT) \
+	detect-target.$(OBJEXT) detect-tcp-ack.$(OBJEXT) \
+	detect-tcp-flags.$(OBJEXT) detect-tcp-seq.$(OBJEXT) \
+	detect-tcp-window.$(OBJEXT) detect-tcphdr.$(OBJEXT) \
+	detect-udphdr.$(OBJEXT) detect-tcpmss.$(OBJEXT) \
+	detect-template.$(OBJEXT) detect-template2.$(OBJEXT) \
+	detect-template-buffer.$(OBJEXT) detect-threshold.$(OBJEXT) \
+	detect-tos.$(OBJEXT) \
 	detect-transform-compress-whitespace.$(OBJEXT) \
 	detect-transform-strip-whitespace.$(OBJEXT) \
 	detect-transform-md5.$(OBJEXT) detect-transform-sha1.$(OBJEXT) \
@@ -280,8 +280,7 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	util-memrchr.$(OBJEXT) util-misc.$(OBJEXT) \
 	util-mpm-ac-bs.$(OBJEXT) util-mpm-ac.$(OBJEXT) \
 	util-mpm-ac-ks.$(OBJEXT) util-mpm-ac-ks-small.$(OBJEXT) \
-	util-mpm-hs.$(OBJEXT) util-mpm.$(OBJEXT) \
-	util-napatech.$(OBJEXT) util-pages.$(OBJEXT) \
+	util-mpm-hs.$(OBJEXT) util-mpm.$(OBJEXT) util-pages.$(OBJEXT) \
 	util-path.$(OBJEXT) util-pidfile.$(OBJEXT) \
 	util-plugin.$(OBJEXT) util-pool.$(OBJEXT) \
 	util-pool-thread.$(OBJEXT) util-prefilter.$(OBJEXT) \
@@ -501,14 +500,13 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-pcre.Po ./$(DEPDIR)/detect-pkt-data.Po \
 	./$(DEPDIR)/detect-pktvar.Po ./$(DEPDIR)/detect-prefilter.Po \
 	./$(DEPDIR)/detect-priority.Po ./$(DEPDIR)/detect-rawbytes.Po \
-	./$(DEPDIR)/detect-reference.Po ./$(DEPDIR)/detect-replace.Po \
-	./$(DEPDIR)/detect-rev.Po ./$(DEPDIR)/detect-rpc.Po \
-	./$(DEPDIR)/detect-sameip.Po ./$(DEPDIR)/detect-sid.Po \
-	./$(DEPDIR)/detect-stream_size.Po ./$(DEPDIR)/detect-tag.Po \
-	./$(DEPDIR)/detect-target.Po ./$(DEPDIR)/detect-tcp-ack.Po \
-	./$(DEPDIR)/detect-tcp-flags.Po ./$(DEPDIR)/detect-tcp-seq.Po \
-	./$(DEPDIR)/detect-tcp-window.Po ./$(DEPDIR)/detect-tcphdr.Po \
-	./$(DEPDIR)/detect-tcpmss.Po \
+	./$(DEPDIR)/detect-reference.Po ./$(DEPDIR)/detect-rev.Po \
+	./$(DEPDIR)/detect-rpc.Po ./$(DEPDIR)/detect-sameip.Po \
+	./$(DEPDIR)/detect-sid.Po ./$(DEPDIR)/detect-stream_size.Po \
+	./$(DEPDIR)/detect-tag.Po ./$(DEPDIR)/detect-target.Po \
+	./$(DEPDIR)/detect-tcp-ack.Po ./$(DEPDIR)/detect-tcp-flags.Po \
+	./$(DEPDIR)/detect-tcp-seq.Po ./$(DEPDIR)/detect-tcp-window.Po \
+	./$(DEPDIR)/detect-tcphdr.Po ./$(DEPDIR)/detect-tcpmss.Po \
 	./$(DEPDIR)/detect-template-buffer.Po \
 	./$(DEPDIR)/detect-template.Po ./$(DEPDIR)/detect-template2.Po \
 	./$(DEPDIR)/detect-threshold.Po ./$(DEPDIR)/detect-tos.Po \
@@ -592,11 +590,11 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/util-mpm-ac-ks-small.Po \
 	./$(DEPDIR)/util-mpm-ac-ks.Po ./$(DEPDIR)/util-mpm-ac.Po \
 	./$(DEPDIR)/util-mpm-hs.Po ./$(DEPDIR)/util-mpm.Po \
-	./$(DEPDIR)/util-napatech.Po ./$(DEPDIR)/util-pages.Po \
-	./$(DEPDIR)/util-path.Po ./$(DEPDIR)/util-pidfile.Po \
-	./$(DEPDIR)/util-plugin.Po ./$(DEPDIR)/util-pool-thread.Po \
-	./$(DEPDIR)/util-pool.Po ./$(DEPDIR)/util-prefilter.Po \
-	./$(DEPDIR)/util-print.Po ./$(DEPDIR)/util-privs.Po \
+	./$(DEPDIR)/util-pages.Po ./$(DEPDIR)/util-path.Po \
+	./$(DEPDIR)/util-pidfile.Po ./$(DEPDIR)/util-plugin.Po \
+	./$(DEPDIR)/util-pool-thread.Po ./$(DEPDIR)/util-pool.Po \
+	./$(DEPDIR)/util-prefilter.Po ./$(DEPDIR)/util-print.Po \
+	./$(DEPDIR)/util-privs.Po \
 	./$(DEPDIR)/util-profiling-keywords.Po \
 	./$(DEPDIR)/util-profiling-locks.Po \
 	./$(DEPDIR)/util-profiling-prefilter.Po \
@@ -1084,7 +1082,6 @@ detect-prefilter.c detect-prefilter.h \
 detect-priority.c detect-priority.h \
 detect-rawbytes.c detect-rawbytes.h \
 detect-reference.c detect-reference.h \
-detect-replace.c detect-replace.h \
 detect-rev.c detect-rev.h \
 detect-rpc.c detect-rpc.h \
 detect-sameip.c detect-sameip.h \
@@ -1240,7 +1237,6 @@ util-mpm-ac-ks.c util-mpm-ac-ks.h \
 util-mpm-ac-ks-small.c \
 util-mpm-hs.c util-mpm-hs.h \
 util-mpm.c util-mpm.h \
-util-napatech.c util-napatech.h \
 util-optimize.h \
 util-pages.c util-pages.h \
 util-path.c util-path.h \
@@ -1714,7 +1710,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-priority.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-rawbytes.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-reference.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-replace.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-rev.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-rpc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-sameip.Po@am__quote@ # am--include-marker
@@ -1870,7 +1865,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-mpm-ac.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-mpm-hs.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-mpm.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-napatech.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-pages.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-path.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util-pidfile.Po@am__quote@ # am--include-marker
@@ -2263,7 +2257,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-priority.Po
 	-rm -f ./$(DEPDIR)/detect-rawbytes.Po
 	-rm -f ./$(DEPDIR)/detect-reference.Po
-	-rm -f ./$(DEPDIR)/detect-replace.Po
 	-rm -f ./$(DEPDIR)/detect-rev.Po
 	-rm -f ./$(DEPDIR)/detect-rpc.Po
 	-rm -f ./$(DEPDIR)/detect-sameip.Po
@@ -2419,7 +2412,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/util-mpm-ac.Po
 	-rm -f ./$(DEPDIR)/util-mpm-hs.Po
 	-rm -f ./$(DEPDIR)/util-mpm.Po
-	-rm -f ./$(DEPDIR)/util-napatech.Po
 	-rm -f ./$(DEPDIR)/util-pages.Po
 	-rm -f ./$(DEPDIR)/util-path.Po
 	-rm -f ./$(DEPDIR)/util-pidfile.Po
@@ -2647,7 +2639,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-priority.Po
 	-rm -f ./$(DEPDIR)/detect-rawbytes.Po
 	-rm -f ./$(DEPDIR)/detect-reference.Po
-	-rm -f ./$(DEPDIR)/detect-replace.Po
 	-rm -f ./$(DEPDIR)/detect-rev.Po
 	-rm -f ./$(DEPDIR)/detect-rpc.Po
 	-rm -f ./$(DEPDIR)/detect-sameip.Po
@@ -2803,7 +2794,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/util-mpm-ac.Po
 	-rm -f ./$(DEPDIR)/util-mpm-hs.Po
 	-rm -f ./$(DEPDIR)/util-mpm.Po
-	-rm -f ./$(DEPDIR)/util-napatech.Po
 	-rm -f ./$(DEPDIR)/util-pages.Po
 	-rm -f ./$(DEPDIR)/util-path.Po
 	-rm -f ./$(DEPDIR)/util-pidfile.Po

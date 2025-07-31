@@ -111,42 +111,14 @@ static const char *RunModeTranslateModeToName(int runmode)
             return "PCAP_DEV";
         case RUNMODE_PCAP_FILE:
             return "PCAP_FILE";
-        case RUNMODE_PFRING:
-#ifdef HAVE_PFRING
-            return "PFRING";
-#else
-            return "PFRING(DISABLED)";
-#endif
         case RUNMODE_PLUGIN:
             return "PLUGIN";
-        case RUNMODE_NFLOG:
-            return "NFLOG";
-        case RUNMODE_IPFW:
-            return "IPFW";
-        case RUNMODE_ERF_FILE:
-            return "ERF_FILE";
-        case RUNMODE_DAG:
-            return "ERF_DAG";
-        case RUNMODE_NAPATECH:
-            return "NAPATECH";
         case RUNMODE_UNITTEST:
             return "UNITTEST";
         case RUNMODE_AFP_DEV:
             return "AF_PACKET_DEV";
-        case RUNMODE_NETMAP:
-#ifdef HAVE_NETMAP
-            return "NETMAP";
-#else
-            return "NETMAP(DISABLED)";
-#endif
         case RUNMODE_UNIX_SOCKET:
             return "UNIX_SOCKET";
-        case RUNMODE_WINDIVERT:
-#ifdef WINDIVERT
-            return "WINDIVERT";
-#else
-            return "WINDIVERT(DISABLED)";
-#endif
         default:
             FatalError(SC_ERR_UNKNOWN_RUN_MODE, "Unknown runtime mode. Aborting");
     }
@@ -283,11 +255,6 @@ void RunModeDispatch(int runmode, const char *custom_mode,
             case RUNMODE_PCAP_FILE:
                 custom_mode = RunModeFilePcapGetDefaultMode();
                 break;
-#ifdef HAVE_PFRING
-            case RUNMODE_PFRING:
-                custom_mode = RunModeIdsPfringGetDefaultMode();
-                break;
-#endif
             case RUNMODE_PLUGIN: {
 #ifdef HAVE_PLUGINS
                 SCCapturePlugin *plugin = SCPluginFindCaptureByName(capture_plugin_name);
@@ -305,11 +272,6 @@ void RunModeDispatch(int runmode, const char *custom_mode,
             case RUNMODE_UNIX_SOCKET:
                 custom_mode = RunModeUnixSocketGetDefaultMode();
                 break;
-#ifdef WINDIVERT
-            case RUNMODE_WINDIVERT:
-                custom_mode = RunModeIpsWinDivertGetDefaultMode();
-                break;
-#endif
             default:
                 FatalError(SC_ERR_FATAL, "Unknown runtime mode. Aborting");
         }
@@ -466,7 +428,6 @@ bool IsRunModeSystem(enum RunModes run_mode_to_check)
 {
     switch (run_mode_to_check) {
         case RUNMODE_PCAP_FILE:
-        case RUNMODE_ERF_FILE:
         case RUNMODE_ENGINE_ANALYSIS:
             return false;
             break;
@@ -480,7 +441,6 @@ bool IsRunModeOffline(enum RunModes run_mode_to_check)
     switch(run_mode_to_check) {
         case RUNMODE_CONF_TEST:
         case RUNMODE_PCAP_FILE:
-        case RUNMODE_ERF_FILE:
         case RUNMODE_ENGINE_ANALYSIS:
         case RUNMODE_UNIX_SOCKET:
             return true;

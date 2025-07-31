@@ -54,7 +54,6 @@
 
 #include "detect-filestore.h"
 #include "detect-flowvar.h"
-#include "detect-replace.h"
 
 #include "util-validate.h"
 #include "util-detect.h"
@@ -790,7 +789,6 @@ static inline void DetectRulePacketRules(
         AlertQueueAppend(det_ctx, s, p, 0, alert_flags);
 next:
         DetectVarProcessList(det_ctx, pflow, p);
-        DetectReplaceFree(det_ctx);
         RULE_PROFILING_END(det_ctx, s, smatch, p);
 
         det_ctx->flags = 0;
