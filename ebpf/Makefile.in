@@ -354,9 +354,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign ebpf/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu ebpf/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign ebpf/Makefile
+	  $(AUTOMAKE) --gnu ebpf/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

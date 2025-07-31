@@ -669,14 +669,8 @@ static void PrintBuildInfo(void)
 #ifdef HAVE_PCAP_SET_BUFF
     strlcat(features, "PCAP_SET_BUFF ", sizeof(features));
 #endif
-#ifdef HAVE_PFRING
-    strlcat(features, "PF_RING ", sizeof(features));
-#endif
 #ifdef HAVE_AF_PACKET
     strlcat(features, "AF_PACKET ", sizeof(features));
-#endif
-#ifdef HAVE_NETMAP
-    strlcat(features, "NETMAP ", sizeof(features));
 #endif
 #ifdef HAVE_PACKET_FANOUT
     strlcat(features, "HAVE_PACKET_FANOUT ", sizeof(features));
@@ -1457,34 +1451,6 @@ static TmEcode ParseCommandLine(int argc, char** argv, SCInstance *suri)
                 return TM_ECODE_FAILED;
             }
 #else /* not afpacket */
-            /* warn user if netmap or pf-ring are available */
-#if defined HAVE_PFRING || HAVE_NETMAP
-            int i = 0;
-#ifdef HAVE_PFRING
-            i++;
-#endif
-#ifdef HAVE_NETMAP
-            i++;
-#endif
-            SCLogWarning(SC_WARN_FASTER_CAPTURE_AVAILABLE, "faster capture "
-                    "option%s %s available:"
-#ifdef HAVE_PFRING
-                    " PF_RING (--pfring-int=%s)"
-#endif
-#ifdef HAVE_NETMAP
-                    " NETMAP (--netmap=%s)"
-#endif
-                    ". Use --pcap=%s to suppress this warning",
-                    i == 1 ? "" : "s", i == 1 ? "is" : "are"
-#ifdef HAVE_PFRING
-                    , optarg
-#endif
-#ifdef HAVE_NETMAP
-                    , optarg
-#endif
-                    , optarg
-                    );
-#endif /* have faster methods */
             if (ParseCommandLinePcapLive(suri, optarg) != TM_ECODE_OK) {
                 return TM_ECODE_FAILED;
             }

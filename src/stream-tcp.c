@@ -937,19 +937,6 @@ static int StreamTcpPacketStateNone(ThreadVars *tv, Packet *p,
         STREAMTCP_SET_RA_BASE_SEQ(&ssn->client, ssn->client.isn);
         ssn->client.next_seq = ssn->client.isn + 1;
 
-        /* Set the stream timestamp value, if packet has timestamp option
-         * enabled. */
-        if (TCP_HAS_TS(p)) {
-            ssn->client.last_ts = TCP_GET_TSVAL(p);
-            SCLogDebug("ssn %p: %02x", ssn, ssn->client.last_ts);
-
-            if (ssn->client.last_ts == 0)
-                ssn->client.flags |= STREAMTCP_STREAM_FLAG_ZERO_TIMESTAMP;
-
-            ssn->client.last_pkt_ts = p->ts.tv_sec;
-            ssn->client.flags |= STREAMTCP_STREAM_FLAG_TIMESTAMP;
-        }
-
         ssn->server.window = TCP_GET_WINDOW(p);
         if (TCP_HAS_WSCALE(p)) {
             ssn->flags |= STREAMTCP_FLAG_SERVER_WSCALE;
@@ -1251,21 +1238,12 @@ static inline bool StateSynSentValidateTimestamp(TcpSession *ssn, Packet *p)
 
     TcpStream *receiver_stream = &ssn->client;
     uint32_t ts_echo = TCP_GET_TSECR(p);
-    if ((receiver_stream->flags & STREAMTCP_STREAM_FLAG_TIMESTAMP) != 0) {
-        if (receiver_stream->last_ts != 0 && ts_echo != 0 &&
-            ts_echo != receiver_stream->last_ts)
-        {
-            SCLogDebug("ssn %p: BAD TSECR echo %u recv %u", ssn,
-                    ts_echo, receiver_stream->last_ts);
-            return false;
-        }
-    } else {
-        if (receiver_stream->last_ts == 0 && ts_echo != 0) {
-            SCLogDebug("ssn %p: BAD TSECR echo %u recv %u", ssn,
-                    ts_echo, receiver_stream->last_ts);
-            return false;
-        }
+    if (receiver_stream->last_ts == 0 && ts_echo != 0) {
+        SCLogDebug("ssn %p: BAD TSECR echo %u recv %u", ssn,
+                ts_echo, receiver_stream->last_ts);
+        return false;
     }
+    
     return true;
 }
 
@@ -1369,7 +1347,7 @@ static int StreamTcpPacketStateSynSent(ThreadVars *tv, Packet *p,
              * to avoid dropping any SYN+ACK packets that respond to a retransmitted SYN
              * with an updated timestamp in StateSynSentValidateTimestamp.
              */
-            if ((ssn->client.flags & STREAMTCP_STREAM_FLAG_TIMESTAMP) && TCP_HAS_TS(p)) {
+            /* if ((ssn->client.flags & STREAMTCP_STREAM_FLAG_TIMESTAMP) && TCP_HAS_TS(p)) {
                 uint32_t ts_val = TCP_GET_TSVAL(p);
 
                 // Check whether packets have been received in the correct order (only ever update)
@@ -1380,7 +1358,7 @@ static int StreamTcpPacketStateSynSent(ThreadVars *tv, Packet *p,
 
                 SCLogDebug("ssn %p: Retransmitted SYN. Updated timestamp from packet %" PRIu64, ssn,
                         p->pcap_cnt);
-            }
+            } */
         }
 
         /** \todo check if it's correct or set event */

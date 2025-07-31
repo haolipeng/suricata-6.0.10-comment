@@ -461,30 +461,9 @@ typedef struct Packet_
     struct timeval ts;
 
     union {
-        /* nfq stuff */
-#ifdef HAVE_NFLOG
-        NFLOGPacketVars nflog_v;
-#endif /* HAVE_NFLOG */
-#ifdef NFQ
-        NFQPacketVars nfq_v;
-#endif /* NFQ */
-#ifdef IPFW
-        IPFWPacketVars ipfw_v;
-#endif /* IPFW */
 #ifdef AF_PACKET
         AFPPacketVars afp_v;
 #endif
-#ifdef HAVE_NETMAP
-        NetmapPacketVars netmap_v;
-#endif
-#ifdef HAVE_PFRING
-#ifdef HAVE_PF_RING_FLOW_OFFLOAD
-        PfringPacketVars pfring_v;
-#endif
-#endif
-#ifdef WINDIVERT
-        WinDivertPacketVars windivert_v;
-#endif /* WINDIVERT */
 
         /* A chunk of memory that a plugin can use for its packet vars. */
         uint8_t plugin_v[PLUGIN_VAR_SIZE];

@@ -25,6 +25,8 @@ src/*.rej
 src/*.orig
 src/*.plist/*
 src/TAGS
+src/suricata
+build/*
 stamp-h1
 test.sh
 .vscode/*
