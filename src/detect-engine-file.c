@@ -30,8 +30,6 @@
 #include "detect-parse.h"
 #include "detect-engine-state.h"
 
-#include "detect-filestore.h"
-
 #include "detect-engine-file.h"
 
 #include "stream-tcp.h"
@@ -166,23 +164,7 @@ static int DetectFileInspect(ThreadVars *tv, DetectEngineThreadCtx *det_ctx,
              * maybe we have more that can :) */
         }
     } else {
-        /* if we have a filestore sm with a scope > file (so tx, ssn) we
-         * run it here */
-        if (smd != NULL && smd->is_last && smd->type == DETECT_FILESTORE &&
-                smd->ctx != NULL)
-        {
-            DetectFilestoreData *fd = (DetectFilestoreData *)smd->ctx;
-            if (fd->scope > FILESTORE_SCOPE_DEFAULT) {
-                KEYWORD_PROFILING_START;
-                match = sigmatch_table[smd->type].
-                    FileMatch(det_ctx, f, flags, /* no file */NULL, s, smd->ctx);
-                KEYWORD_PROFILING_END(det_ctx, smd->type, (match > 0));
-
-                if (match == 1) {
-                    r = DETECT_ENGINE_INSPECT_SIG_MATCH;
-                }
-            }
-        }
+        
     }
 
     if (r == DETECT_ENGINE_INSPECT_SIG_NO_MATCH && store_r == DETECT_ENGINE_INSPECT_SIG_MATCH) {

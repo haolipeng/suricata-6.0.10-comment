@@ -104,16 +104,6 @@ detect-engine-tag.c detect-engine-tag.h \
 detect-engine-threshold.c detect-engine-threshold.h \
 detect-engine-uint.c detect-engine-uint.h \
 detect-fast-pattern.c detect-fast-pattern.h \
-detect-file-data.c detect-file-data.h \
-detect-file-hash-common.c detect-file-hash-common.h \
-detect-fileext.c detect-fileext.h \
-detect-filemagic.c detect-filemagic.h \
-detect-filemd5.c detect-filemd5.h \
-detect-filesha1.c detect-filesha1.h \
-detect-filesha256.c detect-filesha256.h \
-detect-filename.c detect-filename.h \
-detect-filesize.c detect-filesize.h \
-detect-filestore.c detect-filestore.h \
 detect-flowbits.c detect-flowbits.h \
 detect-flow.c detect-flow.h \
 detect-flowint.c detect-flowint.h \
@@ -165,14 +155,6 @@ detect-template2.c detect-template2.h \
 detect-template-buffer.c detect-template-buffer.h \
 detect-threshold.c detect-threshold.h \
 detect-tos.c detect-tos.h \
-detect-transform-compress-whitespace.c detect-transform-compress-whitespace.h \
-detect-transform-strip-whitespace.c detect-transform-strip-whitespace.h \
-detect-transform-md5.c detect-transform-md5.h \
-detect-transform-sha1.c detect-transform-sha1.h \
-detect-transform-sha256.c detect-transform-sha256.h \
-detect-transform-dotprefix.c detect-transform-dotprefix.h \
-detect-transform-pcrexform.c detect-transform-pcrexform.h \
-detect-transform-urldecode.c detect-transform-urldecode.h \
 detect-ttl.c detect-ttl.h \
 detect-uricontent.c detect-uricontent.h \
 detect-urilen.c detect-urilen.h \
@@ -356,7 +338,6 @@ EXTRA_DIST = \
 	tests/detect.c \
 	tests/detect-engine-alert.c \
 	tests/detect-engine-content-inspection.c \
-	tests/detect-file-data.c \
 	tests/detect-http2.c \
 	tests/detect-http-client-body.c \
 	tests/detect-http-cookie.c \

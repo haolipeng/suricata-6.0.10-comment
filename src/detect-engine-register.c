@@ -94,14 +94,6 @@
 #include "detect-isdataat.h"
 #include "detect-id.h"
 #include "detect-rpc.h"
-#include "detect-filename.h"
-#include "detect-fileext.h"
-#include "detect-filestore.h"
-#include "detect-filemagic.h"
-#include "detect-filemd5.h"
-#include "detect-filesha1.h"
-#include "detect-filesha256.h"
-#include "detect-filesize.h"
 #include "detect-dataset.h"
 #include "detect-datarep.h"
 #include "detect-dsize.h"
@@ -121,7 +113,6 @@
 #include "detect-bsize.h"
 #include "detect-detection-filter.h"
 #include "detect-byte-extract.h"
-#include "detect-file-data.h"
 #include "detect-pkt-data.h"
 #include "detect-tos.h"
 #include "detect-app-layer-event.h"
@@ -140,15 +131,6 @@
 #include "detect-template-buffer.h"
 #include "detect-bypass.h"
 #include "detect-engine-content-inspection.h"
-
-#include "detect-transform-compress-whitespace.h"
-#include "detect-transform-strip-whitespace.h"
-#include "detect-transform-md5.h"
-#include "detect-transform-sha1.h"
-#include "detect-transform-sha256.h"
-#include "detect-transform-dotprefix.h"
-#include "detect-transform-pcrexform.h"
-#include "detect-transform-urldecode.h"
 
 #include "util-rule-vars.h"
 
@@ -348,15 +330,6 @@ void SigTableSetup(void)
      * state keeping */
     DetectHttpMethodRegister();
 
-    DetectFilenameRegister();
-    DetectFileextRegister();
-    DetectFilestoreRegister();
-    DetectFilemagicRegister();
-    DetectFileMd5Register();
-    DetectFileSha1Register();
-    DetectFileSha256Register();
-    DetectFilesizeRegister();
-
     DetectDnsQueryRegister();
 
     DetectAppLayerEventRegister();
@@ -406,7 +379,6 @@ void SigTableSetup(void)
     DetectBsizeRegister();
     DetectDetectionFilterRegister();
     DetectByteExtractRegister();
-    DetectFiledataRegister();
     DetectPktDataRegister();
     DetectIPRepRegister();
     DetectAppLayerProtocolRegister();
@@ -423,15 +395,6 @@ void SigTableSetup(void)
     DetectTemplateBufferRegister();
     DetectBypassRegister();
     DetectConfigRegister();
-
-    DetectTransformCompressWhitespaceRegister();
-    DetectTransformStripWhitespaceRegister();
-    DetectTransformMd5Register();
-    DetectTransformSha1Register();
-    DetectTransformSha256Register();
-    DetectTransformDotPrefixRegister();
-    DetectTransformPcrexformRegister();
-    DetectTransformUrlDecodeRegister();
 
     /* close keyword registration */
     DetectBufferTypeCloseRegistration();

@@ -588,9 +588,6 @@ typedef struct Signature_ {
      * their inspect engines. */
     SigMatchData *sm_arrays[DETECT_SM_LIST_MAX];
 
-    /* memory is still owned by the sm_lists/sm_arrays entry */
-    const struct DetectFilestoreData_ *filestore_ctx;
-
     char *msg;
 
     /** classification message */

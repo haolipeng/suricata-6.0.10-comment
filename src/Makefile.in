@@ -185,11 +185,6 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-engine-sigorder.$(OBJEXT) detect-engine-state.$(OBJEXT) \
 	detect-engine-tag.$(OBJEXT) detect-engine-threshold.$(OBJEXT) \
 	detect-engine-uint.$(OBJEXT) detect-fast-pattern.$(OBJEXT) \
-	detect-file-data.$(OBJEXT) detect-file-hash-common.$(OBJEXT) \
-	detect-fileext.$(OBJEXT) detect-filemagic.$(OBJEXT) \
-	detect-filemd5.$(OBJEXT) detect-filesha1.$(OBJEXT) \
-	detect-filesha256.$(OBJEXT) detect-filename.$(OBJEXT) \
-	detect-filesize.$(OBJEXT) detect-filestore.$(OBJEXT) \
 	detect-flowbits.$(OBJEXT) detect-flow.$(OBJEXT) \
 	detect-flowint.$(OBJEXT) detect-flowvar.$(OBJEXT) \
 	detect-fragbits.$(OBJEXT) detect-fragoffset.$(OBJEXT) \
@@ -215,14 +210,7 @@ am__objects_1 = app-layer.$(OBJEXT) app-layer-detect-proto.$(OBJEXT) \
 	detect-udphdr.$(OBJEXT) detect-tcpmss.$(OBJEXT) \
 	detect-template.$(OBJEXT) detect-template2.$(OBJEXT) \
 	detect-template-buffer.$(OBJEXT) detect-threshold.$(OBJEXT) \
-	detect-tos.$(OBJEXT) \
-	detect-transform-compress-whitespace.$(OBJEXT) \
-	detect-transform-strip-whitespace.$(OBJEXT) \
-	detect-transform-md5.$(OBJEXT) detect-transform-sha1.$(OBJEXT) \
-	detect-transform-sha256.$(OBJEXT) \
-	detect-transform-dotprefix.$(OBJEXT) \
-	detect-transform-pcrexform.$(OBJEXT) \
-	detect-transform-urldecode.$(OBJEXT) detect-ttl.$(OBJEXT) \
+	detect-tos.$(OBJEXT) detect-ttl.$(OBJEXT) \
 	detect-uricontent.$(OBJEXT) detect-urilen.$(OBJEXT) \
 	detect-within.$(OBJEXT) detect-xbits.$(OBJEXT) \
 	device-storage.$(OBJEXT) feature.$(OBJEXT) flow-bit.$(OBJEXT) \
@@ -510,14 +498,6 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-template-buffer.Po \
 	./$(DEPDIR)/detect-template.Po ./$(DEPDIR)/detect-template2.Po \
 	./$(DEPDIR)/detect-threshold.Po ./$(DEPDIR)/detect-tos.Po \
-	./$(DEPDIR)/detect-transform-compress-whitespace.Po \
-	./$(DEPDIR)/detect-transform-dotprefix.Po \
-	./$(DEPDIR)/detect-transform-md5.Po \
-	./$(DEPDIR)/detect-transform-pcrexform.Po \
-	./$(DEPDIR)/detect-transform-sha1.Po \
-	./$(DEPDIR)/detect-transform-sha256.Po \
-	./$(DEPDIR)/detect-transform-strip-whitespace.Po \
-	./$(DEPDIR)/detect-transform-urldecode.Po \
 	./$(DEPDIR)/detect-ttl.Po ./$(DEPDIR)/detect-udphdr.Po \
 	./$(DEPDIR)/detect-uricontent.Po ./$(DEPDIR)/detect-urilen.Po \
 	./$(DEPDIR)/detect-within.Po ./$(DEPDIR)/detect-xbits.Po \
@@ -1040,16 +1020,6 @@ detect-engine-tag.c detect-engine-tag.h \
 detect-engine-threshold.c detect-engine-threshold.h \
 detect-engine-uint.c detect-engine-uint.h \
 detect-fast-pattern.c detect-fast-pattern.h \
-detect-file-data.c detect-file-data.h \
-detect-file-hash-common.c detect-file-hash-common.h \
-detect-fileext.c detect-fileext.h \
-detect-filemagic.c detect-filemagic.h \
-detect-filemd5.c detect-filemd5.h \
-detect-filesha1.c detect-filesha1.h \
-detect-filesha256.c detect-filesha256.h \
-detect-filename.c detect-filename.h \
-detect-filesize.c detect-filesize.h \
-detect-filestore.c detect-filestore.h \
 detect-flowbits.c detect-flowbits.h \
 detect-flow.c detect-flow.h \
 detect-flowint.c detect-flowint.h \
@@ -1101,14 +1071,6 @@ detect-template2.c detect-template2.h \
 detect-template-buffer.c detect-template-buffer.h \
 detect-threshold.c detect-threshold.h \
 detect-tos.c detect-tos.h \
-detect-transform-compress-whitespace.c detect-transform-compress-whitespace.h \
-detect-transform-strip-whitespace.c detect-transform-strip-whitespace.h \
-detect-transform-md5.c detect-transform-md5.h \
-detect-transform-sha1.c detect-transform-sha1.h \
-detect-transform-sha256.c detect-transform-sha256.h \
-detect-transform-dotprefix.c detect-transform-dotprefix.h \
-detect-transform-pcrexform.c detect-transform-pcrexform.h \
-detect-transform-urldecode.c detect-transform-urldecode.h \
 detect-ttl.c detect-ttl.h \
 detect-uricontent.c detect-uricontent.h \
 detect-urilen.c detect-urilen.h \
@@ -1292,7 +1254,6 @@ EXTRA_DIST = \
 	tests/detect.c \
 	tests/detect-engine-alert.c \
 	tests/detect-engine-content-inspection.c \
-	tests/detect-file-data.c \
 	tests/detect-http2.c \
 	tests/detect-http-client-body.c \
 	tests/detect-http-cookie.c \
@@ -1728,14 +1689,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-template2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-threshold.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-tos.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-compress-whitespace.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-dotprefix.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-md5.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-pcrexform.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-sha1.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-sha256.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-strip-whitespace.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-transform-urldecode.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-ttl.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-udphdr.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-uricontent.Po@am__quote@ # am--include-marker
@@ -2215,16 +2168,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-engine-uint.Po
 	-rm -f ./$(DEPDIR)/detect-engine.Po
 	-rm -f ./$(DEPDIR)/detect-fast-pattern.Po
-	-rm -f ./$(DEPDIR)/detect-file-data.Po
-	-rm -f ./$(DEPDIR)/detect-file-hash-common.Po
-	-rm -f ./$(DEPDIR)/detect-fileext.Po
-	-rm -f ./$(DEPDIR)/detect-filemagic.Po
-	-rm -f ./$(DEPDIR)/detect-filemd5.Po
-	-rm -f ./$(DEPDIR)/detect-filename.Po
-	-rm -f ./$(DEPDIR)/detect-filesha1.Po
-	-rm -f ./$(DEPDIR)/detect-filesha256.Po
-	-rm -f ./$(DEPDIR)/detect-filesize.Po
-	-rm -f ./$(DEPDIR)/detect-filestore.Po
 	-rm -f ./$(DEPDIR)/detect-flow.Po
 	-rm -f ./$(DEPDIR)/detect-flowbits.Po
 	-rm -f ./$(DEPDIR)/detect-flowint.Po
@@ -2275,14 +2218,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/detect-template2.Po
 	-rm -f ./$(DEPDIR)/detect-threshold.Po
 	-rm -f ./$(DEPDIR)/detect-tos.Po
-	-rm -f ./$(DEPDIR)/detect-transform-compress-whitespace.Po
-	-rm -f ./$(DEPDIR)/detect-transform-dotprefix.Po
-	-rm -f ./$(DEPDIR)/detect-transform-md5.Po
-	-rm -f ./$(DEPDIR)/detect-transform-pcrexform.Po
-	-rm -f ./$(DEPDIR)/detect-transform-sha1.Po
-	-rm -f ./$(DEPDIR)/detect-transform-sha256.Po
-	-rm -f ./$(DEPDIR)/detect-transform-strip-whitespace.Po
-	-rm -f ./$(DEPDIR)/detect-transform-urldecode.Po
 	-rm -f ./$(DEPDIR)/detect-ttl.Po
 	-rm -f ./$(DEPDIR)/detect-udphdr.Po
 	-rm -f ./$(DEPDIR)/detect-uricontent.Po
@@ -2597,16 +2532,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-engine-uint.Po
 	-rm -f ./$(DEPDIR)/detect-engine.Po
 	-rm -f ./$(DEPDIR)/detect-fast-pattern.Po
-	-rm -f ./$(DEPDIR)/detect-file-data.Po
-	-rm -f ./$(DEPDIR)/detect-file-hash-common.Po
-	-rm -f ./$(DEPDIR)/detect-fileext.Po
-	-rm -f ./$(DEPDIR)/detect-filemagic.Po
-	-rm -f ./$(DEPDIR)/detect-filemd5.Po
-	-rm -f ./$(DEPDIR)/detect-filename.Po
-	-rm -f ./$(DEPDIR)/detect-filesha1.Po
-	-rm -f ./$(DEPDIR)/detect-filesha256.Po
-	-rm -f ./$(DEPDIR)/detect-filesize.Po
-	-rm -f ./$(DEPDIR)/detect-filestore.Po
 	-rm -f ./$(DEPDIR)/detect-flow.Po
 	-rm -f ./$(DEPDIR)/detect-flowbits.Po
 	-rm -f ./$(DEPDIR)/detect-flowint.Po
@@ -2657,14 +2582,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/detect-template2.Po
 	-rm -f ./$(DEPDIR)/detect-threshold.Po
 	-rm -f ./$(DEPDIR)/detect-tos.Po
-	-rm -f ./$(DEPDIR)/detect-transform-compress-whitespace.Po
-	-rm -f ./$(DEPDIR)/detect-transform-dotprefix.Po
-	-rm -f ./$(DEPDIR)/detect-transform-md5.Po
-	-rm -f ./$(DEPDIR)/detect-transform-pcrexform.Po
-	-rm -f ./$(DEPDIR)/detect-transform-sha1.Po
-	-rm -f ./$(DEPDIR)/detect-transform-sha256.Po
-	-rm -f ./$(DEPDIR)/detect-transform-strip-whitespace.Po
-	-rm -f ./$(DEPDIR)/detect-transform-urldecode.Po
 	-rm -f ./$(DEPDIR)/detect-ttl.Po
 	-rm -f ./$(DEPDIR)/detect-udphdr.Po
 	-rm -f ./$(DEPDIR)/detect-uricontent.Po

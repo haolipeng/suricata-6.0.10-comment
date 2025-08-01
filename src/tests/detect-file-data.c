@@ -280,21 +280,4 @@ static int DetectFiledataIsdataatParseTest2(void)
     PASS;
 }
 
-void DetectFiledataRegisterTests(void)
-{
-    UtRegisterTest("DetectEngineSMTPFiledataTest02",
-                   DetectEngineSMTPFiledataTest02);
-
-    UtRegisterTest("DetectFiledataParseTest01", DetectFiledataParseTest01);
-    UtRegisterTest("DetectFiledataParseTest02", DetectFiledataParseTest02);
-    UtRegisterTest("DetectFiledataParseTest03", DetectFiledataParseTest03);
-    UtRegisterTest("DetectFiledataParseTest04", DetectFiledataParseTest04);
-    UtRegisterTest("DetectFiledataParseTest05", DetectFiledataParseTest05);
-
-    UtRegisterTest("DetectFiledataIsdataatParseTest1",
-            DetectFiledataIsdataatParseTest1);
-    UtRegisterTest("DetectFiledataIsdataatParseTest2",
-            DetectFiledataIsdataatParseTest2);
-}
-
 #endif
