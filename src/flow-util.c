@@ -53,13 +53,15 @@ Flow *FlowAlloc(void)
     Flow *f;
     size_t size = sizeof(Flow) + FlowStorageSize();
 
-	//检测是否超出内存最大值
+	//检测是否超出内存最大值，如果超出则返回NULL
     if (!(FLOW_CHECK_MEMCAP(size))) {
         return NULL;
     }
 
+    //增加内存使用量
     (void) SC_ATOMIC_ADD(flow_memuse, size);
 
+    //分配内存
     f = SCMalloc(size);
     if (unlikely(f == NULL)) {
         (void)SC_ATOMIC_SUB(flow_memuse, size);
@@ -67,7 +69,7 @@ Flow *FlowAlloc(void)
     }
     memset(f, 0, size);
 
-    /* coverity[missing_lock] */
+    //初始化Flow对象
     FLOW_INITIALIZE(f);
     return f;
 }

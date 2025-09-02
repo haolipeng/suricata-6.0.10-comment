@@ -464,17 +464,9 @@ am__depfiles_remade = ./$(DEPDIR)/app-layer-detect-proto.Po \
 	./$(DEPDIR)/detect-engine-tag.Po \
 	./$(DEPDIR)/detect-engine-threshold.Po \
 	./$(DEPDIR)/detect-engine-uint.Po ./$(DEPDIR)/detect-engine.Po \
-	./$(DEPDIR)/detect-fast-pattern.Po \
-	./$(DEPDIR)/detect-file-data.Po \
-	./$(DEPDIR)/detect-file-hash-common.Po \
-	./$(DEPDIR)/detect-fileext.Po ./$(DEPDIR)/detect-filemagic.Po \
-	./$(DEPDIR)/detect-filemd5.Po ./$(DEPDIR)/detect-filename.Po \
-	./$(DEPDIR)/detect-filesha1.Po \
-	./$(DEPDIR)/detect-filesha256.Po \
-	./$(DEPDIR)/detect-filesize.Po ./$(DEPDIR)/detect-filestore.Po \
-	./$(DEPDIR)/detect-flow.Po ./$(DEPDIR)/detect-flowbits.Po \
-	./$(DEPDIR)/detect-flowint.Po ./$(DEPDIR)/detect-flowvar.Po \
-	./$(DEPDIR)/detect-fragbits.Po \
+	./$(DEPDIR)/detect-fast-pattern.Po ./$(DEPDIR)/detect-flow.Po \
+	./$(DEPDIR)/detect-flowbits.Po ./$(DEPDIR)/detect-flowint.Po \
+	./$(DEPDIR)/detect-flowvar.Po ./$(DEPDIR)/detect-fragbits.Po \
 	./$(DEPDIR)/detect-fragoffset.Po ./$(DEPDIR)/detect-geoip.Po \
 	./$(DEPDIR)/detect-gid.Po ./$(DEPDIR)/detect-hostbits.Po \
 	./$(DEPDIR)/detect-http-method.Po ./$(DEPDIR)/detect-id.Po \
@@ -1389,9 +1381,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/Makefile
+	  $(AUTOMAKE) --foreign src/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -1629,16 +1621,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-engine-uint.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-engine.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-fast-pattern.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-file-data.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-file-hash-common.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-fileext.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filemagic.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filemd5.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filename.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filesha1.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filesha256.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filesize.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-filestore.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-flow.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-flowbits.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/detect-flowint.Po@am__quote@ # am--include-marker

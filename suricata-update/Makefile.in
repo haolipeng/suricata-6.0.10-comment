@@ -381,9 +381,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu suricata-update/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign suricata-update/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu suricata-update/Makefile
+	  $(AUTOMAKE) --foreign suricata-update/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

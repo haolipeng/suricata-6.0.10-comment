@@ -540,11 +540,10 @@ typedef struct FlowBypassInfo_ {
 
 typedef struct FlowLookupStruct_ // TODO name
 {
-    /** thread store of spare queues */
-    FlowQueuePrivate spare_queue;
+    FlowQueuePrivate spare_queue;//空闲队列，存储可重复利用的Flow对象
     DecodeThreadVars *dtv;
-    FlowQueuePrivate work_queue;
-    uint32_t emerg_spare_sync_stamp;
+    FlowQueuePrivate work_queue;//工作队列，当Flow超时需要清理时，会将其放入工作队列中
+    uint32_t emerg_spare_sync_stamp;//紧急空闲同步时间戳
 } FlowLookupStruct;
 
 /** \brief prepare packet for a life with flow

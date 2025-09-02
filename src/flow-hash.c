@@ -124,19 +124,25 @@ static inline uint32_t FlowGetHash(const Packet *p)
     uint32_t hash = 0;
 
     if (p->ip4h != NULL) {
+        //如果数据包是TCP或UDP，则计算TCP或UDP的hash值
         if (p->tcph != NULL || p->udph != NULL) {
             FlowHashKey4 fhk;
 
+            //地址排序，比较源地址和目的地址，索引0的位置放置大的地址
             int ai = (p->src.addr_data32[0] > p->dst.addr_data32[0]);
             fhk.addrs[1-ai] = p->src.addr_data32[0];
             fhk.addrs[ai] = p->dst.addr_data32[0];
 
+            //端口排序，比较源端口和目的端口，索引0的位置放置大的端口
             const int pi = (p->sp > p->dp);
             fhk.ports[1-pi] = p->sp;
             fhk.ports[pi] = p->dp;
 
+            //协议类型
             fhk.proto = (uint16_t)p->proto;
+            //递归级别
             fhk.recur = (uint16_t)p->recursion_level;
+            //VLAN ID
             /* g_vlan_mask sets the vlan_ids to 0 if vlan.use-for-tracking
              * is disabled. */
             fhk.vlan_id[0] = p->vlan_id[0] & g_vlan_mask;
@@ -145,6 +151,7 @@ static inline uint32_t FlowGetHash(const Packet *p)
             hash = hashword(fhk.u32, 5, flow_config.hash_rand);
 
         }  else {
+
             FlowHashKey4 fhk;
             const int ai = (p->src.addr_data32[0] > p->dst.addr_data32[0]);
             fhk.addrs[1-ai] = p->src.addr_data32[0];
@@ -487,7 +494,6 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
         return NULL;
     }
 
-    /* get a flow from the spare queue */
 	//每个线程拥有一个FlowLookupStruct指针fls
 	//从线程所属的flow空闲队列spare_queue里获取flow，如果获取成功则返回flow
     Flow *f = FlowQueuePrivateGetFromTop(&fls->spare_queue);
@@ -497,7 +503,6 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
     }
 	//全局flow内存池，也没有flow队列
     if (f == NULL) {
-        /* If we reached the max memcap, we get a used flow */
 		//flow内存超过配置上限，则进入紧急模式
         if (!(FLOW_CHECK_MEMCAP(sizeof(Flow) + FlowStorageSize()))) {
             /* declare state of emergency */
