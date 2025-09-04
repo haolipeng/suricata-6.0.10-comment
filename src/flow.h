@@ -379,7 +379,7 @@ typedef struct Flow_
      *  On receiving a packet the counter is incremented while the flow
      *  bucked is locked, which is also the case on timeout pruning.
      */
-    FlowRefCount use_cnt;
+    FlowRefCount use_cnt; //记录flow的引用计数，有多少数据包在引用这个flow
 
     uint8_t vlan_idx;
 
@@ -405,7 +405,7 @@ typedef struct Flow_
     struct LiveDevice_ *livedev;
 
     /** flow hash - the flow hash before hash table size mod. */
-    uint32_t flow_hash;
+    uint32_t flow_hash; //记录flow的真实哈希值，用于查找会话
 
     /* time stamp of last update (last packet). Set/updated under the
      * flow and flow hash row locks, safe to read under either the
@@ -495,7 +495,7 @@ typedef struct Flow_
     /* pointer to the var list */
     GenericVar *flowvar;
 
-    struct FlowBucket_ *fb;
+    struct FlowBucket_ *fb; //记录flow所属的bucket桶
 
     struct timeval startts;
 

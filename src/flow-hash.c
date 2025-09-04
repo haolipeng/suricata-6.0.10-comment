@@ -449,6 +449,7 @@ static inline Flow *FlowSpareSync(ThreadVars *tv, FlowLookupStruct *fls,
         spare_sync = true;
     }
 
+    // 统计信息
     if (spare_sync) {
         if (f != NULL) {
             StatsAddUI64(tv, fls->dtv->counter_flow_spare_sync_avg, fls->spare_queue.len+1);
@@ -509,6 +510,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
             if (!(SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY)) {
                 SC_ATOMIC_OR(flow_flags, FLOW_EMERGENCY);
                 FlowTimeoutsEmergency();
+                //唤醒flow manager线程，进行flow清理操作
                 FlowWakeupFlowManagerThread();
             }
 
@@ -693,7 +695,7 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
 
     SCLogDebug("fb %p fb->head %p", fb, fb->head);
 
-    /* see if the bucket already has a flow */
+    /* 检测bucket桶中是否有Flow流 */
 	//bucket为空,直接FlowGetNew申请Flow
     if (fb->head == NULL) {
         f = FlowGetNew(tv, fls, p);
@@ -728,7 +730,9 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
         const bool timedout = (fb_nextts < (uint32_t)p->ts.tv_sec && FlowIsTimedOut(f, (uint32_t)p->ts.tv_sec, emerg));
         if (timedout) {
             FromHashLockTO(f);//FLOWLOCK_WRLOCK(f);
-            //超时且引用计数为0，没有packet引用这个flow，则放到线程所属的work queue
+            /*
+            流超时，且没有数据包引用此flow，则放到线程所属的work queue
+            */
             if (likely(f->use_cnt == 0)) {
                 next_f = f->next;
                 MoveToWorkQueue(tv, fls, fb, f, prev_f);
@@ -737,10 +741,13 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
             }
             FLOWLOCK_UNLOCK(f);
         } else if (FlowCompare(f, p) != 0) {//找到了和packet匹配的流
-            FromHashLockCMP(f);//FLOWLOCK_WRLOCK(f);
+            FromHashLockCMP(f);//内部调用FLOWLOCK_WRLOCK(f)，锁住flow
             /* found a matching flow that is not timed out */
+            // 检测当前数据包是否与现有flow存在tcp会话重用，非主要流程，前期可忽略
             if (unlikely(TcpSessionPacketSsnReuse(p, f, f->protoctx) == 1)) {
+                // tcp会话重用，则创建新Flow替换旧Flow
                 Flow *new_f = TcpReuseReplace(tv, fls, fb, f, hash, p);
+                // 安全的清理旧Flow，如果旧Flow没有被引用，则将旧Flow放到线程所属的工作队列，等待后续清理
                 if (likely(f->use_cnt == 0)) {
                     if (prev_f == NULL) /* if we have no prev it means new_f is now our prev */
                         prev_f = new_f;
@@ -748,12 +755,17 @@ Flow *FlowGetFlowFromHash(ThreadVars *tv, FlowLookupStruct *fls, Packet *p, Flow
                 }
                 FLOWLOCK_UNLOCK(f); /* unlock old replaced flow */
 
+                //处理替换失败的情况
                 if (new_f == NULL) {
                     FBLOCK_UNLOCK(fb);
                     return NULL;
                 }
+
+                //使用新的Flow对象
                 f = new_f;
             }
+
+            //增加引用计数并解锁
             FlowReference(dest, f);
             FBLOCK_UNLOCK(fb);
 			//返回哈希值匹配的流
