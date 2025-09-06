@@ -169,7 +169,7 @@ static int FlowFinish(ThreadVars *tv, Flow *f, FlowWorkerThreadData *fw, void *d
 
 //处理工作队列中的流，主要是那些被标记为需要移除/超时的流
 static void CheckWorkQueue(ThreadVars *tv, FlowWorkerThreadData *fw,
-        void *detect_thread, // TODO proper type?
+        void *detect_thread,
         FlowTimeoutCounters *counters,
         FlowQueuePrivate *fq)
 {

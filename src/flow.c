@@ -523,7 +523,7 @@ void  FlowInitConfig(char quiet)
     SC_ATOMIC_INIT(flow_memuse);//流占用的内存大小
     SC_ATOMIC_INIT(flow_prune_idx);
     SC_ATOMIC_INIT(flow_config.memcap);//flow的内存使用上限
-    FlowQueueInit(&flow_recycle_q);
+    FlowQueueInit(&flow_recycle_q); //初始化流回收队列
 
     /* set defaults */
     flow_config.hash_rand   = (uint32_t)RandomGet();
@@ -653,6 +653,7 @@ void  FlowInitConfig(char quiet)
 void FlowShutdown(void)
 {
     Flow *f;
+    //从回收队列中出队Flow对象，并释放其内存
     while ((f = FlowDequeue(&flow_recycle_q))) {
         FlowFree(f);
     }
@@ -686,7 +687,7 @@ void FlowShutdown(void)
         flow_hash = NULL;
     }
     (void) SC_ATOMIC_SUB(flow_memuse, flow_config.hash_size * sizeof(FlowBucket));
-    FlowQueueDestroy(&flow_recycle_q);
+    FlowQueueDestroy(&flow_recycle_q); //销毁流回收队列
     FlowSparePoolDestroy();
     return;
 }

@@ -490,7 +490,7 @@ static Flow *FlowGetNew(ThreadVars *tv, FlowLookupStruct *fls, Packet *p)
         return NULL;
     }
 #endif
-	//紧急模式下，tcp的非syn包不生成flow
+	//紧急模式下，tcp协议的非syn包不生成flow
     if (FlowCreateCheck(p, emerg) == 0) {
         return NULL;
     }

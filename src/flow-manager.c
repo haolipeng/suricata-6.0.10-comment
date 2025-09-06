@@ -747,8 +747,6 @@ static uint32_t FlowTimeoutsMin(void)
     return m;
 }
 
-//#define FM_PROFILE
-
 /** \brief Thread that manages the flow table and times out flows.
  *
  *  \param td ThreadVars casted to void ptr
@@ -757,26 +755,15 @@ static uint32_t FlowTimeoutsMin(void)
  */
 static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
 {
+    //流管理线程数据
     FlowManagerThreadData *ftd = thread_data;
     struct timeval ts;
     uint32_t established_cnt = 0, new_cnt = 0, closing_cnt = 0;
-    bool emerg = false;
-    bool prev_emerg = false;
+    bool emerg = false; //紧急模式标志
+    bool prev_emerg = false; //上一次紧急模式标志
     uint32_t other_last_sec = 0; /**< last sec stamp when defrag etc ran */
     uint32_t flow_last_sec = 0;
-/* VJ leaving disabled for now, as hosts are only used by tags and the numbers
- * are really low. Might confuse ppl
-    uint16_t flow_mgr_host_prune = StatsRegisterCounter("hosts.pruned", th_v);
-    uint16_t flow_mgr_host_active = StatsRegisterCounter("hosts.active", th_v);
-    uint16_t flow_mgr_host_spare = StatsRegisterCounter("hosts.spare", th_v);
-*/
     memset(&ts, 0, sizeof(ts));
-#ifdef FM_PROFILE
-    uint32_t hash_passes = 0;
-    uint32_t hash_row_checks = 0;
-    uint32_t hash_passes_chunks = 0;
-    uint32_t hash_full_passes = 0;
-#endif
 
     //所有协议的超时时间的最小值
     const uint32_t min_timeout = FlowTimeoutsMin();
@@ -792,17 +779,6 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
     SCLogDebug("FM %s/%d starting. min_timeout %us. Full hash pass in %us", th_v->name,
             ftd->instance, min_timeout, pass_in_sec);
 
-#ifdef FM_PROFILE
-    struct timeval endts;
-    struct timeval active;
-    struct timeval paused;
-    struct timeval sleeping;
-    memset(&endts, 0, sizeof(endts));
-    memset(&active, 0, sizeof(active));
-    memset(&paused, 0, sizeof(paused));
-    memset(&sleeping, 0, sizeof(sleeping));
-#endif
-
     struct timeval startts;
     memset(&startts, 0, sizeof(startts));
     gettimeofday(&startts, NULL);
@@ -813,20 +789,22 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
 
     while (1)
     {
+        //检查线程暂停标志
         if (TmThreadsCheckFlag(th_v, THV_PAUSE)) {
             TmThreadsSetFlag(th_v, THV_PAUSED);
             TmThreadTestThreadUnPaused(th_v);
             TmThreadsUnsetFlag(th_v, THV_PAUSED);
         }
 
-        //检查紧急模式标志,在FlowGetNew设置FLOW_EMERGENCY
+        //检查紧急模式标志
+        //设置FLOW_EMERGENCY标志是在FlowGetNew
         if (SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY) {
             emerg = true;
         }
 		
-        /* Get the time */
+        /* 获取当前时间，并转换为秒和毫秒格式*/
         memset(&ts, 0, sizeof(ts));
-        TimeGet(&ts);   //获取最新时间
+        TimeGet(&ts);   
         SCLogDebug("ts %" PRIdMAX "", (intmax_t)ts.tv_sec);
         const uint64_t ts_ms = ts.tv_sec * 1000 + ts.tv_usec / 1000;
         const uint32_t rt = (uint32_t)ts.tv_sec;
@@ -834,7 +812,7 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
         //避免重复进入紧急模式
         const bool emerge_p = (emerg && !prev_emerg);
         if (emerge_p) {
-            next_run_ms = 0;
+            next_run_ms = 0;//下次运行的时间
             prev_emerg = true;
             SCLogNotice("Flow emergency mode entered...");
             StatsIncr(th_v, ftd->cnt.flow_emerg_mode_enter);
@@ -854,11 +832,11 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             FlowTimeoutCounters counters = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             if (emerg) {
-                /* in emergency mode, do a full pass of the hash table */
+                /* 紧急模式：全表扫描 */
                 FlowTimeoutHash(&ftd->timeout, &ts, ftd->min, ftd->max, &counters);
                 StatsIncr(th_v, ftd->cnt.flow_mgr_full_pass);
             } else {
-                /* non-emergency mode: scan part of the hash */
+                /* 非紧急模式：分段扫描 */
                 const uint32_t chunks = MIN(secs_passed, pass_in_sec);
                 for (uint32_t i = 0; i < chunks; i++) {
                     FlowTimeoutHashInChunks(&ftd->timeout, &ts, ftd->min, ftd->max,
@@ -873,13 +851,6 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             }
             flow_last_sec = rt;
 
-            /*
-               StatsAddUI64(th_v, flow_mgr_host_prune, (uint64_t)hosts_pruned);
-               uint32_t hosts_active = HostGetActiveCount();
-               StatsSetUI64(th_v, flow_mgr_host_active, (uint64_t)hosts_active);
-               uint32_t hosts_spare = HostGetSpareCount();
-               StatsSetUI64(th_v, flow_mgr_host_spare, (uint64_t)hosts_spare);
-             */
             StatsAddUI64(th_v, ftd->cnt.flow_mgr_cnt_clo, (uint64_t)counters.clo);
             StatsAddUI64(th_v, ftd->cnt.flow_mgr_cnt_new, (uint64_t)counters.new);
             StatsAddUI64(th_v, ftd->cnt.flow_mgr_cnt_est, (uint64_t)counters.est);
@@ -910,36 +881,39 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
                         "flow_spare_q status: %"PRIu32"%% flows at the queue",
                         len, flow_config.prealloc, len * 100 / flow_config.prealloc);
 
-            /* only if we have pruned this "emergency_recovery" percentage
-             * of flows, we will unset the emergency bit */
-            if (len * 100 / flow_config.prealloc > flow_config.emergency_recovery) {
-                emerg_over_cnt++;
-            } else {
-                emerg_over_cnt = 0;
+                /* only if we have pruned this "emergency_recovery" percentage
+                * of flows, we will unset the emergency bit */
+                if (len * 100 / flow_config.prealloc > flow_config.emergency_recovery) {
+                    emerg_over_cnt++;
+                } else {
+                    emerg_over_cnt = 0;
+                }
+
+                //连续30次检测都满足条件，则退出紧急模式
+                if (emerg_over_cnt >= 30) {
+                    SC_ATOMIC_AND(flow_flags, ~FLOW_EMERGENCY);//清除紧急标志
+                    FlowTimeoutsReset();//重置超时时间
+
+                    emerg = false;
+                    prev_emerg = FALSE;
+                    emerg_over_cnt = 0;
+                    hash_pass_iter = 0;//重置扫描迭代器
+                    SCLogNotice("Flow emergency mode over, back to normal... unsetting"
+                            " FLOW_EMERGENCY bit (ts.tv_sec: %"PRIuMAX", "
+                            "ts.tv_usec:%"PRIuMAX") flow_spare_q status(): %"PRIu32
+                            "%% flows at the queue", (uintmax_t)ts.tv_sec,
+                            (uintmax_t)ts.tv_usec, len * 100 / flow_config.prealloc);
+
+                    StatsIncr(th_v, ftd->cnt.flow_emerg_mode_over);
+                }
             }
 
-            if (emerg_over_cnt >= 30) {
-                SC_ATOMIC_AND(flow_flags, ~FLOW_EMERGENCY);
-                FlowTimeoutsReset();
-
-                emerg = false;
-                prev_emerg = FALSE;
-                emerg_over_cnt = 0;
-                hash_pass_iter = 0;
-                SCLogNotice("Flow emergency mode over, back to normal... unsetting"
-                          " FLOW_EMERGENCY bit (ts.tv_sec: %"PRIuMAX", "
-                          "ts.tv_usec:%"PRIuMAX") flow_spare_q status(): %"PRIu32
-                          "%% flows at the queue", (uintmax_t)ts.tv_sec,
-                          (uintmax_t)ts.tv_usec, len * 100 / flow_config.prealloc);
-
-                StatsIncr(th_v, ftd->cnt.flow_emerg_mode_over);
-            }
-        }
-		//正常模式下，下次轮询时间
-        next_run_ms = ts_ms + 667;
-        if (emerg)
-            next_run_ms = ts_ms + 250;//紧急模式的轮询间隔时间
+            //正常模式下，下次轮询时间
+            next_run_ms = ts_ms + 667;
+            if (emerg)
+                next_run_ms = ts_ms + 250;//紧急模式的轮询间隔时间
         }//end with if (ts_ms >= next_run_ms)
+        
         if (flow_last_sec == 0) {
 			//第一次走这里
             flow_last_sec = rt;
@@ -954,12 +928,10 @@ static TmEcode FlowManager(ThreadVars *th_v, void *thread_data)
             other_last_sec = (uint32_t)ts.tv_sec;
         }
 
-
         if (TmThreadsCheckFlag(th_v, THV_KILL)) {
             StatsSyncCounters(th_v);
             break;
         }
-
 
         if (emerg || !time_is_live) {
             usleep(250);
@@ -1075,17 +1047,6 @@ static TmEcode FlowRecycler(ThreadVars *th_v, void *thread_data)
     struct timeval ts;
     memset(&ts, 0, sizeof(ts));
 
-#ifdef FM_PROFILE
-    uint32_t fr_passes = 0;
-    struct timeval endts;
-    struct timeval active;
-    struct timeval paused;
-    struct timeval sleeping;
-    memset(&endts, 0, sizeof(endts));
-    memset(&active, 0, sizeof(active));
-    memset(&paused, 0, sizeof(paused));
-    memset(&sleeping, 0, sizeof(sleeping));
-#endif
     struct timeval startts;
     memset(&startts, 0, sizeof(startts));
     gettimeofday(&startts, NULL);
@@ -1094,31 +1055,10 @@ static TmEcode FlowRecycler(ThreadVars *th_v, void *thread_data)
     {
         if (TmThreadsCheckFlag(th_v, THV_PAUSE)) {
             TmThreadsSetFlag(th_v, THV_PAUSED);
-#ifdef FM_PROFILE
-            struct timeval pause_startts;
-            memset(&pause_startts, 0, sizeof(pause_startts));
-            gettimeofday(&pause_startts, NULL);
-#endif
             TmThreadTestThreadUnPaused(th_v);
-
-#ifdef FM_PROFILE
-            struct timeval pause_endts;
-            memset(&pause_endts, 0, sizeof(pause_endts));
-            gettimeofday(&pause_endts, NULL);
-
-            struct timeval pause_time;
-            memset(&pause_time, 0, sizeof(pause_time));
-            timersub(&pause_endts, &pause_startts, &pause_time);
-            timeradd(&paused, &pause_time, &paused);
-#endif
             TmThreadsUnsetFlag(th_v, THV_PAUSED);
         }
-#ifdef FM_PROFILE
-        fr_passes++;
-        struct timeval run_startts;
-        memset(&run_startts, 0, sizeof(run_startts));
-        gettimeofday(&run_startts, NULL);
-#endif
+
         SC_ATOMIC_ADD(flowrec_busy,1);
         FlowQueuePrivate list = FlowQueueExtractPrivate(&flow_recycle_q);
 
@@ -1135,17 +1075,6 @@ static TmEcode FlowRecycler(ThreadVars *th_v, void *thread_data)
             recycled_cnt++;
         }
         SC_ATOMIC_SUB(flowrec_busy,1);
-
-#ifdef FM_PROFILE
-        struct timeval run_endts;
-        memset(&run_endts, 0, sizeof(run_endts));
-        gettimeofday(&run_endts, NULL);
-
-        struct timeval run_time;
-        memset(&run_time, 0, sizeof(run_time));
-        timersub(&run_endts, &run_startts, &run_time);
-        timeradd(&active, &run_time, &active);
-#endif
 
         if (bail) {
             break;
@@ -1169,6 +1098,8 @@ static TmEcode FlowRecycler(ThreadVars *th_v, void *thread_data)
                 if (SC_ATOMIC_GET(flow_flags) & FLOW_EMERGENCY) {
                     break;
                 }
+
+                //如果回收队列不为空，则退出循环
                 if (SC_ATOMIC_GET(flow_recycle_q.non_empty) == true) {
                     break;
                 }
@@ -1181,19 +1112,6 @@ static TmEcode FlowRecycler(ThreadVars *th_v, void *thread_data)
         StatsSyncCountersIfSignalled(th_v);
     }
     StatsSyncCounters(th_v);
-#ifdef FM_PROFILE
-    gettimeofday(&endts, NULL);
-    struct timeval total_run_time;
-    timersub(&endts, &startts, &total_run_time);
-    SCLogNotice("FR: active %u.%us out of %u.%us; sleeping %u.%us, paused %u.%us",
-            (uint32_t)active.tv_sec, (uint32_t)active.tv_usec,
-            (uint32_t)total_run_time.tv_sec, (uint32_t)total_run_time.tv_usec,
-            (uint32_t)sleeping.tv_sec, (uint32_t)sleeping.tv_usec,
-            (uint32_t)paused.tv_sec, (uint32_t)paused.tv_usec);
-
-    SCLogNotice("FR passes %u passes/s %u", fr_passes,
-            (uint32_t)fr_passes/((uint32_t)active.tv_sec?(uint32_t)active.tv_sec:1));
-#endif
     SCLogPerf("%"PRIu64" flows processed", recycled_cnt);
     return TM_ECODE_OK;
 }
