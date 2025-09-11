@@ -167,7 +167,7 @@ Packet *PacketGetFromAlloc(void)
 
     memset(p, 0, SIZE_OF_PACKET);
     PACKET_INITIALIZE(p);
-    p->ReleasePacket = PacketFree;
+    p->ReleasePacket = PacketFree; //设置数据包释放函数
     p->flags |= PKT_ALLOC;
 
     SCLogDebug("allocated a new packet only using alloc...");
@@ -185,7 +185,7 @@ void PacketFreeOrRelease(Packet *p)
         PacketFree(p);
     else {
         p->ReleasePacket = PacketPoolReturnPacket;
-        PacketPoolReturnPacket(p);
+        PacketPoolReturnPacket(p);//将数据包归还给数据包池
     }
 }
 

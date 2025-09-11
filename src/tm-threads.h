@@ -201,6 +201,7 @@ static inline TmEcode TmThreadsSlotProcessPkt(ThreadVars *tv, TmSlot *s, Packet 
 
     tv->tmqh_out(tv, p);
 
+    //将数据包归还给对应线程
     TmThreadsHandleInjectedPackets(tv);
 
     return TM_ECODE_OK;

@@ -882,8 +882,8 @@ static void AFPReleasePacketV3(Packet *p)
 
 static void AFPReleasePacket(Packet *p)
 {
-    AFPReleaseDataFromRing(p);
-    PacketFreeOrRelease(p);
+    AFPReleaseDataFromRing(p);//释放内核环形缓冲区的数据
+    PacketFreeOrRelease(p);//释放数据包对象
 }
 
 /** \internal
@@ -948,15 +948,16 @@ static bool AFPReadFromRingSetupPacket(
         p->vlan_idx = 1;
     }
 
+    //零拷贝模式，直接使用内核环形缓冲区中的数据
     if (ptv->flags & AFP_ZERO_COPY) {
         if (PacketSetData(p, (unsigned char *)h.raw + h.h2->tp_mac, h.h2->tp_snaplen) == -1) {
             return false;
         }
 
-        p->afp_v.relptr = h.raw;
-        p->ReleasePacket = AFPReleasePacket;
-        p->afp_v.mpeer = ptv->mpeer;
-        AFPRefSocket(ptv->mpeer);
+        p->afp_v.relptr = h.raw;//保存内核环形缓冲区指针
+        p->ReleasePacket = AFPReleasePacket;//设置释放回调函数
+        p->afp_v.mpeer = ptv->mpeer;//设置数据包关联的peer套接字
+        AFPRefSocket(ptv->mpeer);//增加peer的引用计数
 
         p->afp_v.copy_mode = ptv->copy_mode;
         if (p->afp_v.copy_mode != AFP_COPY_MODE_NONE) {
@@ -965,6 +966,8 @@ static bool AFPReadFromRingSetupPacket(
             p->afp_v.peer = NULL;
         }
     } else {
+        //将数据包从内核缓冲区拷贝到用户空间
+        //不设置 ReleasePacket 函数，使用默认的 PacketFreeOrRelease
         if (PacketCopyData(p, (unsigned char *)h.raw + h.h2->tp_mac, h.h2->tp_snaplen) == -1) {
             return false;
         }
@@ -1068,10 +1071,12 @@ static int AFPReadFromRing(AFPThreadVars *ptv)
             goto next_frame;
         }
 
+        //从数据包池申请新的数据包对象
         Packet *p = PacketGetFromQueueOrAlloc();
         if (p == NULL) {
             return AFPSuriFailure(ptv, h);
         }
+        //设置数据包属性
         if (AFPReadFromRingSetupPacket(ptv, h, tp_status, p) == false) {
             TmqhOutputPacketpool(ptv->tv, p);
             return AFPSuriFailure(ptv, h);
@@ -1081,6 +1086,7 @@ static int AFPReadFromRing(AFPThreadVars *ptv)
             h.h2->tp_status = TP_STATUS_KERNEL;
         }
 
+        //将数据包放入线程槽中,传递给下一个阶段
         if (TmThreadsSlotProcessPkt(ptv->tv, ptv->slot, p) != TM_ECODE_OK) {
             return AFPSuriFailure(ptv, h);
         }
@@ -1508,7 +1514,11 @@ static int AFPTryReopen(AFPThreadVars *ptv)
 }
 
 /**
- *  \brief Main AF_PACKET reading Loop function
+ *  从网口持续读取数据包
+ *  管理网口的状态
+ *  将数据包传递给后续处理模块
+ *  data: 指向AFPThreadVars的指针
+ *  slot: 指向TmSlot的指针
  */
 TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
 {
@@ -1520,21 +1530,21 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
     TmSlot *s = (TmSlot *)slot;
     time_t last_dump = 0;
     time_t current_time;
-    int (*AFPReadFunc) (AFPThreadVars *);
-    uint64_t discarded_pkts = 0;
+    int (*AFPReadFunc) (AFPThreadVars *); //函数指针，指向具体的数据包读取函数
+    uint64_t discarded_pkts = 0;//丢弃数据包数
 
     ptv->slot = s->slot_next;
 
     if (ptv->flags & AFP_RING_MODE) {
         if (ptv->flags & AFP_TPACKET_V3) {
-            AFPReadFunc = AFPReadFromRingV3;
+            AFPReadFunc = AFPReadFromRingV3;//Ring + AF_PACKET v3模式
         } else {
-            AFPReadFunc = AFPReadFromRing;
+            AFPReadFunc = AFPReadFromRing;//Ring + AF_PACKET v2模式
         }
     } else {
-        AFPReadFunc = AFPRead;
+        AFPReadFunc = AFPRead;//No ring模式
     }
-
+    //接口关闭状态处理
     if (ptv->afp_state == AFP_STATE_DOWN) {
         /* Wait for our turn, threads before us must have opened the socket */
         while (AFPPeersListWaitTurn(ptv->mpeer)) {
@@ -1543,6 +1553,7 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
                 break;
             }
         }
+        //创建AF_PACKET 套接字
         r = AFPCreateSocket(ptv, ptv->iface, 1);
         if (r < 0) {
             switch (-r) {
@@ -1553,10 +1564,13 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
                     SCLogWarning(SC_ERR_AFP_CREATE, "Couldn't init AF_PACKET socket, retrying soon");
             }
         }
+        //状态更新
         AFPPeersListReachedInc();
     }
+    //接口开启状态处理
     if (ptv->afp_state == AFP_STATE_UP) {
         SCLogDebug("Thread %s using socket %d", tv->name, ptv->socket);
+        //确保所有线程同时开始捕获数据包
         AFPSynchronizeStart(ptv, &discarded_pkts);
         /* let's reset counter as we will start the capture at the
          * next function call */
@@ -1586,6 +1600,7 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
             int dbreak = 0;
 
             do {
+                //控制重连的间隔
                 usleep(AFP_RECONNECT_TIMEOUT);
                 if (suricata_ctl_flags != 0) {
                     dbreak = 1;
@@ -1598,12 +1613,13 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
                 break;
         }
 
-        /* make sure we have at least one packet in the packet pool, to prevent
-         * us from alloc'ing packets at line rate */
+        //确保数据包池中至少有一个数据包，以防止在数据包池中分配数据包
         PacketPoolWait();
 
+        //等待数据包
         r = poll(&fds, 1, POLL_TIMEOUT);
 
+        //控制信号处理
         if (suricata_ctl_flags != 0) {
             break;
         }
@@ -1629,40 +1645,40 @@ TmEcode ReceiveAFPLoop(ThreadVars *tv, void *data, void *slot)
                 continue;
             }
         } else if (r > 0) {
+            //读取数据包
             r = AFPReadFunc(ptv);
             switch (r) {
-                case AFP_READ_OK:
-                    /* Trigger one dump of stats every second */
+                case AFP_READ_OK: //读取成功
+                    //每秒触发一次统计信息
                     current_time = time(NULL);
                     if (current_time != last_dump) {
                         AFPDumpCounters(ptv);
                         last_dump = current_time;
                     }
                     break;
-                case AFP_READ_FAILURE:
-                    /* AFPRead in error: best to reset the socket */
+                case AFP_READ_FAILURE: //读取失败
+                    //读取失败: 最好重置套接字
                     SCLogError(SC_ERR_AFP_READ,
                            "AFPRead error reading data from iface '%s': (%d) %s",
                            ptv->iface, errno, strerror(errno));
                     AFPSwitchState(ptv, AFP_STATE_DOWN);
                     continue;
-                case AFP_SURI_FAILURE:
+                case AFP_SURI_FAILURE://Suricata 内部错误
                     StatsIncr(ptv->tv, ptv->capture_errors);
                     break;
-                case AFP_KERNEL_DROP:
+                case AFP_KERNEL_DROP: //内核丢弃数据包
                     AFPDumpCounters(ptv);
                     break;
             }
         } else if (unlikely(r == 0)) {
-            /* Trigger one dump of stats every second */
+            //每秒触发一次统计信息
             current_time = time(NULL);
             if (current_time != last_dump) {
                 AFPDumpCounters(ptv);
                 last_dump = current_time;
             }
-            /* poll timed out, lets see handle our timeout path */
+            //poll 超时处理路径
             TmThreadsCaptureHandleTimeout(tv, NULL);
-
         } else if ((r < 0) && (errno != EINTR)) {
             SCLogError(SC_ERR_AFP_READ, "Error reading data from iface '%s': (%d) %s",
                        ptv->iface,

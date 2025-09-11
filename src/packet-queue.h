@@ -45,14 +45,14 @@ typedef struct PacketQueueNoLock_ {
  *        layouts except for the mutex_q and cond_q fields.
  */
 typedef struct PacketQueue_ {
-    struct Packet_ *top;
-    struct Packet_ *bot;
-    uint32_t len;
+    struct Packet_ *top;//队列顶部指针
+    struct Packet_ *bot;//队列底部指针
+    uint32_t len;//队列长度
 #ifdef DBG_PERF
-    uint32_t dbg_maxlen;
+    uint32_t dbg_maxlen;//调试最大长度
 #endif /* DBG_PERF */
-    SCMutex mutex_q;
-    SCCondT cond_q;
+    SCMutex mutex_q;//互斥锁
+    SCCondT cond_q;//条件变量
 } PacketQueue;
 
 #include "decode.h"

@@ -53,14 +53,14 @@ int threading_set_cpu_affinity = FALSE;
 uint64_t threading_set_stack_size = 0;
 
 /* Runmode Global Thread Names */
-const char *thread_name_autofp = "RX";
-const char *thread_name_single = "W";
-const char *thread_name_workers = "W";
-const char *thread_name_verdict = "TX";
-const char *thread_name_flow_mgr = "FM";
-const char *thread_name_flow_rec = "FR";
-const char *thread_name_flow_bypass = "FB";
-const char *thread_name_unix_socket = "US";
+const char *thread_name_autofp = "RX";//autofp工作模式线程
+const char *thread_name_single = "W";//单线程工作模式线程
+const char *thread_name_workers = "W";//多线程worker工作模式线程
+const char *thread_name_verdict = "TX";//裁决线程
+const char *thread_name_flow_mgr = "FM";//流管理线程
+const char *thread_name_flow_rec = "FR";//流回收线程
+const char *thread_name_flow_bypass = "FB";//流绕过线程
+const char *thread_name_unix_socket = "US";//unix套接字线程
 const char *thread_name_detect_loader = "DL";
 const char *thread_name_counter_stats = "CS";
 const char *thread_name_counter_wakeup = "CW";

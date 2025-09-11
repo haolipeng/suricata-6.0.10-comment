@@ -161,10 +161,10 @@ static void PacketPoolStorePacket(Packet *p)
 {
     /* Clear the PKT_ALLOC flag, since that indicates to push back
      * onto the ring buffer. */
-    p->flags &= ~PKT_ALLOC;
-    p->pool = GetThreadPacketPool();
-    p->ReleasePacket = PacketPoolReturnPacket;
-    PacketPoolReturnPacket(p);
+    p->flags &= ~PKT_ALLOC; //消除PKT_ALLOC标志
+    p->pool = GetThreadPacketPool();//获取线程对应的数据包内存池
+    p->ReleasePacket = PacketPoolReturnPacket;//设置数据包释放函数
+    PacketPoolReturnPacket(p);//将数据包归还给数据包池
 }
 
 static void PacketPoolGetReturnedPackets(PktPool *pool)
