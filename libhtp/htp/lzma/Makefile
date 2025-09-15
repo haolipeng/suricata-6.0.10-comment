@@ -216,7 +216,7 @@ AUTOMAKE = ${SHELL} '/home/work/suricata-6.0.10-comment/libhtp/missing' automake
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS =  -DHTP_DEBUG -O2 -Wstrict-overflow=1 -fstack-protector -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fPIC
+CFLAGS = -g -O0 -DHTP_DEBUG -O2 -Wstrict-overflow=1 -fstack-protector -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fPIC
 CPP = gcc -E
 CPPFLAGS =  -O2
 CSCOPE = cscope
@@ -322,19 +322,19 @@ install_sh = ${SHELL} /home/work/suricata-6.0.10-comment/libhtp/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
-localstatedir = ${prefix}/var
+localstatedir = /var
 mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /usr
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
-sysconfdir = ${prefix}/etc
+sysconfdir = /etc
 target_alias = 
 top_build_prefix = ../../
 top_builddir = ../..

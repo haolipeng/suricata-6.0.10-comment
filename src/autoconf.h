@@ -23,10 +23,10 @@
 #define CLS 64
 
 /* Our CONFIG_DIR */
-#define CONFIG_DIR "/usr/local/etc/suricata/"
+#define CONFIG_DIR "/etc/suricata/"
 
 /* Our DATA_DIR */
-#define DATA_DIR "/usr/local/var/lib/suricata/data"
+#define DATA_DIR "/var/lib/suricata/data"
 
 /* Enable debug output */
 #define DEBUG 1
@@ -693,7 +693,7 @@
 /* #undef PROFILING */
 
 /* Git revision */
-#define REVISION 1c598d919 2025-09-06
+#define REVISION 9eab8b4bc 2025-09-11
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

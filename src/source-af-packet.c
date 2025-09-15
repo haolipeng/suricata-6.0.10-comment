@@ -955,7 +955,7 @@ static bool AFPReadFromRingSetupPacket(
         }
 
         p->afp_v.relptr = h.raw;//保存内核环形缓冲区指针
-        p->ReleasePacket = AFPReleasePacket;//设置释放回调函数
+        p->ReleasePacket = AFPReleasePacket;//设置数据包释放的回调函数
         p->afp_v.mpeer = ptv->mpeer;//设置数据包关联的peer套接字
         AFPRefSocket(ptv->mpeer);//增加peer的引用计数
 
@@ -1136,7 +1136,7 @@ static inline int AFPParsePacketV3(AFPThreadVars *ptv, struct tpacket_block_desc
             SCReturnInt(AFP_SURI_FAILURE);
         }
         p->afp_v.relptr = ppd;
-        p->ReleasePacket = AFPReleasePacketV3;
+        p->ReleasePacket = AFPReleasePacketV3;//设置数据包释放的回调函数
         p->afp_v.mpeer = ptv->mpeer;
         AFPRefSocket(ptv->mpeer);
 

@@ -181,6 +181,7 @@ Packet *PacketGetFromAlloc(void)
  */
 void PacketFreeOrRelease(Packet *p)
 {
+    //数据包有PKT_ALLOC标志，代表是从malloc申请的，直接调用free函数
     if (p->flags & PKT_ALLOC)
         PacketFree(p);
     else {
